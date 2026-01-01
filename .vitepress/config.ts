@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitepress'
+import { withMermaid } from "vitepress-plugin-mermaid";
 
 // Environment variables for documentation
 const DOC_VARS = {
@@ -20,7 +20,7 @@ const DOC_VARS = {
 function replaceDocVars(content: string): string {
   let result = content
   Object.entries(DOC_VARS).forEach(([key, value]) => {
-    const regex = new RegExp(`\\{\\{${key}\\}\\}`, 'g')
+    const regex = new RegExp(`\\{\\{\\s*${key}\\s*\\}\\}`, 'g')
     result = result.replace(regex, value)
   })
   return result
@@ -43,7 +43,7 @@ function markdownVariablesPlugin() {
   }
 }
 
-export default defineConfig({
+export default withMermaid({
   title: `${DOC_VARS.PRODUCT_NAME} Docs`,
   description: `${DOC_VARS.PRODUCT_NAME} Platform Documentation`,
   ignoreDeadLinks: true,
@@ -218,7 +218,10 @@ export default defineConfig({
                 { text: '概述', link: '/zh-hans/plugins/' },
                 { text: '插件市场', link: '/zh-hans/plugins/marketplace' },
                 { text: '使用插件', link: '/zh-hans/plugins/using-plugins' },
-                { text: '创建插件', link: '/zh-hans/plugins/creating-plugins' },
+                { text: '开发插件', collapsed: true, items: [
+                  { text: '核心概念', link: '/zh-hans/plugins/development/core-concepts' },
+                  { text: '快速上手', link: '/zh-hans/plugins/development/quick-start' },
+                ] },
                 { text: '插件 API', link: '/zh-hans/plugins/api' }
               ]
             }
@@ -527,5 +530,9 @@ export default defineConfig({
     }
   },
 
-  lastUpdated: true
+  lastUpdated: true,
+
+  mermaid: {
+    
+  },
 })
