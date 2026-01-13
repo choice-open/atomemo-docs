@@ -1,21 +1,21 @@
-# Autoamtion Documentation
+# Atomemo Documentation
 
-This is the documentation site for the Autoamtion workflow platform, built with VitePress.
+Documentation site for the Atomemo workflow platform, built with VitePress.
 
 ## Structure
 
 ```
-packages/docs/
 ├── .vitepress/
-│   └── config.ts          # VitePress configuration with i18n
-├── zh-hans/               # 简体中文文档
+│   ├── config.ts          # VitePress configuration with i18n
+│   └── theme/             # Custom theme
+├── zh-hans/               # Simplified Chinese
 │   ├── getting-started/
 │   ├── guide/
 │   ├── plugins/
 │   ├── development/
 │   ├── policies/
 │   └── index.md
-├── en/                    # English documentation
+├── en/                    # English
 │   ├── getting-started/
 │   ├── guide/
 │   ├── plugins/
@@ -26,43 +26,44 @@ packages/docs/
 
 ## Languages
 
-- **简体中文**: Available at `/zh-hans/`
-- **English**: Available at `/en/`
+- **Simplified Chinese**: `/zh-hans/`
+- **English**: `/en/`
 
 ## Development
 
 ```bash
+# Install dependencies
+pnpm install
+
 # Start dev server
-pnpm docs:dev
+pnpm dev
 
 # Build
-pnpm docs:build
+pnpm build
 
 # Preview build
-pnpm docs:preview
+pnpm preview
 ```
 
 ## Adding Content
 
-### Chinese
-Add files to the `/zh-hans/` subdirectories:
-- `/zh-hans/getting-started/` - 开始使用
-- `/zh-hans/guide/` - 用户指南
-- `/zh-hans/plugins/` - 插件
-- `/zh-hans/development/` - 开发文档
-- `/zh-hans/policies/` - 政策条款
+### Chinese (`/zh-hans/`)
+- `/zh-hans/getting-started/` - Getting Started
+- `/zh-hans/guide/` - User Guide
+- `/zh-hans/plugins/` - Plugins
+- `/zh-hans/development/` - Development
+- `/zh-hans/policies/` - Policies
 
-### English
-Add files to the `/en/` subdirectories:
+### English (`/en/`)
 - `/en/getting-started/` - Getting Started
-- `/en/guide/` - Guide
+- `/en/guide/` - User Guide
 - `/en/plugins/` - Plugins
 - `/en/development/` - Development
 - `/en/policies/` - Policies
 
-## URL Structure
+## Features
 
-- Chinese: `http://localhost:5173/zh-hans/` (Introduction as homepage)
-- English: `http://localhost:5173/en/` (Introduction as homepage)
-
-VitePress automatically handles language switching in the UI.
+- Multi-language support (Chinese/English)
+- Mermaid diagram support
+- Environment variable replacement in markdown
+- Local search

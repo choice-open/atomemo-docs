@@ -113,6 +113,7 @@
  * -------------------------------------------------------------------------- */
 
 :root {
+  --vp-nav-logo-height: 48px;
   --vp-custom-block-tip-border: transparent;
   --vp-custom-block-tip-text: var(--vp-c-text-1);
   --vp-custom-block-tip-bg: var(--vp-c-brand-soft);
@@ -125,4 +126,12 @@
 
 .DocSearch {
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
+}
+
+.VPImage {
+  margin-right: 0 !important;
+  margin-left: -12px !important;
+}
+.VPImage + span {
+  margin-top: 12px;
 }
