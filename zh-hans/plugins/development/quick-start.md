@@ -1,79 +1,162 @@
 ---
 title: 快速上手插件开发
-description: 十分钟跟练教程，快速开发一个完整可用的工具插件。
+description: 十分钟跟练教程，从零构建一个完整可用的插件。
 ---
 
-# 快速上手
+# 快速上手插件开发
 
 ::: info 十分钟，能做什么？
-跟随本教程一步一步开发一个可查询指定地区天气情况的工具插件，只需花费十分钟就可以得到一个完整可用的插件。
+跟随本教程开发一个**查询指定地区天气**的工具插件。你将学会从环境准备、项目创建到本地调试的完整流程。
 :::
 
-在开始此教程之前请务必确保你的系统满足以下环境需求：
+## 准备工作
 
-::: code-group
+在开始之前，请确保你的开发环境满足以下要求：
 
-```plain:line-numbers [TypeScript]
-Node.js v20+ 或者 Bun v1.3+(推荐)
-兼容上述运行时环境的依赖管理工具（推荐 Pnpm 用于 Node.js）
-现代代码编辑器（如 VSCode）或 IDE（获得良好开发体验）
-Git v2+
-```
-
-```plain:line-numbers [Elixir]
-Elixir 1.19.4 (compiled with Erlang/OTP 28)
-现代代码编辑器（如 VSCode）或 IDE（获得良好开发体验）
-Git v2+
-```
-
-:::
+- **基础知识**：了解 TypeScript/JavaScript 基础。
+- **运行环境**：Node.js v20+ (推荐使用 Bun v1.0+ 以获得最佳体验)。
+- **工具**：Git v2+，现代代码编辑器 (推荐 VS Code)。
+- **账号**：已注册 {{ PRODUCT_NAME }} 账号。
 
 ## 第一步：安装命令行工具
 
-首先打开终端并使用以下命令安装命令行工具：
+打开终端，安装 {{ PRODUCT_NAME }} 官方插件开发工具：
 
-```shell
-$ npm install @choice-open/automation-plugin-cli --global
+```bash
+$ npm install @choiceopen/atomemo-plugin-cli --global
 ```
 
-::: tip 其他安装命令行工具的方法
-上例假定用户使用 `npm` 全局安装命令行工具，但除此之外我们还提供了多种安装方式以符合你的本地环境。请查看 [命令行工具 - 安装](./cli#installation) 一节了解详情。
-:::
+::: tip 验证安装
+安装完成后，可以通过以下命令验证是否成功：
 
-接着用命令行工具新建一个插件项目，这条命令会通过一些交互向你收集创建插件项目必要的基本信息：
-
-```shell
-$ automation plugin init
+```bash
+$ atomemo --version
 ```
 
-::: tip 简短命令
-如果觉得 `automation` 命令太长或是和你系统里的其他命令有冲突，也可以将其换成 `apc`（Automation Plugin CLI 的缩写）。
-
-另外使用 `help` 子命令可以获得帮助，例如：`apc help`
 :::
 
-## 第二步：在本地运行（调试）插件项目
+## 第二步：初始化项目
 
-在新插件项目的根目录下有一个 `.env.example` 文件，复制一份重命名为 `.env` 并填上 `DEVELOPMENT_KEY` 的值，该值是每一个插件在开发时专用的，可以在 {{ PRODUCT_NAME }} 的插件页面上获取到。
+不要手动创建文件夹——使用 CLI 可以一键生成符合规范的项目骨架。
 
-::: details 关于 DEVELOPMENT_KEY 的有效期
-`DEVELOPMENT_KEY` 的有效期是（自生成后）24小时，失效后插件在连接 Hub 时会收到过期提醒的消息，此时需要重新生成并替换。
+### 1. 登录账号
 
-发布至生产环境的插件会自动忽略 `DEVELOPMENT_KEY`，开发者无需做任何处理。
+在使用 CLI 创建项目之前，你需要先登录你的账号以同步开发者信息：
+
+```bash
+$ atomemo auth login
+```
+
+_终端将提示通过浏览器打开登录页面，授权成功后即可关闭窗口。_
+
+### 2. 创建项目
+
+运行初始化命令，CLI 会通过交互式问答引导你完成配置：
+
+```bash
+$ atomemo plugin init
+```
+
+::: details 交互式配置示例
+
+- **Plugin Name**: `weather-lookup`
+- **Description**: `Get current weather for a specific location`
+- **Language**: `TypeScript`
+  :::
+
+### 3. 项目结构概览
+
+创建完成后，生成的目录结构如下：
+
+```text
+/weather-lookup
+  ├── src/
+  │    └── index.ts        # 插件入口文件
+  ├── package.json         # 依赖管理
+  ├── tsconfig.json        # TypeScript 配置
+  ├── .env                 # 环境变量（自动生成）
+  └── README.md
+```
+
+## 第三步：连接与调试
+
+### 1. 获取调试凭证
+
+为了连接到 Hub 进行调试，你需要生成一个临时的开发密钥。新版 CLI 提供了快捷命令来自动更新 `.env` 文件：
+
+```bash
+$ cd weather-lookup
+$ atomemo plugin refresh-key
+```
+
+::: warning 凭证有效期
+开发密钥 (`DEVELOPMENT_KEY`) 有效期为 **24小时**。如果调试时提示认证失败或过期，只需再次运行 `refresh-key` 命令即可。
 :::
 
-接着执行启动命令，插件会通过 SDK 自动寻找并连接到 Hub，成功之后就可以开始编写代码了：
+### 2. 启动开发服务器
 
-::: code-group
+安装依赖并启动本地开发服务（推荐使用 bun）：
 
-```shell [TypeScript]
-$ cd new-plugin
+```bash
+# 安装依赖
+$ bun install
+
+# 启动服务，插件内容将实时打包到 dist 目录
 $ bun run dev
 ```
 
-```shell [Elixir]
-$ cd new-plugin
-$ mix automation.dev
+### 3. 连接到 Hub
+
+构建完成后，运行以下命令将本地插件连接到调试服务器：
+
+```bash
+$ bun run ./dist
 ```
 
+::: tip 实时反馈
+终端将显示连接状态与交互日志，这是你验证插件行为的主要窗口。
 :::
+
+#### 连接成功
+
+当看到如下 `ok` 响应时，说明连接建立成功，插件已准备好接收调试指令：
+
+```log
+RECEIVE ok debug_plugin:notion phx_reply (8) {
+  status: "ok",
+  response: {
+    success: true,
+  },
+}
+```
+
+#### 连接失败
+
+如果遇到 `ZodError`，通常意味着 `manifest` 配置不符合规范。例如下所示的错误提示 `name` 字段包含非法字符：
+
+```json
+ZodError: [
+  {
+    "origin": "string",
+    "code": "invalid_format",
+    "format": "regex",
+    "pattern": "/^[a-zA-Z](?:(?![_-]{2,})[a-zA-Z0-9_-]){3,63}[a-zA-Z0-9]$/",
+    "path": [
+      "name"
+    ],
+    "message": "Invalid name, should match the following rules: 1. only English letters, numbers, _ and - 2. start with English letter, end with English letter or number 3. _ and - cannot appear consecutively more than twice 4. minimum length 4, maximum length 64"
+  }
+]
+```
+
+此时请检查 `package.json` 中的配置项是否满足命名规范（如仅允许英文字母、数字、下划线和连字符，且不以数字开头）。
+
+## 下一步
+
+你已经成功搭建了开发环境，接下来可以深入了解：
+
+- **[核心概念](./core-concepts.md)**：了解插件的 Manifest 结构与生命周期。
+- **[开发插件工具](./tool.md)**：掌握工具型插件的开发方法与最佳实践。
+- **[开发插件模型](./model.md)**：学习如何集成 AI 模型功能到插件中。
+- **[开发插件凭证](./credential.md)**：管理敏感信息与第三方服务密钥。
+- **[发布插件](./publish.md)**：将你的插件分享给社区。

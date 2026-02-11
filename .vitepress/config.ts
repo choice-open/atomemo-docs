@@ -324,6 +324,14 @@ export default withMermaid({
                   items: [
                     { text: "核心概念", link: "/zh-hans/plugins/development/core-concepts" },
                     { text: "快速上手", link: "/zh-hans/plugins/development/quick-start" },
+                    { text: "开发工具", link: "/zh-hans/plugins/development/tool" },
+                    {
+                      text: "声明式参数",
+                      link: "/zh-hans/plugins/development/declarative-parameters",
+                    },
+                    { text: "开发模型", link: "/zh-hans/plugins/development/model" },
+                    { text: "定义凭证", link: "/zh-hans/plugins/development/credential" },
+                    { text: "发布插件", link: "/zh-hans/plugins/development/publishing" },
                   ],
                 },
                 { text: "插件 API", link: "/zh-hans/plugins/api" },
@@ -590,7 +598,22 @@ export default withMermaid({
                 { text: "Overview", link: "/en/plugins/" },
                 { text: "Plugin Marketplace", link: "/en/plugins/marketplace" },
                 { text: "Using Plugins", link: "/en/plugins/using-plugins" },
-                { text: "Creating Plugins", link: "/en/plugins/creating-plugins" },
+                {
+                  text: "Developing Plugins",
+                  collapsed: true,
+                  items: [
+                    { text: "Core Concepts", link: "/en/plugins/development/core-concepts" },
+                    { text: "Quick Start", link: "/en/plugins/development/quick-start" },
+                    { text: "Developing Tools", link: "/en/plugins/development/tool" },
+                    {
+                      text: "Declarative parameters",
+                      link: "/en/plugins/development/declarative-parameters",
+                    },
+                    { text: "Developing Models", link: "/en/plugins/development/model" },
+                    { text: "Defining Credentials", link: "/en/plugins/development/credential" },
+                    { text: "Publishing Your Plugin", link: "/en/plugins/development/publishing" },
+                  ],
+                },
                 { text: "Plugin API", link: "/en/plugins/api" },
               ],
             },
