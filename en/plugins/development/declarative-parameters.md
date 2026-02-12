@@ -1799,7 +1799,7 @@ const params = {
 invoke: async ({ args }) => {
   const { parameters } = args
   const { country, languages } = parameters.location
-  // Data structure is identical to normal object, UI display is different
+  // Data structure is identical to normal object, but UI display is different
   console.log(`Selected country: ${country}`)
   console.log(`Languages available: ${languages.join(", ")}`)
   return { success: true }
