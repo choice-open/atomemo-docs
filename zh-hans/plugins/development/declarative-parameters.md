@@ -1800,7 +1800,7 @@ const params = {
 invoke: async ({ args }) => {
   const { parameters } = args
   const { country, languages } = parameters.location
-  // Section 的数据结构与普通 object 一致，突UI 渲染业不同
+  // Section 的数据结构与普通 object 一致，但 UI 渲染也不同
   console.log(`Selected country: ${country}`)
   console.log(`Languages available: ${languages.join(", ")}`)
   return { success: true }
