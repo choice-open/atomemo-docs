@@ -147,4 +147,4 @@ plugin.run()
 ## 参考
 
 - **类型定义**: [`@choiceopen/atomemo-plugin-schema/types`](https://github.com/choice-open/atomemo-plugin-schema/tree/main/src/types) 中的 `CredentialDefinition`
-- **Schema**: [`@choiceopen/atomemo-plugin-schema/schema`](https://github.com/choice-open/atomemo-plugin-schema/tree/main/src/schemas) 中的 `CredentialDefinitionSchema`
+- **Schema**: [`@choiceopen/atomemo-plugin-schema/schema`](https://github.com/choice-open/atomemo-plugin-schema/blob/main/src/schemas/README.md) 中的 `CredentialDefinitionSchema`
