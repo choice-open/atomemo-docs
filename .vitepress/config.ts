@@ -606,7 +606,7 @@ export default withMermaid({
                     { text: "Quick Start", link: "/en/plugins/development/quick-start" },
                     { text: "Developing Tools", link: "/en/plugins/development/tool" },
                     {
-                      text: "Declarative parameters",
+                      text: "Declarative Parameters",
                       link: "/en/plugins/development/declarative-parameters",
                     },
                     { text: "Developing Models", link: "/en/plugins/development/model" },
