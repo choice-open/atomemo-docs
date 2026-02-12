@@ -42,5 +42,5 @@ Although the plugin system's design itself is complex and intricate, fortunately
 After understanding the above core concepts, you're ready to start writing plugin code. {{ PRODUCT_NAME }} provides developers with multi-faceted technical support:
 
 1. Read [Quick Start](./quick-start) and follow the tutorial to create a tool plugin in just ten minutes, quickly experiencing the ease and joy of plugin development.
-2. Browse the [official plugin source code](https://github.com/choice-open/automation-official-plugins) already listed in the [Official Marketplace](.), and learn development techniques for various types of plugins.
-3. Visit the [Official Discussion Forum](https://github.com/choice-open/automation-official-plugins/discussions) or join the [Discord Channel](https://discord.gg/U3vj73yvwp) to discuss plugin development and seek more help.
+2. Browse the [official plugin source code](https://github.com/choice-open/atomemo-official-plugins) already listed in the [Official Marketplace](.), and learn development techniques for various types of plugins.
+3. Visit the [Official Discussion Forum](https://github.com/choice-open/atomemo-official-plugins/discussions) or join the [Discord Channel](https://discord.gg/U3vj73yvwp) to discuss plugin development and seek more help.
