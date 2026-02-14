@@ -1,6 +1,6 @@
 # Choose Your {{PRODUCT_NAME}}
 
-This section contains information on {{PRODUCT_NAME}}'s deployment options, pricing plans, and licenses.
+This section contains information on {{PRODUCT_NAME}}'s deployment options and licensing.
 
 ## Deployment Options
 
@@ -72,7 +72,7 @@ iex -S mix phx.server
 - Global CDN acceleration
 - Enterprise-grade SLA guarantees
 
-Expected launch: **Q2 2025**. Stay tuned!
+Launch timing will be announced officially. Stay tuned!
 
 ## Self-Hosting Technical Requirements
 
@@ -178,60 +178,8 @@ For large teams and enterprise scenarios, commercial licensing unlocks additiona
 - 🔒 **Dedicated Customer Success Manager**
 - 🔒 **Custom Development Services**
 
-**Pricing**:
-- Custom pricing based on team size and requirements
-- Contact us for a quote: [{{SALES_EMAIL}}](mailto:{{SALES_EMAIL}})
-
-## Pricing Comparison
-
-| Feature | Open Source | Enterprise |
-|---------|-------------|------------|
-| **Core Features** |
-| AI Agent Framework | ✅ | ✅ |
-| Visual Editor | ✅ | ✅ |
-| Expression Engine | ✅ | ✅ |
-| Official Plugins | ✅ | ✅ |
-| Self-Hosted Deployment | ✅ | ✅ |
-| **Team Collaboration** |
-| Multi-User Support | ✅ | ✅ |
-| Basic Permission Management | ✅ | ✅ |
-| Version Control | ✅ | ✅ |
-| **Enterprise Features** |
-| SSO Integration | ❌ | ✅ |
-| Advanced RBAC | ❌ | ✅ |
-| Audit Logs | ❌ | ✅ |
-| Approval Workflows | ❌ | ✅ |
-| **Support Services** |
-| Community Support | ✅ | ✅ |
-| Email Support | ❌ | ✅ |
-| Priority Support | ❌ | ✅ |
-| SLA Guarantee | ❌ | ✅ |
-| Dedicated CSM | ❌ | ✅ |
-| **Cost** |
-| Price | **Free** | **Contact Sales** |
-
-## How to Choose?
-
-### Choose Open Source if you:
-- 🎯 Are an individual developer or small team
-- 🎯 Have budget constraints
-- 🎯 Have your own operations team
-- 🎯 Don't need enterprise features
-- 🎯 Are comfortable with community support
-
-### Choose Enterprise if you:
-- 🎯 Are a medium to large enterprise (50+ employees)
-- 🎯 Need SSO integration
-- 🎯 Have strict compliance requirements (audit logs)
-- 🎯 Need professional technical support
-- 🎯 Need custom development
-- 🎯 Run mission-critical applications requiring SLA
-
-### Wait for Cloud-Hosted if you:
-- 🎯 Don't want to manage servers
-- 🎯 Need quick deployment
-- 🎯 Are a small team without dedicated operations
-- 🎯 Need global acceleration and high availability
+For plans, complimentary credits, referral rewards, and top-up rules, see:
+- [Plans and Credits](/en/getting-started/plans-and-credits)
 
 ## Migration Paths
 
@@ -275,7 +223,7 @@ PostgreSQL 14+ is recommended. MySQL 8.0+ is also supported.
 Not required. Elixir has built-in ETS caching, sufficient for small deployments. Redis is optional for large-scale deployments to boost performance.
 
 ### When will the cloud-hosted version launch?
-Expected Q2 2025. Join the [early access program](https://automation.io/cloud-waitlist) for priority access.
+Launch timing will be announced officially. Join the [early access program](https://automation.io/cloud-waitlist) for priority access.
 
 ### Does it support private deployment?
 Absolutely! Both open source and enterprise editions can be deployed in your private environment (on-premises servers, private cloud, VPC).

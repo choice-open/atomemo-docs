@@ -137,6 +137,7 @@ export default withMermaid({
               items: [
                 { text: "介绍", link: "/zh-hans/" },
                 { text: "平台能力", link: "/zh-hans/getting-started/capabilities" },
+                { text: "套餐与 Credits", link: "/zh-hans/getting-started/plans-and-credits" },
                 {
                   text: `选择你的 ${DOC_VARS.PRODUCT_NAME}`,
                   link: "/zh-hans/getting-started/choose-your-automation",
@@ -151,6 +152,7 @@ export default withMermaid({
               items: [
                 { text: "介绍", link: "/zh-hans/" },
                 { text: "平台能力", link: "/zh-hans/getting-started/capabilities" },
+                { text: "套餐与 Credits", link: "/zh-hans/getting-started/plans-and-credits" },
                 {
                   text: `选择你的 ${DOC_VARS.PRODUCT_NAME}`,
                   link: "/zh-hans/getting-started/choose-your-automation",
@@ -414,6 +416,7 @@ export default withMermaid({
               items: [
                 { text: "Introduction", link: "/en/" },
                 { text: "Platform Capabilities", link: "/en/getting-started/capabilities" },
+                { text: "Plans and Credits", link: "/en/getting-started/plans-and-credits" },
                 {
                   text: `Choose Your ${DOC_VARS.PRODUCT_NAME}`,
                   link: "/en/getting-started/choose-your-automation",
@@ -428,6 +431,7 @@ export default withMermaid({
               items: [
                 { text: "Introduction", link: "/en/" },
                 { text: "Platform Capabilities", link: "/en/getting-started/capabilities" },
+                { text: "Plans and Credits", link: "/en/getting-started/plans-and-credits" },
                 {
                   text: `Choose Your ${DOC_VARS.PRODUCT_NAME}`,
                   link: "/en/getting-started/choose-your-automation",
