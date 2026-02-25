@@ -43,9 +43,50 @@ function markdownVariablesPlugin() {
   }
 }
 
+// Markdown-it plugin to add .html suffix to internal links
+function markdownLinkHtmlPlugin(md: any) {
+  const originalRender = md.renderer.rules.link_open || function(tokens: any[], idx: number, options: any, _env: any, self: any) {
+    return self.renderToken(tokens, idx, options)
+  }
+
+  md.renderer.rules.link_open = function(tokens: any[], idx: number, options: any, _env: any, self: any) {
+    const token = tokens[idx]
+    const hrefIndex = token.attrIndex('href')
+
+    if (hrefIndex >= 0) {
+      let href = token.attrs[hrefIndex][1]
+
+      // Match internal links like /zh-hans/xxx or /en/xxx
+      if (/^\/(zh-hans|en)\//.test(href)) {
+        // Skip if already has .html or .md
+        if (!href.endsWith('.html') && !href.endsWith('.md') && !href.endsWith('/')) {
+          // Check if there's an anchor
+          const hashIndex = href.indexOf('#')
+          if (hashIndex >= 0) {
+            const path = href.slice(0, hashIndex)
+            const hash = href.slice(hashIndex)
+            href = path + '.html' + hash
+          } else {
+            href = href + '.html'
+          }
+          token.attrs[hrefIndex][1] = href
+        }
+      }
+    }
+
+    return originalRender(tokens, idx, options, _env, self)
+  }
+}
+
 export default withMermaid({
   ignoreDeadLinks: true,
-  cleanUrls: true,
+  cleanUrls: false,
+
+  markdown: {
+    config: (md) => {
+      md.use(markdownLinkHtmlPlugin)
+    },
+  },
 
   head: [
     ["meta", { charset: "UTF-8" }],
