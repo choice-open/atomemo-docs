@@ -370,7 +370,61 @@ export default withMermaid({
                     { text: "开发工具", link: "/zh-hans/plugins/development/tool" },
                     {
                       text: "声明式参数",
-                      link: "/zh-hans/plugins/development/declarative-parameters",
+                      collapsed: true,
+                      items: [
+                        {
+                          text: "总览",
+                          link: "/zh-hans/plugins/development/declarative-parameters",
+                        },
+                        {
+                          text: "概述与核心概念",
+                          link: "/zh-hans/plugins/development/declarative-parameters-overview-and-core-concepts",
+                        },
+                        {
+                          text: "I18nText 国际化文本",
+                          link: "/zh-hans/plugins/development/declarative-parameters-i18n-text",
+                        },
+                        {
+                          text: "Property 类型总览",
+                          link: "/zh-hans/plugins/development/declarative-parameters-property-type-overview",
+                        },
+                        {
+                          text: "PropertyBase 通用基础字段",
+                          link: "/zh-hans/plugins/development/declarative-parameters-property-base",
+                        },
+                        {
+                          text: "基础类型 Property",
+                          link: "/zh-hans/plugins/development/declarative-parameters-basic-type-properties",
+                        },
+                        {
+                          text: "复合类型 Property",
+                          link: "/zh-hans/plugins/development/declarative-parameters-composite-type-properties",
+                        },
+                        {
+                          text: "特殊类型 Property",
+                          link: "/zh-hans/plugins/development/declarative-parameters-special-type-properties",
+                        },
+                        {
+                          text: "PropertyUI 组件参考",
+                          link: "/zh-hans/plugins/development/declarative-parameters-property-ui-reference",
+                        },
+                        {
+                          text: "DisplayCondition 条件显示",
+                          link: "/zh-hans/plugins/development/declarative-parameters-display-condition",
+                        },
+                        {
+                          text: "实战示例",
+                          link: "/zh-hans/plugins/development/declarative-parameters-practical-examples",
+                        },
+                        {
+                          text: "高级模式与最佳实践",
+                          link: "/zh-hans/plugins/development/declarative-parameters-advanced-patterns-best-practices",
+                        },
+                        {
+                          text: "默认 UI 行为",
+                          link: "/zh-hans/plugins/development/declarative-parameters-default-ui-behavior",
+                        },
+                      ],
                     },
                     { text: "开发模型", link: "/zh-hans/plugins/development/model" },
                     { text: "定义凭证", link: "/zh-hans/plugins/development/credential" },
@@ -652,7 +706,61 @@ export default withMermaid({
                     { text: "Developing Tools", link: "/en/plugins/development/tool" },
                     {
                       text: "Declarative Parameters",
-                      link: "/en/plugins/development/declarative-parameters",
+                      collapsed: true,
+                      items: [
+                        {
+                          text: "Index",
+                          link: "/en/plugins/development/declarative-parameters",
+                        },
+                        {
+                          text: "Overview and Core Concepts",
+                          link: "/en/plugins/development/declarative-parameters-overview-and-core-concepts",
+                        },
+                        {
+                          text: "I18nText",
+                          link: "/en/plugins/development/declarative-parameters-i18n-text",
+                        },
+                        {
+                          text: "Property Type Overview",
+                          link: "/en/plugins/development/declarative-parameters-property-type-overview",
+                        },
+                        {
+                          text: "PropertyBase",
+                          link: "/en/plugins/development/declarative-parameters-property-base",
+                        },
+                        {
+                          text: "Basic Type Properties",
+                          link: "/en/plugins/development/declarative-parameters-basic-type-properties",
+                        },
+                        {
+                          text: "Composite Type Properties",
+                          link: "/en/plugins/development/declarative-parameters-composite-type-properties",
+                        },
+                        {
+                          text: "Special Type Properties",
+                          link: "/en/plugins/development/declarative-parameters-special-type-properties",
+                        },
+                        {
+                          text: "PropertyUI Reference",
+                          link: "/en/plugins/development/declarative-parameters-property-ui-reference",
+                        },
+                        {
+                          text: "DisplayCondition",
+                          link: "/en/plugins/development/declarative-parameters-display-condition",
+                        },
+                        {
+                          text: "Practical Examples",
+                          link: "/en/plugins/development/declarative-parameters-practical-examples",
+                        },
+                        {
+                          text: "Advanced Patterns and Best Practices",
+                          link: "/en/plugins/development/declarative-parameters-advanced-patterns-best-practices",
+                        },
+                        {
+                          text: "Default UI Behavior",
+                          link: "/en/plugins/development/declarative-parameters-default-ui-behavior",
+                        },
+                      ],
                     },
                     { text: "Developing Models", link: "/en/plugins/development/model" },
                     { text: "Defining Credentials", link: "/en/plugins/development/credential" },
