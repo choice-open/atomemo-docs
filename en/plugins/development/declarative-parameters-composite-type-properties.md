@@ -11,8 +11,11 @@ interface PropertyObject extends PropertyBase {
   /** Ordered list of child properties. */
   properties: Property[]
 
-  /** Whether to allow users to add additional key-value pairs. */
-  additional_properties?: boolean
+  /**
+   * Schema for additional properties beyond those defined in `properties`.
+   * Supports dynamic keys with values conforming to the specified property schema.
+   */
+  additional_properties?: Property | PropertyDiscriminatedUnion
 
   /** UI configuration. */
   ui?: PropertyUIObject
@@ -35,9 +38,10 @@ interface PropertyObject extends PropertyBase {
 ```typescript
 {
   component: "collapsible-panel",
-  options?: {
-    collapsed?: boolean;  // Collapse by default
-  }
+  default_collapsed?: boolean;  // Whether to collapse by default
+  collapsible?: boolean;        // Whether the panel can be toggled
+  panel_title?: I18nText;       // Optional panel title
+  sortable?: boolean;           // Whether items can be reordered
 }
 ```
 
@@ -60,7 +64,7 @@ interface PropertyObject extends PropertyBase {
   display_name: t("ADVANCED_OPTIONS_DISPLAY_NAME"),
   ui: {
     component: "collapsible-panel",
-    options: { collapsed: true }
+    default_collapsed: true
   },
   properties: [
     {
@@ -86,7 +90,7 @@ interface PropertyObject extends PropertyBase {
   name: "headers",
   type: "object",
   display_name: t("HEADERS_DISPLAY_NAME"),
-  additional_properties: true,
+  additional_properties: { name: "value", type: "string" },
   properties: []
 }
 ```
@@ -100,7 +104,7 @@ interface PropertyArray extends PropertyBase {
   type: "array"
 
   /** Type definition for array elements. */
-  items: Property
+  items: Property | PropertyDiscriminatedUnion
 
   /** Maximum number of items. */
   max_items?: number
@@ -191,7 +195,14 @@ interface PropertyArray extends PropertyBase {
         type: "string",
         display_name: t("TYPE_DISPLAY_NAME"),
         enum: ["click", "scroll", "wait"],
-        ui: { component: "select" }
+        ui: {
+          component: "select",
+          options: [
+            { label: t("ACTION_CLICK"), value: "click" },
+            { label: t("ACTION_SCROLL"), value: "scroll" },
+            { label: t("ACTION_WAIT"), value: "wait" },
+          ],
+        }
       },
       {
         name: "selector",
@@ -272,7 +283,7 @@ interface PropertyDiscriminatedUnion extends PropertyBase {
           name: "schema",
           type: "object",
           display_name: t("SCHEMA_DISPLAY_NAME"),
-          ui: { component: "code-editor", options: { language: "json" } },
+          ui: { component: "code-editor", language: "json" },
           properties: []
         }
       ]

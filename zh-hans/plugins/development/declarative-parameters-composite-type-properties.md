@@ -11,8 +11,11 @@ interface PropertyObject extends PropertyBase {
   /** 子属性列表（有序）。 */
   properties: Property[]
 
-  /** 是否允许用户添加额外的键值对。 */
-  additional_properties?: boolean
+  /**
+   * 用于约束 `properties` 以外附加属性的 schema。
+   * 支持动态键，值需符合指定的属性 schema。
+   */
+  additional_properties?: Property | PropertyDiscriminatedUnion
 
   /** UI 配置。 */
   ui?: PropertyUIObject
@@ -35,9 +38,10 @@ interface PropertyObject extends PropertyBase {
 ```typescript
 {
   component: "collapsible-panel",
-  options?: {
-    collapsed?: boolean;  // 是否默认折叠
-  }
+  default_collapsed?: boolean;  // 是否默认折叠
+  collapsible?: boolean;        // 面板是否可折叠切换
+  panel_title?: I18nText;       // 可选面板标题
+  sortable?: boolean;           // 是否支持拖拽排序
 }
 ```
 
@@ -60,7 +64,7 @@ interface PropertyObject extends PropertyBase {
   display_name: t("ADVANCED_OPTIONS_DISPLAY_NAME"),
   ui: {
     component: "collapsible-panel",
-    options: { collapsed: true }
+    default_collapsed: true
   },
   properties: [
     {
@@ -86,7 +90,7 @@ interface PropertyObject extends PropertyBase {
   name: "headers",
   type: "object",
   display_name: t("HEADERS_DISPLAY_NAME"),
-  additional_properties: true,
+  additional_properties: { name: "value", type: "string" },
   properties: []
 }
 ```
@@ -100,7 +104,7 @@ interface PropertyArray extends PropertyBase {
   type: "array"
 
   /** 数组元素的类型定义。 */
-  items: Property
+  items: Property | PropertyDiscriminatedUnion
 
   /** 最大项数。 */
   max_items?: number
@@ -191,7 +195,14 @@ interface PropertyArray extends PropertyBase {
         type: "string",
         display_name: t("TYPE_DISPLAY_NAME"),
         enum: ["click", "scroll", "wait"],
-        ui: { component: "select" }
+        ui: {
+          component: "select",
+          options: [
+            { label: t("ACTION_CLICK"), value: "click" },
+            { label: t("ACTION_SCROLL"), value: "scroll" },
+            { label: t("ACTION_WAIT"), value: "wait" },
+          ],
+        }
       },
       {
         name: "selector",
@@ -272,7 +283,7 @@ interface PropertyDiscriminatedUnion extends PropertyBase {
           name: "schema",
           type: "object",
           display_name: t("SCHEMA_DISPLAY_NAME"),
-          ui: { component: "code-editor", options: { language: "json" } },
+          ui: { component: "code-editor", language: "json" },
           properties: []
         }
       ]
