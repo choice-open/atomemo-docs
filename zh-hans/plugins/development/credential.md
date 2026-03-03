@@ -74,8 +74,11 @@ export const openaiCredential = {
 
     // 返回适配器配置
     return {
-      // 指定使用哪个内置适配器：openai | anthropic | google | deepseek
+      // 指定使用哪个内置适配器：openai | anthropic | google_ai | deepseek
       adapter: "openai",
+
+      // API 密钥
+      api_key: credential.api_key ?? "",
 
       // API 端点
       endpoint: credential.base_url || "https://api.openai.com/v1",
@@ -104,6 +107,7 @@ export const openaiCredential = {
   - `extra`: 包含上下文信息，如当前使用的 `model` 名称。
 - **输出**:
   - `adapter`: 指定使用的底层协议适配器。
+  - `api_key`: API 密钥（必填）。
   - `endpoint`: API 地址。
   - `headers`: HTTP 请求头（通常用于设置 Authorization）。
 

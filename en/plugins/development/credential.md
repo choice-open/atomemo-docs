@@ -74,8 +74,11 @@ export const openaiCredential = {
 
     // Return adapter configuration
     return {
-      // Specify which built-in adapter to use: openai | anthropic | google | deepseek
+      // Specify which built-in adapter to use: openai | anthropic | google_ai | deepseek
       adapter: "openai",
+
+      // API key
+      api_key: credential.api_key ?? "",
 
       // API endpoint
       endpoint: credential.base_url || "https://api.openai.com/v1",
@@ -104,6 +107,7 @@ The `authenticate` function **only executes when credentials are used for model 
   - `extra`: Context information, such as the current `model` name.
 - **Output**:
   - `adapter`: Specifies the underlying protocol adapter to use.
+  - `api_key`: The API key (required).
   - `endpoint`: API address.
   - `headers`: HTTP request headers (typically used for Authorization).
 

@@ -73,7 +73,7 @@ type DisplayCondition = {
   display: {
     show: { format: { $eq: "json" } }
   },
-  ui: { component: "code-editor", options: { language: "json" } }
+  ui: { component: "code-editor", language: "json" }
 }
 ```
 

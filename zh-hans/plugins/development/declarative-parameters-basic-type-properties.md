@@ -43,9 +43,19 @@ interface PropertyString extends PropertyBase {
 ```typescript
 {
   component: "select",
-  options?: {
-    searchable?: boolean;   // 是否可搜索
-  }
+  searchable?: boolean;   // 是否可搜索
+  clearable?: boolean;    // 是否显示清除按钮
+  options?: Array<PropertyUIOption>;  // 自定义选项（含图标和标签）
+}
+```
+
+**PropertyUIOption 结构**：
+
+```typescript
+interface PropertyUIOption {
+  icon?: string;           // 可选的图标标识
+  label: I18nText;         // 显示标签（支持多语言）
+  value: string | number | boolean;  // 选项值
 }
 ```
 
@@ -54,10 +64,10 @@ interface PropertyString extends PropertyBase {
 ```typescript
 {
   component: "code-editor",
-  options?: {
-    language?: "json" | "javascript" | "python3" | "html" | "css";
-    rows?: number;  // 编辑器行数
-  }
+  language?: "json" | "javascript" | "python3";
+  rows?: number;           // 编辑器行数
+  line_numbers?: boolean;  // 是否显示行号
+  line_wrapping?: boolean; // 是否启用自动换行
 }
 ```
 
@@ -85,7 +95,14 @@ interface PropertyString extends PropertyBase {
   display_name: t("LANGUAGE_DISPLAY_NAME"),
   enum: ["en", "zh", "ja"],
   default: "en",
-  ui: { component: "select" }
+  ui: {
+    component: "select",
+    options: [
+      { label: t("LANG_EN"), value: "en" },
+      { label: t("LANG_ZH"), value: "zh" },
+      { label: t("LANG_JA"), value: "ja" },
+    ],
+  }
 }
 ```
 
@@ -120,7 +137,6 @@ interface PropertyNumber extends PropertyBase {
 | `component`      | 说明              | 典型场景    |
 | ---------------- | ----------------- | ----------- |
 | `"number-input"` | 数字输入框 ⭐默认 | 普通数字    |
-| `"select"`       | 下拉单选          | 需要 `enum` |
 | `"slider"`       | 滑动条            | 范围选择    |
 
 **slider 组件选项配置**：
@@ -128,11 +144,7 @@ interface PropertyNumber extends PropertyBase {
 ```typescript
 {
   component: "slider",
-  options?: {
-    min?: number;
-    max?: number;
-    step?: number;
-  }
+  step?: number;  // 步进值
 }
 ```
 
@@ -187,4 +199,3 @@ interface PropertyBoolean extends PropertyBase {
   ui: { component: "switch" }
 }
 ```
-

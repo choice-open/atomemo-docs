@@ -22,7 +22,7 @@ interface PropertyBase {
   /** 可选。AI 相关配置。 */
   ai?: {
     /** 对 LLM 的参数描述，帮助 AI 理解参数用途。 */
-    llm_description?: string
+    llm_description?: I18nText
   }
 
   /** 可选。UI 组件配置。不同 type 可指定的 UI 组件不同。 */

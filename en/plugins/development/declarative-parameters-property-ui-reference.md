@@ -51,23 +51,22 @@ interface PropertyUICommonProps {
 
 ### 8.2 Available UI Components for String Type
 
-| `component`      | Description          | Typical Use                 | Specific Options                     |
-| ---------------- | -------------------- | --------------------------- | ------------------------------------ |
-| `"input"`        | Single-line input ⭐ | Plain text parameter        | -                                    |
-| `"textarea"`     | Multi-line input     | Long text, code snippets    | -                                    |
-| `"select"`       | Dropdown selection   | Parameters requiring `enum` | `{ searchable: boolean }`            |
-| `"radio-group"`  | Radio buttons        | Few options, intuitive      | -                                    |
-| `"code-editor"`  | Code editor          | JSON, JavaScript, Python    | `{ language: string; rows: number }` |
-| `"emoji-picker"` | Emoji picker         | Icon/symbol selection       | -                                    |
-| `"color-picker"` | Color picker         | RGB/HEX color values        | -                                    |
+| `component`           | Description          | Typical Use                       | Specific Options                                    |
+| --------------------- | -------------------- | --------------------------------- | --------------------------------------------------- |
+| `"input"`             | Single-line input ⭐ | Plain text parameter              | -                                                   |
+| `"textarea"`          | Multi-line input     | Long text, code snippets          | `min_height`, `max_height`                          |
+| `"select"`            | Dropdown selection   | Parameters requiring `enum`       | `options`, `searchable`, `clearable`                |
+| `"radio-group"`       | Radio buttons        | Few options, intuitive            | `options`, `searchable`, `clearable`                |
+| `"code-editor"`       | Code editor          | JSON, JavaScript, Python          | `language`, `rows`, `line_numbers`, `line_wrapping`, `min_height`, `max_height` |
+| `"emoji-picker"`      | Emoji picker         | Icon/symbol selection             | `size`                                              |
+| `"color-picker"`      | Color picker         | RGB/HEX color values              | -                                                   |
 
 ### 8.3 Available UI Components for Number Type
 
-| `component`      | Description     | Typical Use                         | Specific Options                             |
-| ---------------- | --------------- | ----------------------------------- | -------------------------------------------- |
-| `"number-input"` | Number input ⭐ | Plain number input                  | -                                            |
-| `"select"`       | Dropdown        | Numeric options with `enum`         | -                                            |
-| `"slider"`       | Range slider    | Visual value selection, range limit | `{ min: number; max: number; step: number }` |
+| `component`      | Description     | Typical Use                         | Specific Options                               |
+| ---------------- | --------------- | ----------------------------------- | ---------------------------------------------- |
+| `"number-input"` | Number input ⭐ | Plain number input                  | `step`, `suffix`                               |
+| `"slider"`       | Range slider    | Visual value selection, range limit | `step`                  |
 
 ### 8.4 Available UI Components for Boolean Type
 
@@ -80,9 +79,9 @@ interface PropertyUICommonProps {
 | `component`            | Description        | Rendering Effect                                                                     | Specific Options                     |
 | ---------------------- | ------------------ | ------------------------------------------------------------------------------------ | ------------------------------------ |
 | _(not set)_            | Flat render ⭐     | Child fields laid out directly                                                       | -                                    |
-| `"collapsible-panel"`  | Collapsible panel  | Collapsible container                                                                | `{ collapsed: boolean }`             |
+| `"collapsible-panel"`  | Collapsible panel  | Collapsible container                                                                | `default_collapsed`, `collapsible`, `panel_title`, `sortable` |
 | `"section"`            | Section panel      | Object name with underline at top, child properties render downward with indentation | -                                    |
-| `"code-editor"`        | Code editor        | Edit entire object as JSON                                                           | `{ language: string; rows: number }` |
+| `"code-editor"`        | Code editor        | Edit entire object as JSON                                                           | `language`, `rows`, `line_numbers`, `line_wrapping`   |
 | `"json-schema-editor"` | JSON Schema editor | Visual schema editing                                                                | -                                    |
 | `"conditions-editor"`  | Conditions editor  | Condition rule editing                                                               | -                                    |
 
@@ -93,7 +92,7 @@ interface PropertyUICommonProps {
 | `"array-section"` or unset | Array panel ⭐   | Generic array editing; auto-detect mode    | -                                            |
 | `"multi-select"`           | Multi-select     | Array elements as enum strings             | -                                            |
 | `"tag-input"`              | Tag input        | Free text list                             | -                                            |
-| `"slider"`                 | Range slider     | Numeric range [min, max]                   | `{ min: number; max: number; step: number }` |
+| `"slider"`                 | Range slider     | Numeric range [min, max]                   | `step`   |
 | `"key-value-editor"`       | Key-value editor | Array elements as `{ key, value }` objects | -                                            |
 
 ### 8.7 Available UI Components for CredentialId Type
@@ -101,4 +100,3 @@ interface PropertyUICommonProps {
 | `component`                  | Description                                           |
 | ---------------------------- | ----------------------------------------------------- |
 | `"credential-select"` ⭐only | Credential selector dropdown with list and new button |
-

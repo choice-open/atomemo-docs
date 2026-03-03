@@ -44,7 +44,14 @@ const formatParameter: PropertyString = {
   default: "markdown",
   ui: {
     component: "select",
-    options: { searchable: true },
+    searchable: true,
+    options: [
+      { label: t("FORMAT_MARKDOWN"), value: "markdown" },
+      { label: t("FORMAT_HTML"), value: "html" },
+      { label: t("FORMAT_RAW_HTML"), value: "rawHtml" },
+      { label: t("FORMAT_SCREENSHOT"), value: "screenshot" },
+      { label: t("FORMAT_LINKS"), value: "links" },
+    ],
   },
 }
 ```
@@ -82,7 +89,7 @@ const locationParameter: PropertyObject = {
   display_name: t("LOCATION_DISPLAY_NAME"),
   ui: {
     component: "collapsible-panel",
-    options: { collapsed: true },
+    default_collapsed: true,
   },
   properties: [
     {
@@ -90,7 +97,14 @@ const locationParameter: PropertyObject = {
       type: "string",
       display_name: t("COUNTRY_DISPLAY_NAME"),
       default: "US",
-      ui: { component: "select" },
+      ui: {
+        component: "select",
+        options: [
+          { label: t("COUNTRY_US"), value: "US" },
+          { label: t("COUNTRY_CN"), value: "CN" },
+          { label: t("COUNTRY_JP"), value: "JP" },
+        ],
+      },
       enum: ["US", "CN", "JP"],
     },
     {
@@ -218,7 +232,7 @@ const formatsParameter: PropertyDiscriminatedUnion = {
           name: "schema",
           type: "object",
           display_name: t("SCHEMA_DISPLAY_NAME"),
-          ui: { component: "code-editor", options: { language: "json" } },
+          ui: { component: "code-editor", language: "json" },
           properties: [],
         },
         {
@@ -471,7 +485,7 @@ const scrapeTool: ToolDefinition = {
       display_name: t("OPTIONS_DISPLAY_NAME"),
       ui: {
         component: "collapsible-panel",
-        options: { collapsed: true },
+        default_collapsed: true,
       },
       properties: [
         {
@@ -523,7 +537,7 @@ const scrapeTool: ToolDefinition = {
       properties: [],
       ui: {
         component: "collapsible-panel",
-        options: { collapsed: true },
+        default_collapsed: true,
       },
     },
   ],

@@ -43,9 +43,19 @@ interface PropertyString extends PropertyBase {
 ```typescript
 {
   component: "select",
-  options?: {
-    searchable?: boolean;   // Enable search
-  }
+  searchable?: boolean;   // Enable search
+  clearable?: boolean;    // Show clear button
+  options?: Array<PropertyUIOption>;  // Custom options with icons and labels
+}
+```
+
+**PropertyUIOption structure**:
+
+```typescript
+interface PropertyUIOption {
+  icon?: string;           // Optional icon identifier
+  label: I18nText;         // Display label (supports i18n)
+  value: string | number | boolean;  // Option value
 }
 ```
 
@@ -54,10 +64,10 @@ interface PropertyString extends PropertyBase {
 ```typescript
 {
   component: "code-editor",
-  options?: {
-    language?: "json" | "javascript" | "python3" | "html" | "css";
-    rows?: number;  // Editor row count
-  }
+  language?: "json" | "javascript" | "python3";
+  rows?: number;          // Editor row count
+  line_numbers?: boolean; // Show line numbers
+  line_wrapping?: boolean; // Enable line wrapping
 }
 ```
 
@@ -85,7 +95,14 @@ interface PropertyString extends PropertyBase {
   display_name: t("LANGUAGE_DISPLAY_NAME"),
   enum: ["en", "zh", "ja"],
   default: "en",
-  ui: { component: "select" }
+  ui: {
+    component: "select",
+    options: [
+      { label: t("LANG_EN"), value: "en" },
+      { label: t("LANG_ZH"), value: "zh" },
+      { label: t("LANG_JA"), value: "ja" },
+    ],
+  }
 }
 ```
 
@@ -120,7 +137,6 @@ interface PropertyNumber extends PropertyBase {
 | `component`      | Description     | Typical Use     |
 | ---------------- | --------------- | --------------- |
 | `"number-input"` | Number input ⭐ | Plain numbers   |
-| `"select"`       | Dropdown        | Requires `enum` |
 | `"slider"`       | Range slider    | Range selection |
 
 **Slider component options**:
@@ -128,11 +144,7 @@ interface PropertyNumber extends PropertyBase {
 ```typescript
 {
   component: "slider",
-  options?: {
-    min?: number;
-    max?: number;
-    step?: number;
-  }
+  step?: number;  // Step increment
 }
 ```
 

@@ -55,9 +55,9 @@ interface PropertyUICommonProps {
 | ---------------- | ------------------- | ------------------------ | ------------------------------------ |
 | `"input"`        | 单行文本输入 ⭐默认 | 普通文本参数             | -                                    |
 | `"textarea"`     | 多行文本输入        | 长文本、代码段           | -                                    |
-| `"select"`       | 下拉单选            | 需要 `enum` 的参数       | `{ searchable: boolean }`            |
-| `"radio-group"`  | 单选按钮组          | 选项少且需要直观展示     | -                                    |
-| `"code-editor"`  | 代码编辑器          | JSON、JavaScript、Python | `{ language: string; rows: number }` |
+| `"select"`       | 下拉单选            | 需要 `enum` 的参数       | `searchable`, `clearable`            |
+| `"radio-group"`  | 单选按钮组          | 选项少且需要直观展示     | `searchable`, `clearable`            |
+| `"code-editor"`  | 代码编辑器          | JSON、JavaScript、Python | `language`, `rows`, `line_numbers`, `line_wrapping` |
 | `"emoji-picker"` | 表情符号选择器      | 图标、符号选择           | -                                    |
 | `"color-picker"` | 颜色选择器          | RGB、HEX 颜色值          | -                                    |
 
@@ -65,9 +65,8 @@ interface PropertyUICommonProps {
 
 | `component`      | 说明              | 典型场景                 | 特定选项                                     |
 | ---------------- | ----------------- | ------------------------ | -------------------------------------------- |
-| `"number-input"` | 数字输入框 ⭐默认 | 普通数字输入             | -                                            |
-| `"select"`       | 下拉单选          | 需要 `enum` 的数字选项   | -                                            |
-| `"slider"`       | 范围滑动条        | 可视化数值选择、范围限制 | `{ min: number; max: number; step: number }` |
+| `"number-input"` | 数字输入框 ⭐默认 | 普通数字输入             | `step`, `suffix`                             |
+| `"slider"`       | 范围滑动条        | 可视化数值选择、范围限制 | `step`                |
 
 ### 8.4 Boolean 类型可用 UI 组件
 
@@ -80,9 +79,9 @@ interface PropertyUICommonProps {
 | `component`            | 说明               | 渲染效果                                     | 特定选项                             |
 | ---------------------- | ------------------ | -------------------------------------------- | ------------------------------------ |
 | _(不设置)_             | 平铺渲染 ⭐默认    | 子字段直接排列，无外框                       | -                                    |
-| `"collapsible-panel"`  | 可折叠面板         | 带标题的可折叠容器                           | `{ collapsed: boolean }`             |
+| `"collapsible-panel"`  | 可折叠面板         | 带标题的可折叠容器                           | `default_collapsed`, `collapsible`, `panel_title`, `sortable` |
 | `"section"`            | 分区面板           | 顶部显示对象名称下划线，子属性向下渲染并缩进 | -                                    |
-| `"code-editor"`        | 代码编辑器         | 整个对象当做 JSON/代码编辑                   | `{ language: string; rows: number }` |
+| `"code-editor"`        | 代码编辑器         | 整个对象当做 JSON/代码编辑                   | `language`, `rows`, `line_numbers`, `line_wrapping` |
 | `"json-schema-editor"` | JSON Schema 编辑器 | Schema 可视化编辑                            | -                                    |
 | `"conditions-editor"`  | 条件编辑器         | 条件规则编辑                                 | -                                    |
 
@@ -93,7 +92,7 @@ interface PropertyUICommonProps {
 | `"array-section"` 或不设置 | 数组面板 ⭐默认 | 通用数组编辑；自动区分简单/复合模式 | -                                            |
 | `"multi-select"`           | 多选下拉        | 数组元素为枚举字符串                | -                                            |
 | `"tag-input"`              | 标签输入        | 自由输入文本列表                    | -                                            |
-| `"slider"`                 | 范围滑动条      | 数值范围 [min, max]                 | `{ min: number; max: number; step: number }` |
+| `"slider"`                 | 范围滑动条      | 数值范围 [min, max]                 | `step`                |
 | `"key-value-editor"`       | 键值对编辑器    | 数组元素为 `{ key, value }` 对象    | -                                            |
 
 ### 8.7 CredentialId 类型可用 UI 组件
@@ -101,4 +100,3 @@ interface PropertyUICommonProps {
 | `component`                    | 说明                                           |
 | ------------------------------ | ---------------------------------------------- |
 | `"credential-select"` ⭐仅选项 | 凭证选择器下拉框（包含已有凭证列表和新建按钮） |
-

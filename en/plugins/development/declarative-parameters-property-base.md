@@ -22,7 +22,7 @@ interface PropertyBase {
   /** Optional. AI-related configuration. */
   ai?: {
     /** Parameter description for LLM, helping AI understand parameter purpose. */
-    llm_description?: string
+    llm_description?: I18nText
   }
 
   /** Optional. UI component configuration. Different types support different UI components. */
