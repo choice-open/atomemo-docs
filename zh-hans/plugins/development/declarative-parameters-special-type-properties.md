@@ -28,7 +28,7 @@ interface PropertyCredentialId extends PropertyBase {
 {
   name: "credential_id",
   type: "credential_id",
-  display_name: t("CREDENTIAL_DISPLAY_NAME"),
+  display_name: { en_US: "Credential", zh_Hans: "凭证" },
   credential_name: "firecrawl",
   required: true
 }

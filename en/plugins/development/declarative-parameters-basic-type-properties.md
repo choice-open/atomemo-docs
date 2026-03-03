@@ -77,11 +77,11 @@ interface PropertyUIOption {
 {
   name: "url",
   type: "string",
-  display_name: t("URL_DISPLAY_NAME"),
+  display_name: { en_US: "URL" },
   required: true,
   ui: {
     component: "input",
-    placeholder: t("URL_PLACEHOLDER")
+    placeholder: { en_US: "https://example.com" }
   }
 }
 ```
@@ -92,15 +92,15 @@ interface PropertyUIOption {
 {
   name: "language",
   type: "string",
-  display_name: t("LANGUAGE_DISPLAY_NAME"),
+  display_name: { en_US: "Language" },
   enum: ["en", "zh", "ja"],
   default: "en",
   ui: {
     component: "select",
     options: [
-      { label: t("LANG_EN"), value: "en" },
-      { label: t("LANG_ZH"), value: "zh" },
-      { label: t("LANG_JA"), value: "ja" },
+      { label: { en_US: "English" }, value: "en" },
+      { label: { en_US: "Chinese" }, value: "zh" },
+      { label: { en_US: "Japanese" }, value: "ja" },
     ],
   }
 }
@@ -154,13 +154,13 @@ interface PropertyNumber extends PropertyBase {
 {
   name: "timeout",
   type: "integer",
-  display_name: t("TIMEOUT_DISPLAY_NAME"),
+  display_name: { en_US: "Timeout" },
   default: 30000,
   minimum: 1000,
   maximum: 300000,
   ui: {
     component: "number-input",
-    hint: t("TIMEOUT_HINT")
+    hint: { en_US: "Timeout in milliseconds" }
   }
 }
 ```
@@ -194,7 +194,7 @@ interface PropertyBoolean extends PropertyBase {
 {
   name: "include_raw_html",
   type: "boolean",
-  display_name: t("INCLUDE_RAW_HTML_DISPLAY_NAME"),
+  display_name: { en_US: "Include Raw HTML" },
   default: false,
   ui: { component: "switch" }
 }

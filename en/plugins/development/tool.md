@@ -26,7 +26,6 @@ First, import the necessary types and utilities.
 
 ```typescript
 import type { ToolDefinition } from "@choiceopen/atomemo-plugin-sdk-js/types"
-import { t } from "../i18n/i18n-node"
 ```
 
 ### 2. Define the Tool
@@ -50,11 +49,11 @@ parameters: [
     name: "location",
     type: "string",
     required: true, // Whether the parameter is required
-    display_name: t("LOCATION_DISPLAY_NAME"),
+    display_name: { en_US: "Location" },
     ui: {
       component: "input", // UI component type (e.g., input, select, textarea)
-      hint: t("LOCATION_HINT"),
-      placeholder: t("LOCATION_PLACEHOLDER"),
+      hint: { en_US: "Enter a city, region, or country" },
+      placeholder: { en_US: "New York" },
       support_expression: true, // Allow using variables/expressions
       width: "full",
     },
@@ -88,23 +87,22 @@ Here's the complete code for `src/tools/demo.ts`:
 
 ```typescript
 import type { ToolDefinition } from "@choiceopen/atomemo-plugin-sdk-js/types"
-import { t } from "../i18n/i18n-node"
 
 export const demoTool = {
   name: "demo-tool",
-  display_name: t("DEMO_TOOL_DISPLAY_NAME"),
-  description: t("DEMO_TOOL_DESCRIPTION"),
+  display_name: { en_US: "Demo Tool" },
+  description: { en_US: "A demo tool for testing" },
   icon: "🧰",
   parameters: [
     {
       name: "location",
       type: "string",
       required: true,
-      display_name: t("LOCATION_DISPLAY_NAME"),
+      display_name: { en_US: "Location" },
       ui: {
         component: "input",
-        hint: t("LOCATION_HINT"),
-        placeholder: t("LOCATION_PLACEHOLDER"),
+        hint: { en_US: "Enter a city, region, or country" },
+        placeholder: { en_US: "New York" },
         support_expression: true,
         width: "full",
       },

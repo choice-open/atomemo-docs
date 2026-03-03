@@ -79,7 +79,7 @@ invoke: async ({ args }) => {
   name: "type",
   type: "string",
   constant: "webhook",      // 值固定为 "webhook"
-  display_name: t("WEBHOOK_DISPLAY_NAME")
+  display_name: { en_US: "Webhook", zh_Hans: "Webhook" }
 }
 ```
 
@@ -179,7 +179,7 @@ invoke: async ({ args }) => {
 {
   name: "actions",
   type: "array",
-  display_name: t("ACTIONS_DISPLAY_NAME"),
+  display_name: { en_US: "Actions", zh_Hans: "动作" },
   items: {
     name: "action",
     type: "discriminated_union",
@@ -189,7 +189,7 @@ invoke: async ({ args }) => {
         name: "wait",
         type: "object",
         properties: [
-          { name: "type", type: "string", constant: "wait", display_name: t("WAIT_LABEL") },
+          { name: "type", type: "string", constant: "wait", display_name: { en_US: "Wait", zh_Hans: "等待" } },
           { name: "milliseconds", type: "integer", default: 1000 }
         ]
       },
@@ -197,15 +197,15 @@ invoke: async ({ args }) => {
         name: "click",
         type: "object",
         properties: [
-          { name: "type", type: "string", constant: "click", display_name: t("CLICK_LABEL") },
-          { name: "selector", type: "string", display_name: t("SELECTOR_DISPLAY_NAME") }
+          { name: "type", type: "string", constant: "click", display_name: { en_US: "Click", zh_Hans: "点击" } },
+          { name: "selector", type: "string", display_name: { en_US: "Selector", zh_Hans: "选择器" } }
         ]
       },
       {
         name: "scroll",
         type: "object",
         properties: [
-          { name: "type", type: "string", constant: "scroll", display_name: t("SCROLL_LABEL") },
+          { name: "type", type: "string", constant: "scroll", display_name: { en_US: "Scroll", zh_Hans: "滚动" } },
           { name: "direction", type: "string", enum: ["down", "up"], default: "down" }
         ]
       }
@@ -269,12 +269,12 @@ invoke: async ({ args }) => {
 {
   name: "location",
   type: "object",
-  display_name: t("LOCATION_DISPLAY_NAME"),
+  display_name: { en_US: "Location", zh_Hans: "位置" },
   ui: {
     component: "section"
   },
   properties: [
-    { name: "country", type: "string", display_name: t("COUNTRY_DISPLAY_NAME") },
+    { name: "country", type: "string", display_name: { en_US: "Country", zh_Hans: "国家" } },
     { name: "languages", type: "array", items: { name: "l", type: "string" }, ui: { component: "tag-input" } }
   ]
 }

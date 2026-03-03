@@ -28,7 +28,6 @@ src/
 
 ```typescript
 import type { ModelDefinition } from "@choiceopen/atomemo-plugin-sdk-js/types"
-import { t } from "../i18n/i18n-node"
 
 export const openaiGpt4 = {
   // 模型的唯一标识符
@@ -37,10 +36,10 @@ export const openaiGpt4 = {
   name: "openai/gpt-4",
 
   // 模型的简短描述（支持多语言）
-  description: t("OPENAI_GPT4_DESCRIPTION"),
+  description: { en_US: "OpenAI's GPT-4 language model", zh_Hans: "OpenAI 的 GPT-4 语言模型" },
 
   // 模型的显示名称（支持多语言）
-  display_name: t("OPENAI_GPT4_DISPLAY_NAME"),
+  display_name: { en_US: "GPT-4", zh_Hans: "GPT-4" },
 
   // 模型图标，支持 Emoji 或图片 URL
   icon: "🔷",

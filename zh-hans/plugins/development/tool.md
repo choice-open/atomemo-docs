@@ -26,7 +26,6 @@ my-plugin/
 
 ```typescript
 import type { ToolDefinition } from "@choiceopen/atomemo-plugin-sdk-js/types"
-import { t } from "../i18n/i18n-node"
 ```
 
 ### 2. 定义工具
@@ -50,11 +49,11 @@ parameters: [
     name: "location",
     type: "string",
     required: true, // 参数是否为必需
-    display_name: t("LOCATION_DISPLAY_NAME"),
+    display_name: { en_US: "Location", zh_Hans: "位置" },
     ui: {
       component: "input", // UI 组件类型（例如 input、select、textarea）
-      hint: t("LOCATION_HINT"),
-      placeholder: t("LOCATION_PLACEHOLDER"),
+      hint: { en_US: "Enter a city, region, or country", zh_Hans: "输入城市、地区或国家" },
+      placeholder: { en_US: "New York", zh_Hans: "上海" },
       support_expression: true, // 允许使用变量/表达式
       width: "full",
     },
@@ -88,23 +87,22 @@ async invoke({ args }) {
 
 ```typescript
 import type { ToolDefinition } from "@choiceopen/atomemo-plugin-sdk-js/types"
-import { t } from "../i18n/i18n-node"
 
 export const demoTool = {
   name: "demo-tool",
-  display_name: t("DEMO_TOOL_DISPLAY_NAME"),
-  description: t("DEMO_TOOL_DESCRIPTION"),
+  display_name: { en_US: "Demo Tool", zh_Hans: "演示工具" },
+  description: { en_US: "A demo tool for testing", zh_Hans: "用于测试的演示工具" },
   icon: "🧰",
   parameters: [
     {
       name: "location",
       type: "string",
       required: true,
-      display_name: t("LOCATION_DISPLAY_NAME"),
+      display_name: { en_US: "Location", zh_Hans: "位置" },
       ui: {
         component: "input",
-        hint: t("LOCATION_HINT"),
-        placeholder: t("LOCATION_PLACEHOLDER"),
+        hint: { en_US: "Enter a city, region, or country", zh_Hans: "输入城市、地区或国家" },
+        placeholder: { en_US: "New York", zh_Hans: "上海" },
         support_expression: true,
         width: "full",
       },

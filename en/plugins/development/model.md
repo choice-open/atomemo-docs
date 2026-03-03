@@ -28,7 +28,6 @@ Here's a complete example implementing OpenAI GPT-4:
 
 ```typescript
 import type { ModelDefinition } from "@choiceopen/atomemo-plugin-sdk-js/types"
-import { t } from "../i18n/i18n-node"
 
 export const openaiGpt4 = {
   // Unique identifier for the model
@@ -37,10 +36,10 @@ export const openaiGpt4 = {
   name: "openai/gpt-4",
 
   // Short description of the model (supports multi-language)
-  description: t("OPENAI_GPT4_DESCRIPTION"),
+  description: { en_US: "OpenAI's GPT-4 language model" },
 
   // Display name (supports multi-language)
-  display_name: t("OPENAI_GPT4_DISPLAY_NAME"),
+  display_name: { en_US: "GPT-4" },
 
   // Model icon, supports Emoji or image URL
   icon: "🔷",

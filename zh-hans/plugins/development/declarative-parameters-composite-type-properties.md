@@ -61,7 +61,7 @@ interface PropertyObject extends PropertyBase {
 {
   name: "advanced_options",
   type: "object",
-  display_name: t("ADVANCED_OPTIONS_DISPLAY_NAME"),
+  display_name: { en_US: "Advanced Options", zh_Hans: "高级选项" },
   ui: {
     component: "collapsible-panel",
     default_collapsed: true
@@ -70,13 +70,13 @@ interface PropertyObject extends PropertyBase {
     {
       name: "retry_count",
       type: "integer",
-      display_name: t("RETRY_COUNT_DISPLAY_NAME"),
+      display_name: { en_US: "Retry Count", zh_Hans: "重试次数" },
       default: 3
     },
     {
       name: "timeout",
       type: "integer",
-      display_name: t("TIMEOUT_DISPLAY_NAME"),
+      display_name: { en_US: "Timeout", zh_Hans: "超时" },
       default: 30000
     }
   ]
@@ -89,7 +89,7 @@ interface PropertyObject extends PropertyBase {
 {
   name: "headers",
   type: "object",
-  display_name: t("HEADERS_DISPLAY_NAME"),
+  display_name: { en_US: "Headers", zh_Hans: "请求头" },
   additional_properties: { name: "value", type: "string" },
   properties: []
 }
@@ -138,7 +138,7 @@ interface PropertyArray extends PropertyBase {
 {
   name: "formats",
   type: "array",
-  display_name: t("FORMATS_DISPLAY_NAME"),
+  display_name: { en_US: "Formats", zh_Hans: "格式" },
   items: {
     name: "format",
     type: "string",
@@ -154,7 +154,7 @@ interface PropertyArray extends PropertyBase {
 {
   name: "tags",
   type: "array",
-  display_name: t("TAGS_DISPLAY_NAME"),
+  display_name: { en_US: "Tags", zh_Hans: "标签" },
   items: { name: "tag", type: "string" },
   ui: { component: "tag-input" }
 }
@@ -166,7 +166,7 @@ interface PropertyArray extends PropertyBase {
 {
   name: "query_params",
   type: "array",
-  display_name: t("QUERY_PARAMS_DISPLAY_NAME"),
+  display_name: { en_US: "Query Parameters", zh_Hans: "查询参数" },
   items: {
     name: "param",
     type: "object",
@@ -185,7 +185,7 @@ interface PropertyArray extends PropertyBase {
 {
   name: "actions",
   type: "array",
-  display_name: t("ACTIONS_DISPLAY_NAME"),
+  display_name: { en_US: "Actions", zh_Hans: "动作" },
   items: {
     name: "action",
     type: "object",
@@ -193,21 +193,21 @@ interface PropertyArray extends PropertyBase {
       {
         name: "type",
         type: "string",
-        display_name: t("TYPE_DISPLAY_NAME"),
+        display_name: { en_US: "Type", zh_Hans: "类型" },
         enum: ["click", "scroll", "wait"],
         ui: {
           component: "select",
           options: [
-            { label: t("ACTION_CLICK"), value: "click" },
-            { label: t("ACTION_SCROLL"), value: "scroll" },
-            { label: t("ACTION_WAIT"), value: "wait" },
+            { label: { en_US: "Click", zh_Hans: "点击" }, value: "click" },
+            { label: { en_US: "Scroll", zh_Hans: "滚动" }, value: "scroll" },
+            { label: { en_US: "Wait", zh_Hans: "等待" }, value: "wait" },
           ],
         }
       },
       {
         name: "selector",
         type: "string",
-        display_name: t("SELECTOR_DISPLAY_NAME")
+        display_name: { en_US: "Selector", zh_Hans: "选择器" }
       }
     ]
   }
@@ -247,7 +247,7 @@ interface PropertyDiscriminatedUnion extends PropertyBase {
 {
   name: "output_config",
   type: "discriminated_union",
-  display_name: t("OUTPUT_CONFIG_DISPLAY_NAME"),
+  display_name: { en_US: "Output Config", zh_Hans: "输出配置" },
   discriminator: "format",
   discriminator_ui: { component: "select" },
   any_of: [
@@ -259,12 +259,12 @@ interface PropertyDiscriminatedUnion extends PropertyBase {
           name: "format",
           type: "string",
           constant: "markdown",
-          display_name: t("MARKDOWN_LABEL")
+          display_name: { en_US: "Markdown", zh_Hans: "Markdown" }
         },
         {
           name: "include_toc",
           type: "boolean",
-          display_name: t("INCLUDE_TOC_DISPLAY_NAME"),
+          display_name: { en_US: "Include Table of Contents", zh_Hans: "包含目录" },
           default: false
         }
       ]
@@ -277,12 +277,12 @@ interface PropertyDiscriminatedUnion extends PropertyBase {
           name: "format",
           type: "string",
           constant: "json",
-          display_name: t("JSON_LABEL")
+          display_name: { en_US: "JSON", zh_Hans: "JSON" }
         },
         {
           name: "schema",
           type: "object",
-          display_name: t("SCHEMA_DISPLAY_NAME"),
+          display_name: { en_US: "Schema", zh_Hans: "数据结构" },
           ui: { component: "code-editor", language: "json" },
           properties: []
         }

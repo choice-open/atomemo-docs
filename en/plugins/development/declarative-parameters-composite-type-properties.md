@@ -61,7 +61,7 @@ interface PropertyObject extends PropertyBase {
 {
   name: "advanced_options",
   type: "object",
-  display_name: t("ADVANCED_OPTIONS_DISPLAY_NAME"),
+  display_name: { en_US: "Advanced Options" },
   ui: {
     component: "collapsible-panel",
     default_collapsed: true
@@ -70,13 +70,13 @@ interface PropertyObject extends PropertyBase {
     {
       name: "retry_count",
       type: "integer",
-      display_name: t("RETRY_COUNT_DISPLAY_NAME"),
+      display_name: { en_US: "Retry Count" },
       default: 3
     },
     {
       name: "timeout",
       type: "integer",
-      display_name: t("TIMEOUT_DISPLAY_NAME"),
+      display_name: { en_US: "Timeout" },
       default: 30000
     }
   ]
@@ -89,7 +89,7 @@ interface PropertyObject extends PropertyBase {
 {
   name: "headers",
   type: "object",
-  display_name: t("HEADERS_DISPLAY_NAME"),
+  display_name: { en_US: "Headers" },
   additional_properties: { name: "value", type: "string" },
   properties: []
 }
@@ -138,7 +138,7 @@ interface PropertyArray extends PropertyBase {
 {
   name: "formats",
   type: "array",
-  display_name: t("FORMATS_DISPLAY_NAME"),
+  display_name: { en_US: "Formats" },
   items: {
     name: "format",
     type: "string",
@@ -154,7 +154,7 @@ interface PropertyArray extends PropertyBase {
 {
   name: "tags",
   type: "array",
-  display_name: t("TAGS_DISPLAY_NAME"),
+  display_name: { en_US: "Tags" },
   items: { name: "tag", type: "string" },
   ui: { component: "tag-input" }
 }
@@ -166,7 +166,7 @@ interface PropertyArray extends PropertyBase {
 {
   name: "query_params",
   type: "array",
-  display_name: t("QUERY_PARAMS_DISPLAY_NAME"),
+  display_name: { en_US: "Query Parameters" },
   items: {
     name: "param",
     type: "object",
@@ -185,7 +185,7 @@ interface PropertyArray extends PropertyBase {
 {
   name: "actions",
   type: "array",
-  display_name: t("ACTIONS_DISPLAY_NAME"),
+  display_name: { en_US: "Actions" },
   items: {
     name: "action",
     type: "object",
@@ -193,21 +193,21 @@ interface PropertyArray extends PropertyBase {
       {
         name: "type",
         type: "string",
-        display_name: t("TYPE_DISPLAY_NAME"),
+        display_name: { en_US: "Type" },
         enum: ["click", "scroll", "wait"],
         ui: {
           component: "select",
           options: [
-            { label: t("ACTION_CLICK"), value: "click" },
-            { label: t("ACTION_SCROLL"), value: "scroll" },
-            { label: t("ACTION_WAIT"), value: "wait" },
+            { label: { en_US: "Click" }, value: "click" },
+            { label: { en_US: "Scroll" }, value: "scroll" },
+            { label: { en_US: "Wait" }, value: "wait" },
           ],
         }
       },
       {
         name: "selector",
         type: "string",
-        display_name: t("SELECTOR_DISPLAY_NAME")
+        display_name: { en_US: "Selector" }
       }
     ]
   }
@@ -247,7 +247,7 @@ interface PropertyDiscriminatedUnion extends PropertyBase {
 {
   name: "output_config",
   type: "discriminated_union",
-  display_name: t("OUTPUT_CONFIG_DISPLAY_NAME"),
+  display_name: { en_US: "Output Config" },
   discriminator: "format",
   discriminator_ui: { component: "select" },
   any_of: [
@@ -259,12 +259,12 @@ interface PropertyDiscriminatedUnion extends PropertyBase {
           name: "format",
           type: "string",
           constant: "markdown",
-          display_name: t("MARKDOWN_LABEL")
+          display_name: { en_US: "Markdown" }
         },
         {
           name: "include_toc",
           type: "boolean",
-          display_name: t("INCLUDE_TOC_DISPLAY_NAME"),
+          display_name: { en_US: "Include Table of Contents" },
           default: false
         }
       ]
@@ -277,12 +277,12 @@ interface PropertyDiscriminatedUnion extends PropertyBase {
           name: "format",
           type: "string",
           constant: "json",
-          display_name: t("JSON_LABEL")
+          display_name: { en_US: "JSON" }
         },
         {
           name: "schema",
           type: "object",
-          display_name: t("SCHEMA_DISPLAY_NAME"),
+          display_name: { en_US: "Schema" },
           ui: { component: "code-editor", language: "json" },
           properties: []
         }

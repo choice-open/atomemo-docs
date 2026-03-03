@@ -6,12 +6,12 @@
 const urlParameter: PropertyString = {
   name: "url",
   type: "string",
-  display_name: t("URL_DISPLAY_NAME"),
+  display_name: { en_US: "URL" },
   required: true,
   ui: {
     component: "input",
-    placeholder: t("URL_PLACEHOLDER"),
-    hint: t("URL_HINT"),
+    placeholder: { en_US: "https://example.com" },
+    hint: { en_US: "The URL of the web page to scrape" },
   },
 }
 ```
@@ -39,18 +39,18 @@ invoke: async ({ args }) => {
 const formatParameter: PropertyString = {
   name: "format",
   type: "string",
-  display_name: t("FORMAT_DISPLAY_NAME"),
+  display_name: { en_US: "Format" },
   enum: ["markdown", "html", "rawHtml", "screenshot", "links"],
   default: "markdown",
   ui: {
     component: "select",
     searchable: true,
     options: [
-      { label: t("FORMAT_MARKDOWN"), value: "markdown" },
-      { label: t("FORMAT_HTML"), value: "html" },
-      { label: t("FORMAT_RAW_HTML"), value: "rawHtml" },
-      { label: t("FORMAT_SCREENSHOT"), value: "screenshot" },
-      { label: t("FORMAT_LINKS"), value: "links" },
+      { label: { en_US: "Markdown" }, value: "markdown" },
+      { label: { en_US: "HTML" }, value: "html" },
+      { label: { en_US: "Raw HTML" }, value: "rawHtml" },
+      { label: { en_US: "Screenshot" }, value: "screenshot" },
+      { label: { en_US: "Links" }, value: "links" },
     ],
   },
 }
@@ -86,7 +86,7 @@ invoke: async ({ args }) => {
 const locationParameter: PropertyObject = {
   name: "location",
   type: "object",
-  display_name: t("LOCATION_DISPLAY_NAME"),
+  display_name: { en_US: "Location" },
   ui: {
     component: "collapsible-panel",
     default_collapsed: true,
@@ -95,14 +95,14 @@ const locationParameter: PropertyObject = {
     {
       name: "country",
       type: "string",
-      display_name: t("COUNTRY_DISPLAY_NAME"),
+      display_name: { en_US: "Country" },
       default: "US",
       ui: {
         component: "select",
         options: [
-          { label: t("COUNTRY_US"), value: "US" },
-          { label: t("COUNTRY_CN"), value: "CN" },
-          { label: t("COUNTRY_JP"), value: "JP" },
+          { label: { en_US: "United States" }, value: "US" },
+          { label: { en_US: "China" }, value: "CN" },
+          { label: { en_US: "Japan" }, value: "JP" },
         ],
       },
       enum: ["US", "CN", "JP"],
@@ -110,7 +110,7 @@ const locationParameter: PropertyObject = {
     {
       name: "languages",
       type: "array",
-      display_name: t("LANGUAGES_DISPLAY_NAME"),
+      display_name: { en_US: "Languages" },
       items: { name: "lang", type: "string" },
       ui: { component: "tag-input" },
     },
@@ -145,7 +145,7 @@ invoke: async ({ args }) => {
 const headersParameter: PropertyArray = {
   name: "headers",
   type: "array",
-  display_name: t("HEADERS_DISPLAY_NAME"),
+  display_name: { en_US: "Headers" },
   items: {
     name: "header",
     type: "object",
@@ -153,12 +153,12 @@ const headersParameter: PropertyArray = {
       {
         name: "key",
         type: "string",
-        display_name: t("KEY_DISPLAY_NAME"),
+        display_name: { en_US: "Key" },
       },
       {
         name: "value",
         type: "string",
-        display_name: t("VALUE_DISPLAY_NAME"),
+        display_name: { en_US: "Value" },
       },
     ],
   },
@@ -199,7 +199,7 @@ A complete real-world scenario: display different configurations based on scrape
 const formatsParameter: PropertyDiscriminatedUnion = {
   name: "output",
   type: "discriminated_union",
-  display_name: t("OUTPUT_DISPLAY_NAME"),
+  display_name: { en_US: "Output" },
   discriminator: "type",
   discriminator_ui: { component: "select" },
   any_of: [
@@ -212,7 +212,7 @@ const formatsParameter: PropertyDiscriminatedUnion = {
           name: "type",
           type: "string",
           constant: "markdown",
-          display_name: t("MARKDOWN_LABEL"),
+          display_name: { en_US: "Markdown" },
         },
         // Markdown has no additional parameters
       ],
@@ -226,19 +226,19 @@ const formatsParameter: PropertyDiscriminatedUnion = {
           name: "type",
           type: "string",
           constant: "extract",
-          display_name: t("STRUCTURED_EXTRACT_LABEL"),
+          display_name: { en_US: "Structured Extract" },
         },
         {
           name: "schema",
           type: "object",
-          display_name: t("SCHEMA_DISPLAY_NAME"),
+          display_name: { en_US: "Schema" },
           ui: { component: "code-editor", language: "json" },
           properties: [],
         },
         {
           name: "system_prompt",
           type: "string",
-          display_name: t("SYSTEM_PROMPT_DISPLAY_NAME"),
+          display_name: { en_US: "System Prompt" },
           ui: { component: "textarea" },
         },
       ],
@@ -252,12 +252,12 @@ const formatsParameter: PropertyDiscriminatedUnion = {
           name: "type",
           type: "string",
           constant: "screenshot",
-          display_name: t("SCREENSHOT_LABEL"),
+          display_name: { en_US: "Screenshot" },
         },
         {
           name: "full_page",
           type: "boolean",
-          display_name: t("FULL_PAGE_DISPLAY_NAME"),
+          display_name: { en_US: "Full Page" },
           default: false,
         },
       ],
@@ -324,7 +324,7 @@ const parameters: Property[] = [
   {
     name: "mode",
     type: "string",
-    display_name: t("MODE_DISPLAY_NAME"),
+    display_name: { en_US: "Mode" },
     enum: ["simple", "advanced"],
     default: "simple",
     ui: { component: "radio-group" },
@@ -333,7 +333,7 @@ const parameters: Property[] = [
   {
     name: "custom_headers",
     type: "object",
-    display_name: t("CUSTOM_HEADERS_DISPLAY_NAME"),
+    display_name: { en_US: "Custom Headers" },
     additional_properties: true,
     properties: [],
     display: {
@@ -344,7 +344,7 @@ const parameters: Property[] = [
   {
     name: "retry_count",
     type: "integer",
-    display_name: t("RETRY_COUNT_DISPLAY_NAME"),
+    display_name: { en_US: "Retry Count" },
     default: 3,
     minimum: 0,
     maximum: 10,
@@ -396,7 +396,7 @@ invoke: async ({ args }) => {
 const credentialParameter: PropertyCredentialId = {
   name: "credential_id",
   type: "credential_id",
-  display_name: t("CREDENTIAL_DISPLAY_NAME"),
+  display_name: { en_US: "Credential" },
   credential_name: "firecrawl",
   required: true,
 }
@@ -443,8 +443,8 @@ Below is an example of a complete tool definition similar to Firecrawl Scrape:
 ```typescript
 const scrapeTool: ToolDefinition = {
   name: "scrape-a-url",
-  display_name: t("SCRAPE_TOOL_DISPLAY_NAME"),
-  description: t("SCRAPE_TOOL_DESCRIPTION"),
+  display_name: { en_US: "Scrape" },
+  description: { en_US: "Scrape web pages and extract content" },
   icon: "🔥",
   parameters: [
     // Credential
@@ -458,18 +458,18 @@ const scrapeTool: ToolDefinition = {
     {
       name: "url",
       type: "string",
-      display_name: t("URL_DISPLAY_NAME"),
+      display_name: { en_US: "URL" },
       required: true,
       ui: {
         component: "input",
-        placeholder: t("URL_PLACEHOLDER"),
+        placeholder: { en_US: "https://example.com" },
       },
     },
     // Output formats (multi-select)
     {
       name: "formats",
       type: "array",
-      display_name: t("FORMATS_DISPLAY_NAME"),
+      display_name: { en_US: "Formats" },
       items: {
         name: "format",
         type: "string",
@@ -482,7 +482,7 @@ const scrapeTool: ToolDefinition = {
     {
       name: "options",
       type: "object",
-      display_name: t("OPTIONS_DISPLAY_NAME"),
+      display_name: { en_US: "Options" },
       ui: {
         component: "collapsible-panel",
         default_collapsed: true,
@@ -491,7 +491,7 @@ const scrapeTool: ToolDefinition = {
         {
           name: "include_tags",
           type: "array",
-          display_name: t("INCLUDE_TAGS_DISPLAY_NAME"),
+          display_name: { en_US: "Include Tags" },
           items: { name: "tag", type: "string" },
           ui: { component: "tag-input" },
           ai: { llm_description: "HTML tags to include in the output" },
@@ -499,30 +499,30 @@ const scrapeTool: ToolDefinition = {
         {
           name: "exclude_tags",
           type: "array",
-          display_name: t("EXCLUDE_TAGS_DISPLAY_NAME"),
+          display_name: { en_US: "Exclude Tags" },
           items: { name: "tag", type: "string" },
           ui: { component: "tag-input" },
         },
         {
           name: "wait_for",
           type: "integer",
-          display_name: t("WAIT_FOR_DISPLAY_NAME"),
+          display_name: { en_US: "Wait For" },
           default: 0,
           minimum: 0,
           ui: {
-            hint: t("WAIT_FOR_HINT"),
+            hint: { en_US: "Wait time in milliseconds before scraping" },
           },
         },
         {
           name: "timeout",
           type: "integer",
-          display_name: t("TIMEOUT_DISPLAY_NAME"),
+          display_name: { en_US: "Timeout" },
           default: 30000,
         },
         {
           name: "only_main_content",
           type: "boolean",
-          display_name: t("ONLY_MAIN_CONTENT_DISPLAY_NAME"),
+          display_name: { en_US: "Only Main Content" },
           default: true,
           ui: { component: "switch" },
         },
@@ -532,7 +532,7 @@ const scrapeTool: ToolDefinition = {
     {
       name: "headers",
       type: "object",
-      display_name: t("HEADERS_DISPLAY_NAME"),
+      display_name: { en_US: "Headers" },
       additional_properties: true,
       properties: [],
       ui: {
