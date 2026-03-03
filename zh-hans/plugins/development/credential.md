@@ -26,15 +26,17 @@ src/
 
 ```typescript
 import type { CredentialDefinition } from "@choiceopen/atomemo-plugin-sdk-js/types"
-import { t } from "../i18n/i18n-node"
 
 export const openaiCredential = {
   // 凭证的唯一标识符
   name: "openai-api-key",
 
   // 显示名称和描述
-  display_name: t("OPENAI_API_KEY_DISPLAY_NAME"),
-  description: t("OPENAI_API_KEY_DESCRIPTION"),
+  display_name: { en_US: "OpenAI API Key", zh_Hans: "OpenAI API 密钥" },
+  description: {
+    en_US: "OpenAI API credential for authentication",
+    zh_Hans: "用于身份验证的 OpenAI API 凭证",
+  },
 
   // 图标
   icon: "🔑",
@@ -45,7 +47,7 @@ export const openaiCredential = {
       name: "api_key",
       type: "string",
       required: true,
-      display_name: t("API_KEY_LABEL"),
+      display_name: { en_US: "API Key", zh_Hans: "API 密钥" },
       ui: {
         component: "input",
         placeholder: "sk-...",
@@ -57,7 +59,7 @@ export const openaiCredential = {
       name: "base_url",
       type: "string",
       required: false,
-      display_name: t("BASE_URL_LABEL"),
+      display_name: { en_US: "Base URL", zh_Hans: "基础 URL" },
       default: "https://api.openai.com/v1",
       ui: {
         component: "input",

@@ -77,7 +77,7 @@ Set field as read-only fixed value, commonly used in discriminated union:
   name: "type",
   type: "string",
   constant: "webhook",      // Value fixed as "webhook"
-  display_name: t("WEBHOOK_DISPLAY_NAME")
+  display_name: { en_US: "Webhook" }
 }
 ```
 
@@ -177,7 +177,7 @@ Each array item can be different object forms:
 {
   name: "actions",
   type: "array",
-  display_name: t("ACTIONS_DISPLAY_NAME"),
+  display_name: { en_US: "Actions" },
   items: {
     name: "action",
     type: "discriminated_union",
@@ -187,7 +187,7 @@ Each array item can be different object forms:
         name: "wait",
         type: "object",
         properties: [
-          { name: "type", type: "string", constant: "wait", display_name: t("WAIT_LABEL") },
+          { name: "type", type: "string", constant: "wait", display_name: { en_US: "Wait" } },
           { name: "milliseconds", type: "integer", default: 1000 }
         ]
       },
@@ -195,15 +195,15 @@ Each array item can be different object forms:
         name: "click",
         type: "object",
         properties: [
-          { name: "type", type: "string", constant: "click", display_name: t("CLICK_LABEL") },
-          { name: "selector", type: "string", display_name: t("SELECTOR_DISPLAY_NAME") }
+          { name: "type", type: "string", constant: "click", display_name: { en_US: "Click" } },
+          { name: "selector", type: "string", display_name: { en_US: "Selector" } }
         ]
       },
       {
         name: "scroll",
         type: "object",
         properties: [
-          { name: "type", type: "string", constant: "scroll", display_name: t("SCROLL_LABEL") },
+          { name: "type", type: "string", constant: "scroll", display_name: { en_US: "Scroll" } },
           { name: "direction", type: "string", enum: ["down", "up"], default: "down" }
         ]
       }
@@ -267,12 +267,12 @@ Use `section` to display object name with underline at top, rendering child prop
 {
   name: "location",
   type: "object",
-  display_name: t("LOCATION_DISPLAY_NAME"),
+  display_name: { en_US: "Location" },
   ui: {
     component: "section"
   },
   properties: [
-    { name: "country", type: "string", display_name: t("COUNTRY_DISPLAY_NAME") },
+    { name: "country", type: "string", display_name: { en_US: "Country" } },
     { name: "languages", type: "array", items: { name: "l", type: "string" }, ui: { component: "tag-input" } }
   ]
 }

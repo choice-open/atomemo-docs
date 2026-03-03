@@ -28,7 +28,7 @@ Renders as a credential selector dropdown containing:
 {
   name: "credential_id",
   type: "credential_id",
-  display_name: t("CREDENTIAL_DISPLAY_NAME"),
+  display_name: { en_US: "Credential" },
   credential_name: "firecrawl",
   required: true
 }

@@ -26,15 +26,14 @@ Here's a complete example defining an OpenAI API Key credential:
 
 ```typescript
 import type { CredentialDefinition } from "@choiceopen/atomemo-plugin-sdk-js/types"
-import { t } from "../i18n/i18n-node"
 
 export const openaiCredential = {
   // Unique identifier for the credential
   name: "openai-api-key",
 
   // Display name and description
-  display_name: t("OPENAI_API_KEY_DISPLAY_NAME"),
-  description: t("OPENAI_API_KEY_DESCRIPTION"),
+  display_name: { en_US: "OpenAI API Key" },
+  description: { en_US: "OpenAI API credential for authentication" },
 
   // Icon
   icon: "🔑",
@@ -45,7 +44,7 @@ export const openaiCredential = {
       name: "api_key",
       type: "string",
       required: true,
-      display_name: t("API_KEY_LABEL"),
+      display_name: { en_US: "API Key" },
       ui: {
         component: "input",
         placeholder: "sk-...",
@@ -57,7 +56,7 @@ export const openaiCredential = {
       name: "base_url",
       type: "string",
       required: false,
-      display_name: t("BASE_URL_LABEL"),
+      display_name: { en_US: "Base URL" },
       default: "https://api.openai.com/v1",
       ui: {
         component: "input",
