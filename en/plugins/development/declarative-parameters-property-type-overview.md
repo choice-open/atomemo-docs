@@ -12,3 +12,7 @@
 | `"encrypted_string"`    | `PropertyEncryptedString`    | Encrypted string     | `encrypted-input`           |
 | `"discriminated_union"` | `PropertyDiscriminatedUnion` | Discriminated union  | Selector + variant panel    |
 
+**Support by plugin type:**
+
+- **Tool**: All types except `encrypted_string` and `discriminated_union`.
+- **Credential**: `string`, `number`, `integer`, `boolean`, `encrypted_string`.

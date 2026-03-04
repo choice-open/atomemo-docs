@@ -12,3 +12,7 @@
 | `"encrypted_string"`    | `PropertyEncryptedString`    | 加密字符串     | `encrypted-input`           |
 | `"discriminated_union"` | `PropertyDiscriminatedUnion` | 判别联合       | 选择器 + 变体面板           |
 
+**按功能类型的支持范围：**
+
+- **Tool（工具）**：支持除 `encrypted_string`、`discriminated_union` 外的所有类型。
+- **Credential（凭证）**：支持 `string`、`number`、`integer`、`boolean`、`encrypted_string`。
