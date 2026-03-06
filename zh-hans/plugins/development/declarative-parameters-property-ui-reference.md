@@ -57,7 +57,7 @@ interface PropertyUICommonProps {
 | `"textarea"`     | 多行文本输入        | 长文本、代码段           | -                                    |
 | `"select"`       | 下拉单选            | 需要 `enum` 的参数       | `searchable`, `clearable`            |
 | `"radio-group"`  | 单选按钮组          | 选项少且需要直观展示     | `searchable`, `clearable`            |
-| `"code-editor"`  | 代码编辑器          | JSON、JavaScript、Python | `language`, `rows`, `line_numbers`, `line_wrapping` |
+| `"code-editor"`  | 代码编辑器          | JSON、JavaScript、Python、Markdown | `language`, `rows`, `line_numbers`, `line_wrapping` |
 | `"emoji-picker"` | 表情符号选择器      | 图标、符号选择           | -                                    |
 | `"color-picker"` | 颜色选择器          | RGB、HEX 颜色值          | -                                    |
 

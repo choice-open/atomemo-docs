@@ -34,7 +34,7 @@ interface PropertyString extends PropertyBase {
 | `"textarea"`     | 多行文本输入        | 长文本、描述   |
 | `"select"`       | 下拉单选            | 需要 `enum`    |
 | `"radio-group"`  | 单选按钮组          | 选项少时       |
-| `"code-editor"`  | 代码编辑器          | JSON/JS/Python |
+| `"code-editor"`  | 代码编辑器          | JSON/JS/Python/Markdown |
 | `"emoji-picker"` | 表情符号选择器      | 图标选择       |
 | `"color-picker"` | 颜色选择器          | 颜色值         |
 
@@ -64,7 +64,7 @@ interface PropertyUIOption {
 ```typescript
 {
   component: "code-editor",
-  language?: "json" | "javascript" | "python3";
+  language?: "json" | "javascript" | "python3" | "markdown";
   rows?: number;           // 编辑器行数
   line_numbers?: boolean;  // 是否显示行号
   line_wrapping?: boolean; // 是否启用自动换行

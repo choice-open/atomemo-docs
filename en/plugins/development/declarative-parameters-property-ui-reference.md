@@ -57,7 +57,7 @@ interface PropertyUICommonProps {
 | `"textarea"`          | Multi-line input     | Long text, code snippets          | `min_height`, `max_height`                          |
 | `"select"`            | Dropdown selection   | Parameters requiring `enum`       | `options`, `searchable`, `clearable`                |
 | `"radio-group"`       | Radio buttons        | Few options, intuitive            | `options`, `searchable`, `clearable`                |
-| `"code-editor"`       | Code editor          | JSON, JavaScript, Python          | `language`, `rows`, `line_numbers`, `line_wrapping`, `min_height`, `max_height` |
+| `"code-editor"`       | Code editor          | JSON, JavaScript, Python, Markdown | `language`, `rows`, `line_numbers`, `line_wrapping`, `min_height`, `max_height` |
 | `"emoji-picker"`      | Emoji picker         | Icon/symbol selection             | `size`                                              |
 | `"color-picker"`      | Color picker         | RGB/HEX color values              | -                                                   |
 

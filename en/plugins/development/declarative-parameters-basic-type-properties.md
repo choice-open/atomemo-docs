@@ -34,7 +34,7 @@ interface PropertyString extends PropertyBase {
 | `"textarea"`     | Multi-line input     | Long text, description |
 | `"select"`       | Dropdown selection   | Requires `enum`        |
 | `"radio-group"`  | Radio buttons        | Few options            |
-| `"code-editor"`  | Code editor          | JSON/JS/Python         |
+| `"code-editor"`  | Code editor          | JSON/JS/Python/Markdown |
 | `"emoji-picker"` | Emoji picker         | Icon selection         |
 | `"color-picker"` | Color picker         | Color values           |
 
@@ -64,7 +64,7 @@ interface PropertyUIOption {
 ```typescript
 {
   component: "code-editor",
-  language?: "json" | "javascript" | "python3";
+  language?: "json" | "javascript" | "python3" | "markdown";
   rows?: number;          // Editor row count
   line_numbers?: boolean; // Show line numbers
   line_wrapping?: boolean; // Enable line wrapping
