@@ -155,8 +155,6 @@ If your plugin requires OAuth2 authentication (e.g., Google Drive, Slack), you c
 
 When `oauth2` is enabled, the `parameters` array **must** include the following fields:
 
-- `client_id` (string, required)
-- `client_secret` (encrypted_string, required)
 - `access_token` (encrypted_string)
 - `refresh_token` (encrypted_string)
 - `expires_at` (integer)

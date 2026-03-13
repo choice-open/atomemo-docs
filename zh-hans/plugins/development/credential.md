@@ -156,10 +156,8 @@ plugin.run()
 
 ### 必需参数
 
-当启用了 `oauth2` 时，`parameters` 数组**必须**包含以下字段：
+当启用了 `oauth2` 时，`parameters` 数组**必须**包含以下字段（用于存储令牌状态）：
 
-- `client_id` (string, 必需)
-- `client_secret` (encrypted_string, 必需)
 - `access_token` (encrypted_string)
 - `refresh_token` (encrypted_string)
 - `expires_at` (integer)
