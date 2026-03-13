@@ -65,14 +65,29 @@ parameters: [
 
 ### 4. Implementation (Invoke)
 
-The `invoke` function is where your logic lives. It receives parameters passed by the application and returns a JSON-serializable result.
+The `invoke` function is where your logic lives. It receives the invocation inputs together with a runtime context object injected by the SDK, and returns a JSON-serializable result.
+
+The full runtime signature in the current SDK/schema is:
 
 ```typescript
-async invoke({ args }) {
-  // Access parameters via args.parameters
-  const location = args.parameters.location;
+async invoke({ args, context }) {
+  // ...
+}
+```
 
-  // Perform your logic here (e.g., API calls, calculations)
+- **`args`**: the inputs for this invocation
+  - `args.parameters`: resolved parameter values matching your `parameters` definitions
+  - `args.credentials`: credential data keyed by your `credential_id` parameter name
+- **`context`**: a typed runtime helper injected by the SDK; currently exposes `files` helpers for safely working with Atomemo file references
+
+A basic example:
+
+```typescript
+async invoke({ args, context }) {
+  // Access parameters via args.parameters
+  const location = args.parameters.location
+
+  // context.files is available when you need file helpers (see next section)
 
   // Return a JSON-serializable object
   return {
@@ -80,6 +95,100 @@ async invoke({ args }) {
   }
 }
 ```
+
+### 5. Working with `context.files`
+
+When your tool accepts a `file_ref` parameter or returns a file as its result, use the `context.files` helpers instead of treating file references as plain objects.
+
+The current SDK exposes the following methods on `context.files`:
+
+- `context.files.parseFileRef(input)`: validates unknown input and narrows it to a typed `file_ref`
+- `context.files.download(fileRef)`: downloads an OSS/remote file into memory, returning a `file_ref` with `content`
+- `context.files.attachRemoteUrl(fileRef)`: resolves a downloadable URL for an OSS-backed file reference
+- `context.files.upload(fileRef, { prefixKey? })`: uploads an in-memory file and returns an OSS-backed `file_ref` with `res_key`
+
+#### 5.1 Reading a File from Parameters
+
+The official Google Drive upload tool (`google-drive-upload-file`) receives a `file_ref` parameter and downloads its content like this:
+
+```typescript
+const fileRef = context.files.parseFileRef(p.file)
+const downloaded = await context.files.download(fileRef)
+
+const originalFilename = downloaded.filename
+const bytes = new Uint8Array(
+  Buffer.from(downloaded.content ?? "", "base64"),
+)
+```
+
+Key points:
+
+- **Always call `parseFileRef` first** — it validates that the input actually conforms to the `file_ref` schema.
+- **Then call `download`** — it fetches the real file content (base64-encoded) while preserving type safety.
+
+In your own tools, the same pattern applies:
+
+```typescript
+async invoke({ args, context }) {
+  const fileRef = context.files.parseFileRef(args.parameters.file)
+  const downloaded = await context.files.download(fileRef)
+
+  return {
+    filename: downloaded.filename,
+    mime_type: downloaded.mime_type,
+    size: downloaded.size,
+  }
+}
+```
+
+#### 5.2 Producing a File and Returning It
+
+If your tool generates a file in memory and you want Atomemo to manage it, construct a `file_ref` with `source: "mem"` and upload it via the context.
+
+The official Google Drive download tool (`google-drive-download-file`) does exactly this:
+
+```typescript
+const bytes = new Uint8Array(arrayBuffer)
+const contentBase64 = Buffer.from(bytes).toString("base64")
+
+const fileRef: FileRef = {
+  __type__: "file_ref",
+  source: "mem",
+  filename,
+  content: contentBase64,
+  mime_type: contentType,
+  extension,
+  size: bytes.length,
+  res_key: null,
+  remote_url: null,
+}
+
+const uploadResult = await context.files.upload(fileRef, {})
+return uploadResult
+```
+
+In your own tools, follow the same structure:
+
+```typescript
+async invoke({ args, context }) {
+  const fileRef = {
+    __type__: "file_ref",
+    source: "mem",
+    filename: "report.txt",
+    extension: ".txt",
+    mime_type: "text/plain",
+    size: Buffer.byteLength("hello"),
+    content: Buffer.from("hello").toString("base64"),
+    res_key: null,
+    remote_url: null,
+  }
+
+  // Hand the in-memory file to Atomemo and return a persistent file_ref
+  return await context.files.upload(fileRef, { prefixKey: "reports/" })
+}
+```
+
+> **Practical tip**: When your tool needs to handle files (as input or output), refer to the official Google Drive plugin's `upload-a-file` and `download-a-file` implementations. Following the same patterns ensures you benefit from Atomemo's built-in file storage and permission system.
 
 ## Complete Example
 
@@ -108,7 +217,7 @@ export const demoTool = {
       },
     },
   ],
-  async invoke({ args }) {
+  async invoke({ args, context }) {
     return {
       message: `Testing the plugin with location: ${args.parameters.location}`,
     }
