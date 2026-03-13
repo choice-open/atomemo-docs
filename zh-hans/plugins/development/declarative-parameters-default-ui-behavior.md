@@ -2,16 +2,17 @@
 
 当不指定 `ui` 时，系统采用以下默认值：
 
-| Property Type         | 默认 UI Component        | 说明                            |
-| --------------------- | ------------------------ | ------------------------------- |
-| `string`              | `input`                  | 单行文本框                      |
-| `number` / `integer`  | `number-input`           | 数字输入框                      |
-| `boolean`             | `switch`                 | 开关                            |
-| `object`              | _(无容器)_               | 子字段平铺                      |
-| `array`               | `array-section`          | 数组面板，自动选择简单/复合模式 |
-| `credential_id`       | `credential-select`      | 凭证选择器                      |
-| `encrypted_string`    | `encrypted-input`        | 密码输入框                      |
-| `discriminated_union` | `select` (discriminator) | 选择器 + 变体面板               |
+| Property Type         | 默认 UI Component        | 说明                                      |
+| --------------------- | ------------------------ | ----------------------------------------- |
+| `string`              | `input`                  | 单行文本框                                |
+| `number` / `integer`  | `number-input`           | 数字输入框                                |
+| `boolean`             | `switch`                 | 开关                                      |
+| `object`              | _(无容器)_               | 子字段平铺                                |
+| `array`               | `array-section`          | 数组面板，自动选择简单/复合模式           |
+| `credential_id`       | `credential-select`      | 凭证选择器                                |
+| `encrypted_string`    | `encrypted-input`        | 密码输入框                                |
+| `file_ref`            | `input`                  | 仅支持表达式输入，始终禁用 AI 覆盖能力    |
+| `discriminated_union` | `select` (discriminator) | 选择器 + 变体面板                         |
 
 ### Array Section 自动模式选择
 

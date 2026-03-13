@@ -46,3 +46,34 @@ interface PropertyEncryptedString extends PropertyBase {
 
 Renders as a password input field (`encrypted-input`), encrypted when stored.
 
+### 7.3 PropertyFileReference
+
+Reference to a file managed by Atomemo's file storage system (for example, a file produced by an upstream node or previously uploaded into the workspace).
+
+```typescript
+interface PropertyFileReference extends PropertyBase {
+  type: "file_ref"
+}
+```
+
+In the Automation client UI, this property:
+
+- **Always renders as an expression-only text input**
+- **Forces `ui.component` to `input`**, `support_expression = true`, and **disables AI override** (the model cannot fabricate file refs).
+- **Does not have a default value** (unless you explicitly set one in the definition); clearing the field sets the value to `null`.
+
+At runtime, you should treat the value as an opaque file reference and resolve it using the `context.files` APIs to download or inspect the underlying file bytes/metadata.
+
+**Example** (from the official Google Drive plugin):
+
+```typescript
+const parameters: Array<Property> = [
+  {
+    name: "file",
+    type: "file_ref",
+    required: true,
+    display_name: { en_US: "File" },
+  },
+]
+```
+

@@ -46,3 +46,21 @@ interface PropertyEncryptedString extends PropertyBase {
 
 渲染为密码输入框（`encrypted-input`），存储时加密处理。
 
+### 7.3 PropertyFileReference
+
+引用由 Atomemo 文件存储系统管理的文件（例如由上游节点产出的文件，或之前上传到工作空间中的文件）。
+
+```typescript
+interface PropertyFileReference extends PropertyBase {
+  type: "file_ref"
+}
+```
+
+在自动化客户端 UI 中，该类型字段会：
+
+- **始终渲染为仅支持表达式模式的文本输入框**。
+- **强制将 `ui.component` 设为 `input`**，并开启 `support_expression = true`，同时 **禁用 AI 覆盖**（模型无法直接生成合法的文件引用值）。
+- **默认没有初始值**（除非在定义中显式指定）；清空输入时，值会被设置为 `null`。
+
+在运行时，你应当将该字段值视为一个不透明的文件引用，通过 `context.files` 相关 API 解析并下载真实文件内容或查看文件元数据。
+
