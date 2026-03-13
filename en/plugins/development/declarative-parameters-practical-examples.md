@@ -575,3 +575,41 @@ const scrapeTool: ToolDefinition = {
 }
 ```
 
+### 10.9 File Reference Parameter
+
+```typescript
+const fileParameter: PropertyFileReference = {
+  name: "file",
+  type: "file_ref",
+  display_name: { en_US: "File" },
+  required: true,
+}
+```
+
+**User input and corresponding invoke behavior**:
+
+```typescript
+// User configures an upstream node (e.g. File Upload) that produces file references
+const params = {
+  file: $('File Upload').file, // expression resolves to a file_ref value
+}
+
+invoke: async ({ args, context }) => {
+  const { parameters } = args
+
+  // Treat parameters.file as an opaque reference and resolve it via context.files
+  const fileRef = context.files.parseFileRef(parameters.file)
+  const downloaded = await context.files.download(fileRef)
+
+  // Access metadata
+  const filename = downloaded.filename
+  const mimeType = downloaded.mime_type
+
+  // Raw bytes are base64 encoded in downloaded.content
+  const bytes = Buffer.from(downloaded.content ?? "", "base64")
+
+  // ...use bytes to call external APIs or process the file
+  return { success: true, filename, mimeType }
+}
+```
+

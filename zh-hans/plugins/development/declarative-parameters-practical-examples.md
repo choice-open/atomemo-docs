@@ -575,3 +575,41 @@ const scrapeTool: ToolDefinition = {
 }
 ```
 
+### 10.9 文件引用参数
+
+```typescript
+const fileParameter: PropertyFileReference = {
+  name: "file",
+  type: "file_ref",
+  display_name: { en_US: "File", zh_Hans: "文件" },
+  required: true,
+}
+```
+
+**用户输入示例及对应的 invoke 行为**：
+
+```typescript
+// 用户在上游节点（例如「文件上传」节点）中产生文件引用
+const params = {
+  file: $('File Upload').file, // 表达式解析后得到 file_ref 值
+}
+
+invoke: async ({ args, context }) => {
+  const { parameters } = args
+
+  // 将 parameters.file 视为不透明引用，通过 context.files 解析
+  const fileRef = context.files.parseFileRef(parameters.file)
+  const downloaded = await context.files.download(fileRef)
+
+  // 访问元数据
+  const filename = downloaded.filename
+  const mimeType = downloaded.mime_type
+
+  // 原始字节以 base64 编码形式存储在 downloaded.content 中
+  const bytes = Buffer.from(downloaded.content ?? "", "base64")
+
+  // ...使用 bytes 调用外部 API 或做文件处理
+  return { success: true, filename, mimeType }
+}
+```
+
