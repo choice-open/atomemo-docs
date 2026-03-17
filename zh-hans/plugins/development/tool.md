@@ -38,6 +38,7 @@ import type { ToolDefinition } from "@choiceopen/atomemo-plugin-sdk-js/types"
 - **icon**: 代表该工具的表情符号或图像 URL。
 - **parameters**: 工具所需的输入参数列表。
 - **invoke**: 执行工具逻辑的异步函数。
+- **skill**: 描述工具输入与输出的说明文档（字符串，可选，建议使用 Markdown 格式）。
 
 ### 3. 参数
 

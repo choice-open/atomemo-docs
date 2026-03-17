@@ -38,6 +38,7 @@ A tool definition requires the following key properties:
 - **icon**: Emoji or image URL representing this tool.
 - **parameters**: List of input parameters required by the tool.
 - **invoke**: Asynchronous function that executes the tool's logic.
+- **skill**: Description of the tool's input and output (string, optional, recommended to use Markdown format).
 
 ### 3. Parameters
 
