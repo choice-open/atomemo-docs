@@ -68,6 +68,8 @@ parameters: [
 
 `invoke` 函数是逻辑所在的地方。它接收应用传递的参数，同时还会注入一个由 SDK 提供的运行时上下文对象，并返回一个 JSON 可序列化的结果。
 
+> **注意：** 如果想让节点显示错误状态，在 `invoke` 中必须抛出 JavaScript 的 `Error`（例如：`throw new Error('失败原因')`）。仅返回 `{ error: "lorem" }` 是无效的，无法让节点进入错误状态。
+
 在当前 SDK / Schema 中，`invoke` 的完整函数签名是：
 
 ```typescript

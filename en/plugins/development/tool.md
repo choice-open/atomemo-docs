@@ -68,6 +68,8 @@ parameters: [
 
 The `invoke` function is where your logic lives. It receives the invocation inputs together with a runtime context object injected by the SDK, and returns a JSON-serializable result.
 
+> **Note:** If you want the node to show an error status, you must throw a JavaScript `Error` inside `invoke` (for example: `throw new Error('failed')`). Returning an object like `{ error: "lorem" }` will not mark the node as errored.
+
 The full runtime signature in the current SDK/schema is:
 
 ```typescript
