@@ -115,7 +115,7 @@ async invoke({ args, context }) {
 以官方 Google Drive「上传文件」工具为例（`google-drive-upload-file`），其参数中包含一个 `file_ref` 类型的 `file` 字段：
 
 ```typescript
-const fileRef = context.files.parseFileRef(p.file)
+const fileRef = context.files.parseFileRef(args.parameters.file)
 const downloaded = await context.files.download(fileRef)
 
 const originalFilename = downloaded.filename

@@ -5,7 +5,7 @@ Credentials are used to define authentication information that users need to con
 Credentials in the Atomemo plugin system have two main purposes:
 
 1. **Model Authentication**: Used to configure LLM adapters (Adapter), enabling the system to call model services like OpenAI and Anthropic.
-2. **Tool Authorization**: Passed as parameters to tools (Tool), enabling tools to call protected external APIs.
+2. **Tool Authorization**: Passed to tools via `args.credentials`, enabling tools to call protected external APIs.
 
 ## 1. File Structure
 
@@ -112,7 +112,7 @@ The `authenticate` function **only executes when credentials are used for model 
 
 ## 3. Using Credentials in Tools
 
-When credentials are used for tools (Tool), the `authenticate` function **will not** be called. Credential data is passed directly to the tool's `invoke` function as parameters.
+When credentials are used for tools (Tool), the `authenticate` function **will not** be called. Credential data is passed to the tool's `invoke` function via `args.credentials`.
 
 When defining tools, you can specify which credential types the tool requires.
 
@@ -122,7 +122,8 @@ invoke: async ({ args }) => {
   const { parameters, credentials } = args
 
   // Access credential fields directly
-  const apiKey = credentials?.api_key
+  const credentialId = parameters.credential_id
+  const apiKey = credentials?.[credentialId]?.api_key
 
   // Use credentials to call external APIs
   // ...

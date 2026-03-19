@@ -80,7 +80,7 @@ async invoke({ args, context }) {
 
 - **`args`**: the inputs for this invocation
   - `args.parameters`: resolved parameter values matching your `parameters` definitions
-  - `args.credentials`: credential data keyed by your `credential_id` parameter name
+  - `args.credentials`: credential data keyed by the selected credential ID value from your `credential_id` parameter
 - **`context`**: a typed runtime helper injected by the SDK; currently exposes `files` helpers for safely working with Atomemo file references
 
 A basic example:
@@ -115,7 +115,7 @@ The current SDK exposes the following methods on `context.files`:
 The official Google Drive upload tool (`google-drive-upload-file`) receives a `file_ref` parameter and downloads its content like this:
 
 ```typescript
-const fileRef = context.files.parseFileRef(p.file)
+const fileRef = context.files.parseFileRef(args.parameters.file)
 const downloaded = await context.files.download(fileRef)
 
 const originalFilename = downloaded.filename

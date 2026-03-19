@@ -5,7 +5,7 @@
 凭证在 Atomemo 插件系统中主要有两个用途：
 
 1.  **模型鉴权**：用于配置 LLM 适配器（Adapter），使系统能够调用 OpenAI、Anthropic 等模型服务。
-2.  **工具授权**：作为参数传递给工具（Tool），使工具能够调用受保护的外部 API。
+2.  **工具授权**：通过 `args.credentials` 传递给工具（Tool），使工具能够调用受保护的外部 API。
 
 ## 1. 文件结构
 
@@ -115,7 +115,7 @@ export const openaiCredential = {
 
 ## 3. 在工具中使用凭证
 
-当凭证用于工具（Tool）时，`authenticate` 函数**不会**被调用。凭证数据会直接作为参数传递给工具的 `invoke` 函数。
+当凭证用于工具（Tool）时，`authenticate` 函数**不会**被调用。凭证数据会通过 `args.credentials` 传递给工具的 `invoke` 函数。
 
 在定义工具时，你可以指定该工具需要使用的凭证类型。
 
@@ -125,7 +125,8 @@ invoke: async ({ args }) => {
   const { parameters, credentials } = args
 
   // 直接访问凭证字段
-  const apiKey = credentials?.api_key
+  const credentialId = parameters.credential_id
+  const apiKey = credentials?.[credentialId]?.api_key
 
   // 使用凭证调用外部 API
   // ...
