@@ -12,6 +12,8 @@
 | `"encrypted_string"`    | `PropertyEncryptedString`    | 加密字符串            | `encrypted-input`                    |
 | `"file_ref"`            | `PropertyFileReference`      | 文件引用（不透明值）  | `input` (仅表达式，不支持 AI 覆盖)  |
 | `"discriminated_union"` | `PropertyDiscriminatedUnion` | 判别联合              | 选择器 + 变体面板                    |
+| `"resource_locator"`    | `PropertyResourceLocator`    | 远程资源选择器        | 模式选择器 + 输入框 / 可搜索下拉框  |
+| `"resource_mapper"`     | `PropertyResourceMapper`     | 远程字段映射器        | 手动字段行 / 自动 JSON 编辑器        |
 
 **按功能类型的支持范围：**
 

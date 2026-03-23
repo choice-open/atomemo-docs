@@ -13,6 +13,8 @@
 | `encrypted_string`    | `encrypted-input`        | 密码输入框                                |
 | `file_ref`            | `input`                  | 仅支持表达式输入，始终禁用 AI 覆盖能力    |
 | `discriminated_union` | `select` (discriminator) | 选择器 + 变体面板                         |
+| `resource_locator`    | 模式选择器 + 输入框      | list 模式：可搜索下拉框；url/id 模式：文本输入框 |
+| `resource_mapper`     | 手动字段行               | 每个字段对应一个有类型的输入框；自动模式：JSON 编辑器 |
 
 ### Array Section 自动模式选择
 

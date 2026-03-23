@@ -575,7 +575,270 @@ const scrapeTool: ToolDefinition = {
 }
 ```
 
-### 10.9 文件引用参数
+### 10.9 级联资源定位器
+
+一个任务管理工具，用户先选择工作空间，再选择该工作空间内的项目，最后选择该项目内的任务。每一级均依赖于其上一级。
+
+**参数定义：**
+
+```typescript
+import { extractResourceLocator } from "@choiceopen/atomemo-plugin-sdk-js"
+
+const parameters: Array<Property> = [
+  {
+    name: "credential_id",
+    type: "credential_id",
+    credential_name: "my-service",
+    required: true,
+  },
+  // 第 1 级：工作空间——无依赖
+  {
+    name: "workspace",
+    type: "resource_locator",
+    display_name: { en_US: "Workspace", zh_Hans: "工作空间" },
+    required: true,
+    modes: [
+      { type: "list", search_list_method: "search_workspaces", searchable: true },
+      { type: "id", placeholder: { en_US: "Enter workspace ID", zh_Hans: "输入工作空间 ID" } },
+    ],
+  },
+  // 第 2 级：项目——工作空间变更时重置
+  {
+    name: "project",
+    type: "resource_locator",
+    display_name: { en_US: "Project", zh_Hans: "项目" },
+    required: true,
+    depends_on: ["workspace"],
+    modes: [
+      { type: "list", search_list_method: "search_projects", searchable: true },
+      { type: "id", placeholder: { en_US: "Enter project ID", zh_Hans: "输入项目 ID" } },
+    ],
+  },
+  // 第 3 级：任务——工作空间或项目任意变更时重置
+  {
+    name: "task",
+    type: "resource_locator",
+    display_name: { en_US: "Task", zh_Hans: "任务" },
+    required: true,
+    depends_on: ["workspace", "project"],
+    modes: [
+      { type: "list", search_list_method: "search_tasks", searchable: true },
+      {
+        type: "url",
+        placeholder: { en_US: "https://app.example.com/tasks/...", zh_Hans: "https://app.example.com/tasks/..." },
+        extract_value: {
+          type: "regex",
+          regex: "https://app\\.example\\.com/tasks/([A-Za-z0-9_-]+)",
+        },
+      },
+      { type: "id", placeholder: { en_US: "Enter task ID", zh_Hans: "输入任务 ID" } },
+    ],
+  },
+]
+```
+
+**locator_list 回调：**
+
+```typescript
+locator_list: {
+  search_workspaces: async ({ credentials, filter }) => {
+    const token = credentials["my-service"].api_key
+    const workspaces = await apiClient.listWorkspaces(token)
+    return {
+      results: workspaces
+        .filter(w => !filter || w.name.toLowerCase().includes(filter.toLowerCase()))
+        .map(w => ({ label: w.name, value: w.id, url: w.url })),
+    }
+  },
+
+  search_projects: async ({ parameters, credentials, filter }) => {
+    const workspaceId = extractResourceLocator(parameters.workspace)
+    if (!workspaceId) return { results: [] }
+    const token = credentials["my-service"].api_key
+    const projects = await apiClient.listProjects(token, workspaceId)
+    return {
+      results: projects
+        .filter(p => !filter || p.name.toLowerCase().includes(filter.toLowerCase()))
+        .map(p => ({ label: p.name, value: p.id })),
+    }
+  },
+
+  search_tasks: async ({ parameters, credentials, filter }) => {
+    const projectId = extractResourceLocator(parameters.project)
+    if (!projectId) return { results: [] }
+    const token = credentials["my-service"].api_key
+    const tasks = await apiClient.listTasks(token, projectId)
+    return {
+      results: tasks
+        .filter(t => !filter || t.title.toLowerCase().includes(filter.toLowerCase()))
+        .map(t => ({ label: t.title, value: t.id })),
+    }
+  },
+},
+```
+
+**invoke — 提取值并调用 API：**
+
+```typescript
+invoke: async ({ args }) => {
+  const { parameters, credentials } = args
+  const token = credentials["my-service"].api_key
+
+  const workspaceId = extractResourceLocator(parameters.workspace)
+  const projectId = extractResourceLocator(parameters.project)
+  // url 模式时，传入正则表达式从 URL 中提取 ID
+  const taskId = extractResourceLocator(
+    parameters.task,
+    /https:\/\/app\.example\.com\/tasks\/([A-Za-z0-9_-]+)/,
+  )
+
+  const task = await apiClient.getTask(token, workspaceId, projectId, taskId)
+  return { task }
+}
+```
+
+**用户选择示例及对应 invoke 参数：**
+
+```typescript
+// 用户通过下拉框选择（list 模式）
+const params = {
+  workspace: {
+    __type__: "resource_locator",
+    mode_name: "list",
+    value: "ws_abc123",
+    cached_result_label: "工程团队",
+  },
+  project: {
+    __type__: "resource_locator",
+    mode_name: "list",
+    value: "proj_xyz789",
+    cached_result_label: "Q2 路线图",
+  },
+  // 用户粘贴 URL（url 模式）
+  task: {
+    __type__: "resource_locator",
+    mode_name: "url",
+    value: "https://app.example.com/tasks/task_def456",
+  },
+}
+// extractResourceLocator(params.task, /...\/tasks\/([A-Za-z0-9_-]+)/)
+// → "task_def456"
+```
+
+### 10.10 资源映射器——动态字段映射
+
+一个记录创建工具，动态加载目标表格的列定义，让用户为每个字段填入对应的值。当用户切换所选表格时，可用字段会自动更新。
+
+**参数定义：**
+
+```typescript
+import { extractResourceLocator, extractResourceMapper } from "@choiceopen/atomemo-plugin-sdk-js"
+
+const parameters: Array<Property> = [
+  {
+    name: "credential_id",
+    type: "credential_id",
+    credential_name: "my-service",
+    required: true,
+  },
+  {
+    name: "workspace",
+    type: "resource_locator",
+    display_name: { en_US: "Workspace", zh_Hans: "工作空间" },
+    required: true,
+    modes: [{ type: "list", search_list_method: "search_workspaces", searchable: true }],
+  },
+  {
+    name: "table",
+    type: "resource_locator",
+    display_name: { en_US: "Table", zh_Hans: "表格" },
+    required: true,
+    depends_on: ["workspace"],
+    modes: [{ type: "list", search_list_method: "search_tables", searchable: true }],
+  },
+  // 字段映射器——依赖 workspace + table，任意变更时重新拉取字段
+  {
+    name: "fields",
+    type: "resource_mapper",
+    display_name: { en_US: "Fields", zh_Hans: "字段" },
+    required: true,
+    depends_on: ["workspace", "table"],
+    mapping_method: "map_table_fields",
+  },
+]
+```
+
+**resource_mapping 回调：**
+
+```typescript
+resource_mapping: {
+  map_table_fields: async ({ args }) => {
+    const token = args.credentials["my-service"].api_key
+    const tableId = extractResourceLocator(args.parameters.table)
+
+    if (!tableId) {
+      return {
+        fields: [],
+        empty_fields_notice: { en_US: "Select a table to see available fields.", zh_Hans: "请先选择一张表格以查看可用字段。" },
+      }
+    }
+
+    const schema = await apiClient.getTableSchema(token, tableId)
+    return {
+      fields: schema.columns.map(col => ({
+        id: col.id,
+        display_name: { en_US: col.name },
+        type: col.dataType,   // "string" | "number" | "boolean" 等
+        required: col.required,
+      })),
+    }
+  },
+},
+```
+
+**invoke — 提取映射并创建记录：**
+
+```typescript
+invoke: async ({ args }) => {
+  const { parameters, credentials } = args
+  const token = credentials["my-service"].api_key
+
+  const tableId = extractResourceLocator(parameters.table)
+  // 返回 Record<string, unknown> | null
+  const fieldValues = extractResourceMapper(parameters.fields)
+
+  const record = await apiClient.createRecord(token, tableId, fieldValues ?? {})
+  return { record_id: record.id }
+}
+```
+
+**用户输入示例及对应 invoke 参数：**
+
+```typescript
+// 用户在手动模式下填写 name、priority、due_date 字段
+const params = {
+  table: {
+    __type__: "resource_locator",
+    mode_name: "list",
+    value: "tbl_tasks",
+    cached_result_label: "任务",
+  },
+  fields: {
+    __type__: "resource_mapper",
+    mapping_mode: "manual",
+    value: {
+      name: "修复登录 Bug",
+      priority: 1,
+      due_date: "2026-04-01",
+      completed: false,
+    },
+  },
+}
+// extractResourceMapper(params.fields)
+// → { name: "修复登录 Bug", priority: 1, due_date: "2026-04-01", completed: false }
+```
+
+### 10.11 文件引用参数
 
 ```typescript
 const fileParameter: PropertyFileReference = {

@@ -12,6 +12,8 @@
 | `"encrypted_string"`    | `PropertyEncryptedString`    | Encrypted string        | `encrypted-input`                        |
 | `"file_ref"`            | `PropertyFileReference`      | File reference (opaque) | `input` (expression-only, no AI override) |
 | `"discriminated_union"` | `PropertyDiscriminatedUnion` | Discriminated union     | Selector + variant panel                 |
+| `"resource_locator"`    | `PropertyResourceLocator`    | Remote resource selector | Mode selector + input / searchable dropdown |
+| `"resource_mapper"`     | `PropertyResourceMapper`     | Remote field mapper     | Manual field rows / auto JSON editor     |
 
 **Support by plugin type:**
 

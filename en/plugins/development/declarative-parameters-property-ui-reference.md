@@ -100,3 +100,36 @@ interface PropertyUICommonProps {
 | `component`                  | Description                                           |
 | ---------------------------- | ----------------------------------------------------- |
 | `"credential-select"` ⭐only | Credential selector dropdown with list and new button |
+
+### 8.8 ResourceLocator UI
+
+`resource_locator` does not use a `component` key. It always renders as a two-part control:
+
+- **Left**: a mode selector dropdown listing configured modes by their `display_name`.
+- **Right**: an input that adapts to the active mode.
+
+| Mode | Right-side control |
+| ---- | ------------------ |
+| `list` | Read-only label input. Clicking opens a searchable dropdown with infinite-scroll pagination. |
+| `url` | Editable text input (URL string). |
+| `id` | Editable text input (raw ID). |
+
+Common `PropertyUICommonProps` fields such as `hint`, `placeholder`, `support_expression`, and `width` are supported.
+
+### 8.9 ResourceMapper UI
+
+`resource_mapper` does not use a `component` key. It always renders as a section with a **Mapping mode** selector at the top.
+
+| Mode | Rendering |
+| ---- | --------- |
+| `manual` | One typed input row per field returned by the `resource_mapping` callback. Each row has a delete button. An **Add Field** dropdown restores removed optional fields. |
+| `auto` | JSON code editor with `support_expression` always enabled. |
+
+Field type → input component mapping in manual mode:
+
+| Field type | Input component |
+| ---------- | --------------- |
+| `string` | Text input |
+| `number` / `integer` | Number input |
+| `boolean` | Toggle switch |
+| `object` / `array` | JSON code editor |
