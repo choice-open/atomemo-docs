@@ -12,12 +12,14 @@ The AI Agent node is the core for building intelligent AI agents. It allows AI t
 ### What is an AI Agent?
 
 AI Agent doesn't simply execute predefined flows, but:
+
 - **Autonomous Decision-making** - AI decides what to do based on task needs
 - **Tool Calling** - AI can call multiple tools to get info or perform operations
 - **Multi-step Reasoning** - AI can perform multiple rounds of thinking and tool calls
 - **Goal-oriented** - AI focuses on achieving user goals
 
 **Traditional Flow vs AI Agent**:
+
 ```
 Traditional (Fixed):
 User Input → Call API A → Call API B → Return Result
@@ -53,9 +55,11 @@ User Input → AI Analyzes Needs
 ### Basic Settings
 
 #### Model (model)
+
 Select LLM model for AI Agent.
 
 **Recommended Models**:
+
 ```yaml
 GPT-4: Strongest reasoning, suitable for complex Agent tasks
 GPT-3.5-turbo: Cost-effective, suitable for simple Agents
@@ -64,25 +68,53 @@ Claude 3 Sonnet: Balanced performance, suitable for most scenarios
 ```
 
 #### User Prompt (userPrompt)
+
 User input or task description (required).
 
 ```javascript
 // From Chat Trigger
-userPrompt: $('Chat Trigger').message
+userPrompt: $("Chat Trigger").message
 
 // With context
-userPrompt: `User question: ${$('Chat Trigger').message}
-User info: VIP Level ${$('User Info').vipLevel}
+userPrompt: `User question: ${$("Chat Trigger").message}
+User info: VIP Level ${$("User Info").vipLevel}
 Provide personalized service.`
 
 // Multi-turn conversation
-userPrompt: $('Chat Trigger').conversationHistory
+userPrompt: $("Chat Trigger").conversationHistory
+```
+
+##### Multimodal Message Support
+
+The User Prompt field in the AI Agent node now supports multimodal input. You can pass either a plain string or an array containing text and file references, enabling the agent to handle non-text content such as images and text content files.
+
+**Usage**
+
+- String mode: Enter plain text directly (e.g., "Who am I?"). This behaves the same as before.
+- Array mode: Provide an array where each element can be:
+  - A text string
+  - A file reference (or plain text) returned by the $(...) expression
+    The array mode allows you to combine text and files (e.g., images, audio, PDF) in a single user prompt, building multimodal conversations.
+
+```javascript
+// Reference a image file from other node
+userPrompt: ["How many cars are in the picture?", '{{ $("upstream_node").file_ref }}']
+
+/**
+ * Reference an array of text literal and file reference
+ * the `query` here is an array contains two elements:
+ * - "How many cars are in the picture?"
+ * - file_ref object
+ */
+userPrompt: '{{ $("Chat").query }}'
 ```
 
 #### Enable System Prompt (enableSystemPrompt)
+
 Whether to use system prompt to define Agent role and behavior.
 
 #### System Prompt (systemPrompt)
+
 Define AI Agent's role, capabilities, limits, and behavior guidelines.
 
 ```javascript
@@ -106,9 +138,11 @@ Your style:
 ```
 
 #### Structured Output (structuredOutput)
+
 Whether to require AI Agent to return structured JSON data.
 
 #### JSON Schema (jsonSchema)
+
 Define structured output data format (optional, requires structuredOutput enabled).
 
 ```json
@@ -119,21 +153,23 @@ Define structured output data format (optional, requires structuredOutput enable
       "type": "string",
       "enum": ["query_order", "check_stock", "price_inquiry", "complaint"]
     },
-    "orderId": {"type": "string"},
-    "summary": {"type": "string"},
+    "orderId": { "type": "string" },
+    "summary": { "type": "string" },
     "toolsUsed": {
       "type": "array",
-      "items": {"type": "string"}
+      "items": { "type": "string" }
     },
-    "needsHumanSupport": {"type": "boolean"}
+    "needsHumanSupport": { "type": "boolean" }
   }
 }
 ```
 
 #### Max Iterations (maxIterations)
+
 Maximum number of tool call rounds AI Agent can perform (default: 3).
 
 **Configuration Suggestions**:
+
 ```yaml
 Simple tasks: 2-3 iterations
 Medium complexity: 5-8 iterations
@@ -141,6 +177,7 @@ Complex tasks: 10-15 iterations
 ```
 
 #### Stream (stream)
+
 Whether to enable streaming output (return word by word). Default: `false`
 
 ### Connecting Tool Nodes
@@ -156,12 +193,14 @@ AI Agent Node  → Entity Recognition Tool (Extract info)
 ```
 
 **Connection Method**:
+
 1. AI Agent node has "Tool" port at bottom
 2. Connect Tool port to top of each Tool node
 3. AI auto-discovers all connected tools
 4. AI decides which to call based on tool descriptions
 
 ### Advanced Settings
+
 - **Always Output**: Output empty item on failure (default: false)
 - **Execute Once**: Only execute once with first input (default: false)
 - **Retry on Fail**: Auto retry on failure (default: false)
@@ -173,16 +212,16 @@ AI Agent Node  → Entity Recognition Tool (Extract info)
 
 ```javascript
 // AI's final answer
-$('AI Agent').output
-$('AI Agent').answer
+$("AI Agent").output
+$("AI Agent").answer
 
 // If structured output enabled
-$('AI Agent').structuredData.intent
-$('AI Agent').structuredData.orderId
+$("AI Agent").structuredData.intent
+$("AI Agent").structuredData.orderId
 
 // Execution info
-$('AI Agent').toolsUsed      // List of tools used
-$('AI Agent').iterations     // Number of iterations executed
+$("AI Agent").toolsUsed // List of tools used
+$("AI Agent").iterations // Number of iterations executed
 ```
 
 ## Workflow Examples
@@ -309,7 +348,7 @@ Workflow:
 5. Ask if more help needed`
 
 // Bad
-systemPrompt: "You are customer service"  // Too simple
+systemPrompt: "You are customer service" // Too simple
 ```
 
 ### 2. Write Good Tool Descriptions
@@ -378,6 +417,7 @@ HTTP Request Node
 ### Q: AI Agent vs LLM Node?
 
 **A**:
+
 - **LLM Node**: Pure text generation, no tool calling, single round
 - **AI Agent Node**: Text generation + tool calling, multi-round iteration, autonomous
 
@@ -386,6 +426,7 @@ Use LLM for text replies only, use AI Agent for complex tasks requiring data que
 ### Q: How does AI choose which tool to call?
 
 **A**: Based on:
+
 1. Tool description matches needs
 2. Current conversation context
 3. Task goal requirements
@@ -396,6 +437,7 @@ Optimize by writing detailed tool descriptions with use cases and examples.
 ### Q: Can AI Agent get stuck in infinite loop?
 
 **A**: Protected by:
+
 1. **maxIterations** - Limits max iterations
 2. **Timeout mechanism** - Execution time limit
 3. **Duplicate detection** - Detects repeated tool calls
@@ -403,6 +445,7 @@ Optimize by writing detailed tool descriptions with use cases and examples.
 ### Q: How to debug AI Agent?
 
 **A**:
+
 ```javascript
 Code Node (after Agent)
   Code: |

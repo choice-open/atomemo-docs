@@ -12,12 +12,14 @@ AI Agent 节点是构建智能 AI 代理的核心节点。它允许 AI 根据用
 ### 什么是 AI Agent？
 
 AI Agent 不是简单地执行预定义的流程，而是：
+
 - **自主决策** - AI 根据任务需求决定做什么
 - **工具调用** - AI 可以调用多个工具获取信息或执行操作
 - **多步推理** - AI 可以执行多轮思考和工具调用
 - **目标导向** - AI 专注于完成用户的目标
 
 **传统流程 vs AI Agent**:
+
 ```
 传统流程 (固定):
 用户输入 → 调用 API A → 调用 API B → 返回结果
@@ -42,6 +44,7 @@ AI Agent (智能):
 ## 使用场景
 
 ### 典型应用
+
 - **智能客服** - 自动查询订单、库存、物流等信息
 - **个人助理** - 管理日程、发送邮件、查询信息
 - **数据分析助手** - 查询数据、生成图表、分析趋势
@@ -58,10 +61,12 @@ AI Agent (智能):
 选择用于 AI Agent 的大语言模型。
 
 **字段属性**:
+
 - 必填字段
 - 支持主流 LLM 提供商
 
 **推荐模型**:
+
 ```yaml
 GPT-4: 最强推理能力，适合复杂 Agent 任务
 GPT-3.5-turbo: 性价比高，适合简单 Agent
@@ -70,6 +75,7 @@ Claude 3 Sonnet: 平衡性能，适合大多数场景
 ```
 
 **选择建议**:
+
 - **复杂任务**: GPT-4, Claude 3 Opus (更好的推理和工具选择)
 - **简单任务**: GPT-3.5, Claude 3 Haiku (更快更便宜)
 - **工具较多**: GPT-4, Claude 3 系列 (更准确的工具选择)
@@ -79,6 +85,7 @@ Claude 3 Sonnet: 平衡性能，适合大多数场景
 用户的输入或任务描述。
 
 **字段属性**:
+
 - 必填字段
 - 支持表达式
 
@@ -86,22 +93,47 @@ Claude 3 Sonnet: 平衡性能，适合大多数场景
 
 ```javascript
 // 1. 从 Chat Trigger 获取
-userPrompt: $('Chat Trigger').message
+userPrompt: $("Chat Trigger").message
 
 // 2. 从 Webhook 获取
-userPrompt: $('Webhook Trigger').body.query
+userPrompt: $("Webhook Trigger").body.query
 
 // 3. 组合上下文
-userPrompt: `用户问题: ${$('Chat Trigger').message}
+userPrompt: `用户问题: ${$("Chat Trigger").message}
 
 用户信息:
-- ID: ${$('Chat Trigger').userId}
-- 会员等级: ${$('User Info').vipLevel}
+- ID: ${$("Chat Trigger").userId}
+- 会员等级: ${$("User Info").vipLevel}
 
 请根据用户等级提供个性化服务。`
 
 // 4. 多轮对话
-userPrompt: $('Chat Trigger').conversationHistory
+userPrompt: $("Chat Trigger").conversationHistory
+```
+
+##### 多模态消息支持
+
+AI Agent 节点的用户提示（User Prompt）支持多模态输入。您可以在提示框中传入一个字符串，或一个包含文本与文件引用的数组，使 Agent 能够处理图像等非文本内容。
+
+**用法说明**
+
+- 字符串模式：直接输入文本，如 "我是谁？"。
+- 数组模式：提供一个数组，元素可以是：
+  - 文本字符串
+  - 通过表达式 $(...) 返回的文件引用（file ref）或文本内容
+    数组模式允许您将文本与文件（如图片、PDF等）混合发送给 AI Agent，从而构建多模态对话。
+
+```javascript
+// 从其他节点引用一个图片
+userPrompt: ["这张图片里有几辆汽车？", '{{ $("upstream_node").file_ref }}']
+
+/**
+ * 引用一个包含文本和文件引用的数组
+ * 这里的 `query` 参数实际是一个包含两个元素的数组:
+ * - "这张图片里有几辆汽车？"
+ * - file_ref object
+ */
+userPrompt: '{{ $("Chat").query }}'
 ```
 
 #### 启用系统提示 (enableSystemPrompt)
@@ -109,6 +141,7 @@ userPrompt: $('Chat Trigger').conversationHistory
 是否使用系统提示词来定义 Agent 的角色和行为。
 
 **字段属性**:
+
 - 布尔值
 - 默认值: `false`
 
@@ -117,6 +150,7 @@ userPrompt: $('Chat Trigger').conversationHistory
 定义 AI Agent 的角色、能力、限制和行为准则。
 
 **字段属性**:
+
 - 可选字段(需要启用 enableSystemPrompt)
 - 支持表达式
 - 支持多行文本
@@ -161,10 +195,10 @@ systemPrompt: `你是订单处理助手。
 - 异常情况立即上报`
 
 // 3. 带上下文的动态提示
-systemPrompt: `你是 ${$('Config').companyName} 的智能助手。
+systemPrompt: `你是 ${$("Config").companyName} 的智能助手。
 
 当前时间: ${new Date().toISOString()}
-用户等级: ${$('User Info').vipLevel}
+用户等级: ${$("User Info").vipLevel}
 可用工具: 订单查询、库存查询、价格计算
 
 根据用户等级调整服务:
@@ -178,10 +212,12 @@ systemPrompt: `你是 ${$('Config').companyName} 的智能助手。
 是否要求 AI Agent 返回结构化的 JSON 数据。
 
 **字段属性**:
+
 - 布尔值
 - 默认值: `false`
 
 **使用场景**:
+
 - 需要提取特定信息
 - 需要后续节点处理
 - 需要保存到数据库
@@ -191,6 +227,7 @@ systemPrompt: `你是 ${$('Config').companyName} 的智能助手。
 定义结构化输出的数据格式。
 
 **字段属性**:
+
 - 可选字段(需要启用 structuredOutput)
 - 支持完整的 JSON Schema 规范
 
@@ -216,7 +253,7 @@ systemPrompt: `你是 ${$('Config').companyName} 的智能助手。
     "toolsUsed": {
       "type": "array",
       "description": "使用的工具列表",
-      "items": {"type": "string"}
+      "items": { "type": "string" }
     },
     "needsHumanSupport": {
       "type": "boolean",
@@ -231,15 +268,18 @@ systemPrompt: `你是 ${$('Config').companyName} 的智能助手。
 AI Agent 最多可以执行多少轮工具调用。
 
 **字段属性**:
+
 - 数字类型
 - 默认值: `3`
 
 **说明**:
+
 - 每次工具调用算一次迭代
 - 防止 Agent 陷入无限循环
 - 超过限制会停止执行
 
 **配置建议**:
+
 ```yaml
 简单任务: 2-3 次 (查询1-2个信息源)
 中等复杂: 5-8 次 (多个工具组合)
@@ -251,10 +291,12 @@ AI Agent 最多可以执行多少轮工具调用。
 是否启用流式输出(逐字返回)。
 
 **字段属性**:
+
 - 布尔值
 - 默认值: `false`
 
 **使用场景**:
+
 - 实时对话体验
 - 长文本生成
 - 提升用户体验
@@ -272,6 +314,7 @@ AI Agent Node  → Entity Recognition Tool (提取信息)
 ```
 
 **连接方式**:
+
 1. AI Agent 节点底部有 "Tool" 端口
 2. 将 Tool 端口连接到各个 Tool 节点的顶部
 3. AI 会自动发现所有连接的工具
@@ -280,24 +323,31 @@ AI Agent Node  → Entity Recognition Tool (提取信息)
 ### 高级设置(设置面板)
 
 #### 总是输出 (alwaysOutput)
+
 执行失败时是否也输出空项。**默认**: `false`
 
 #### 仅执行一次 (executeOnce)
+
 是否仅使用第一个输入项执行一次。**默认**: `false`
 
 #### 失败重试 (retryOnFail)
+
 执行失败时是否自动重试。**默认**: `false`
 
 #### 最大重试次数 (maxTries)
+
 失败后最多重试几次。**默认**: `3`
 
 #### 重试间隔 (waitBetweenTries)
+
 重试之间的等待时间(毫秒)。**默认**: `1000`
 
 #### 错误处理 (onError)
+
 如何处理执行失败。
 
 **可选值**:
+
 - `stopWorkflow` - 停止整个工作流(默认)
 - `continueRegularOutput` - 继续执行
 - `continueErrorOutput` - 继续并输出错误
@@ -308,17 +358,17 @@ AI Agent 节点的输出包含:
 
 ```javascript
 // 1. AI 的最终回答
-$('AI Agent').output
-$('AI Agent').answer
+$("AI Agent").output
+$("AI Agent").answer
 
 // 2. 如果启用结构化输出
-$('AI Agent').structuredData.intent
-$('AI Agent').structuredData.orderId
+$("AI Agent").structuredData.intent
+$("AI Agent").structuredData.orderId
 
 // 3. 执行信息(可能包含)
-$('AI Agent').toolsUsed      // 使用的工具列表
-$('AI Agent').iterations     // 执行的迭代次数
-$('AI Agent').thinkingProcess // 思考过程(如果启用)
+$("AI Agent").toolsUsed // 使用的工具列表
+$("AI Agent").iterations // 执行的迭代次数
+$("AI Agent").thinkingProcess // 思考过程(如果启用)
 ```
 
 ## 工作流示例
@@ -572,7 +622,7 @@ systemPrompt: `你是客服助手。
 - 敏感操作需确认`
 
 // 不好的 System Prompt
-systemPrompt: "你是客服"  // 太简单，Agent 不知道该做什么
+systemPrompt: "你是客服" // 太简单，Agent 不知道该做什么
 ```
 
 ### 2. 为每个工具写好描述
@@ -754,15 +804,16 @@ Code Node
 
 **A**:
 
-| 特性 | LLM 节点 | AI Agent 节点 |
-|------|---------|--------------|
-| 功能 | 纯文本生成 | 文本生成 + 工具调用 |
-| 工具调用 | 不支持 | 核心功能 |
-| 多步推理 | 单轮 | 多轮迭代 |
-| 适用场景 | 对话、内容生成 | 复杂任务、自动化 |
-| 自主性 | 无，按提示生成 | 高，自主决策 |
+| 特性     | LLM 节点       | AI Agent 节点       |
+| -------- | -------------- | ------------------- |
+| 功能     | 纯文本生成     | 文本生成 + 工具调用 |
+| 工具调用 | 不支持         | 核心功能            |
+| 多步推理 | 单轮           | 多轮迭代            |
+| 适用场景 | 对话、内容生成 | 复杂任务、自动化    |
+| 自主性   | 无，按提示生成 | 高，自主决策        |
 
 **选择建议**:
+
 - 只需要文本回复 → 使用 **LLM 节点**
 - 需要查询数据、执行操作 → 使用 **AI Agent 节点**
 
@@ -770,12 +821,14 @@ Code Node
 
 **A**:
 AI 根据以下因素决定:
+
 1. **工具描述** - 工具功能是否匹配需求
 2. **当前上下文** - 对话中提到了什么
 3. **任务目标** - 完成任务需要什么信息
 4. **之前的调用** - 已经获取了什么信息
 
 **优化工具选择**:
+
 - 工具描述要详细明确
 - 说明使用场景和示例
 - 区分相似工具的差异
@@ -785,11 +838,13 @@ AI 根据以下因素决定:
 
 **A**:
 有保护机制:
+
 1. **maxIterations** - 限制最大迭代次数
 2. **超时机制** - 执行时间上限
 3. **重复检测** - 检测是否重复调用同一工具
 
 **预防措施**:
+
 ```javascript
 System Prompt: `工具调用规则:
 - 同一工具不要重复调用超过2次
@@ -804,6 +859,7 @@ maxIterations: 5  // 设置合理上限
 **A**:
 
 **方案 1: 使用 Code Tool 预处理**
+
 ```
 HTTP Request Tool (返回大量数据)
   → Code Tool (提取关键信息)
@@ -817,6 +873,7 @@ HTTP Request Tool (返回大量数据)
 ```
 
 **方案 2: 在工具描述中说明**
+
 ```javascript
 Tool Description: `查询产品列表。
 返回: 最多10个产品，包含 id, name, price, inStock
@@ -824,6 +881,7 @@ Tool Description: `查询产品列表。
 ```
 
 **方案 3: 分页查询**
+
 ```javascript
 Tool Description: `搜索产品，支持分页。
 输入: query, page (默认1), limit (默认10)
@@ -837,18 +895,21 @@ Tool Description: `搜索产品，支持分页。
 **优化策略**:
 
 **1. 使用更快的模型**
+
 ```javascript
 简单场景: GPT-3.5-turbo, Claude 3 Haiku
 // 响应更快
 ```
 
 **2. 减少工具数量**
+
 ```javascript
 // 只注册必要的工具，不超过5-8个
 // 工具太多会增加选择时间
 ```
 
 **3. 优化工具性能**
+
 ```javascript
 // 确保工具 API 响应快
 // 使用缓存
@@ -856,12 +917,14 @@ Tool Description: `搜索产品，支持分页。
 ```
 
 **4. 启用流式输出**
+
 ```javascript
 stream: true
 // 边生成边返回，提升用户体验
 ```
 
 **5. 异步处理**
+
 ```javascript
 // 对于非紧急任务，后台处理
 System Prompt: "如果任务需要较长时间，告诉用户'正在处理，稍后通知您'"
@@ -874,6 +937,7 @@ System Prompt: "如果任务需要较长时间，告诉用户'正在处理，稍
 **调试技巧**:
 
 **1. 启用详细日志**
+
 ```javascript
 Code Node (在 Agent 之后)
   Code: |
@@ -889,6 +953,7 @@ Code Node (在 Agent 之后)
 ```
 
 **2. 测试单个工具**
+
 ```
 // 先单独测试每个工具是否正常工作
 Manual Trigger
@@ -897,15 +962,17 @@ Manual Trigger
 ```
 
 **3. 简化场景测试**
+
 ```javascript
 // 从简单场景开始
-userPrompt: "查询订单 ORD-12345"  // 明确的单一任务
+userPrompt: "查询订单 ORD-12345" // 明确的单一任务
 
 // 逐步增加复杂度
 userPrompt: "我的订单到哪了? 如果还没发货能加急吗?"
 ```
 
 **4. 查看中间步骤**
+
 ```javascript
 // 如果模型支持，启用 verbose 模式
 // 查看 Agent 的思考过程
@@ -947,6 +1014,7 @@ Chat Trigger
 **安全措施**:
 
 **1. 在 System Prompt 中明确规则**
+
 ```javascript
 systemPrompt: `安全规则:
 - 不要显示完整的密码、信用卡号
@@ -956,6 +1024,7 @@ systemPrompt: `安全规则:
 ```
 
 **2. 工具层面控制**
+
 ```javascript
 // 工具描述中说明权限要求
 Tool Description: `查询用户详细信息(需要管理员权限)。
@@ -972,6 +1041,7 @@ Code Tool
 ```
 
 **3. 输出过滤**
+
 ```javascript
 Code Node (在 Agent 之后)
   Code: |
