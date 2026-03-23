@@ -57,7 +57,7 @@ Each element in the `modes` array configures one input mode, determined by its `
 {
   type: "url"
 
-  /** Label shown in the mode selector. Falls back to "By Url" if not set. Recommended max 5 characters; longer values may be truncated. */
+  /** Label shown in the mode selector. Falls back to "By URL" if not set. Recommended max 5 characters; longer values may be truncated. */
   display_name?: I18nText | null
 
   /** Placeholder text for the URL input. */

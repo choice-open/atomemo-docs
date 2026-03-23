@@ -405,11 +405,11 @@ export default withMermaid({
                           link: "/zh-hans/plugins/development/declarative-parameters-special-type-properties",
                         },
                         {
-                          text: "Resource Locator",
+                          text: "资源定位器（Resource Locator）",
                           link: "/zh-hans/plugins/development/declarative-parameters-resource-locator",
                         },
                         {
-                          text: "Resource Mapper",
+                          text: "资源映射器（Resource Mapper）",
                           link: "/zh-hans/plugins/development/declarative-parameters-resource-mapper",
                         },
                         {
