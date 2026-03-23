@@ -100,3 +100,36 @@ interface PropertyUICommonProps {
 | `component`                    | 说明                                           |
 | ------------------------------ | ---------------------------------------------- |
 | `"credential-select"` ⭐仅选项 | 凭证选择器下拉框（包含已有凭证列表和新建按钮） |
+
+### 8.8 ResourceLocator UI
+
+`resource_locator` 不使用 `component` 键，始终渲染为双部分控件：
+
+- **左侧**：模式选择器下拉框，列出各模式的 `display_name`。
+- **右侧**：随当前模式自适应变化的输入控件。
+
+| 模式 | 右侧控件 |
+| ---- | -------- |
+| `list` | 只读标签输入框。点击后打开带无限滚动分页的可搜索下拉框。 |
+| `url` | 可编辑文本输入框（URL 字符串）。 |
+| `id` | 可编辑文本输入框（原始 ID）。 |
+
+`PropertyUICommonProps` 中的 `hint`、`placeholder`、`support_expression`、`width` 等通用字段均受支持。
+
+### 8.9 ResourceMapper UI
+
+`resource_mapper` 不使用 `component` 键，始终渲染为顶部带**映射模式**选择器的区块。
+
+| 模式 | 渲染效果 |
+| ---- | -------- |
+| `manual` | 每个字段对应一行带类型的输入项（由 `resource_mapping` 回调返回），每行有删除按钮。**添加字段**下拉框可恢复已删除的可选字段。 |
+| `auto` | 支持表达式输入的 JSON 代码编辑器（`support_expression` 始终开启）。 |
+
+手动模式下字段类型与输入组件的对应关系：
+
+| 字段类型 | 输入组件 |
+| -------- | -------- |
+| `string` | 文本输入框 |
+| `number` / `integer` | 数字输入框 |
+| `boolean` | 开关 |
+| `object` / `array` | JSON 代码编辑器 |

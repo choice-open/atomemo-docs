@@ -13,6 +13,8 @@ When `ui` is not specified, the system uses these defaults:
 | `encrypted_string`    | `encrypted-input`        | Password input box                                 |
 | `file_ref`            | `input`                  | Expression-only input, AI override always disabled |
 | `discriminated_union` | `select` (discriminator) | Selector + variant panel                           |
+| `resource_locator`    | Mode selector + input    | List mode: searchable dropdown; url/id modes: text input |
+| `resource_mapper`     | Manual field rows        | One typed input per field; auto mode: JSON editor  |
 
 ### Array Section Auto Mode Selection
 

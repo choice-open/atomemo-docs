@@ -405,6 +405,14 @@ export default withMermaid({
                           link: "/zh-hans/plugins/development/declarative-parameters-special-type-properties",
                         },
                         {
+                          text: "Resource Locator",
+                          link: "/zh-hans/plugins/development/declarative-parameters-resource-locator",
+                        },
+                        {
+                          text: "Resource Mapper",
+                          link: "/zh-hans/plugins/development/declarative-parameters-resource-mapper",
+                        },
+                        {
                           text: "PropertyUI 组件参考",
                           link: "/zh-hans/plugins/development/declarative-parameters-property-ui-reference",
                         },
@@ -739,6 +747,14 @@ export default withMermaid({
                         {
                           text: "Special Type Properties",
                           link: "/en/plugins/development/declarative-parameters-special-type-properties",
+                        },
+                        {
+                          text: "Resource Locator",
+                          link: "/en/plugins/development/declarative-parameters-resource-locator",
+                        },
+                        {
+                          text: "Resource Mapper",
+                          link: "/en/plugins/development/declarative-parameters-resource-mapper",
                         },
                         {
                           text: "PropertyUI Reference",

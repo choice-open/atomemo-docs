@@ -575,7 +575,270 @@ const scrapeTool: ToolDefinition = {
 }
 ```
 
-### 10.9 File Reference Parameter
+### 10.9 Cascading Resource Locator
+
+A task management tool where users first select a workspace, then a project within that workspace, and finally a task within that project. Each level depends on the one above it.
+
+**Parameter Definition:**
+
+```typescript
+import { extractResourceLocator } from "@choiceopen/atomemo-plugin-sdk-js"
+
+const parameters: Array<Property> = [
+  {
+    name: "credential_id",
+    type: "credential_id",
+    credential_name: "my-service",
+    required: true,
+  },
+  // Level 1: Workspace — no dependencies
+  {
+    name: "workspace",
+    type: "resource_locator",
+    display_name: { en_US: "Workspace" },
+    required: true,
+    modes: [
+      { type: "list", search_list_method: "search_workspaces", searchable: true },
+      { type: "id", placeholder: { en_US: "Enter workspace ID" } },
+    ],
+  },
+  // Level 2: Project — reset when workspace changes
+  {
+    name: "project",
+    type: "resource_locator",
+    display_name: { en_US: "Project" },
+    required: true,
+    depends_on: ["workspace"],
+    modes: [
+      { type: "list", search_list_method: "search_projects", searchable: true },
+      { type: "id", placeholder: { en_US: "Enter project ID" } },
+    ],
+  },
+  // Level 3: Task — reset when workspace or project changes
+  {
+    name: "task",
+    type: "resource_locator",
+    display_name: { en_US: "Task" },
+    required: true,
+    depends_on: ["workspace", "project"],
+    modes: [
+      { type: "list", search_list_method: "search_tasks", searchable: true },
+      {
+        type: "url",
+        placeholder: { en_US: "https://app.example.com/tasks/..." },
+        extract_value: {
+          type: "regex",
+          regex: "https://app\\.example\\.com/tasks/([A-Za-z0-9_-]+)",
+        },
+      },
+      { type: "id", placeholder: { en_US: "Enter task ID" } },
+    ],
+  },
+]
+```
+
+**locator_list Callbacks:**
+
+```typescript
+locator_list: {
+  search_workspaces: async ({ credentials, filter }) => {
+    const token = credentials["my-service"].api_key
+    const workspaces = await apiClient.listWorkspaces(token)
+    return {
+      results: workspaces
+        .filter(w => !filter || w.name.toLowerCase().includes(filter.toLowerCase()))
+        .map(w => ({ label: w.name, value: w.id, url: w.url })),
+    }
+  },
+
+  search_projects: async ({ parameters, credentials, filter }) => {
+    const workspaceId = extractResourceLocator(parameters.workspace)
+    if (!workspaceId) return { results: [] }
+    const token = credentials["my-service"].api_key
+    const projects = await apiClient.listProjects(token, workspaceId)
+    return {
+      results: projects
+        .filter(p => !filter || p.name.toLowerCase().includes(filter.toLowerCase()))
+        .map(p => ({ label: p.name, value: p.id })),
+    }
+  },
+
+  search_tasks: async ({ parameters, credentials, filter }) => {
+    const projectId = extractResourceLocator(parameters.project)
+    if (!projectId) return { results: [] }
+    const token = credentials["my-service"].api_key
+    const tasks = await apiClient.listTasks(token, projectId)
+    return {
+      results: tasks
+        .filter(t => !filter || t.title.toLowerCase().includes(filter.toLowerCase()))
+        .map(t => ({ label: t.title, value: t.id })),
+    }
+  },
+},
+```
+
+**invoke — Extract values and call API:**
+
+```typescript
+invoke: async ({ args }) => {
+  const { parameters, credentials } = args
+  const token = credentials["my-service"].api_key
+
+  const workspaceId = extractResourceLocator(parameters.workspace)
+  const projectId = extractResourceLocator(parameters.project)
+  // For url mode, pass a regex to extract the ID from the URL
+  const taskId = extractResourceLocator(
+    parameters.task,
+    /https:\/\/app\.example\.com\/tasks\/([A-Za-z0-9_-]+)/,
+  )
+
+  const task = await apiClient.getTask(token, workspaceId, projectId, taskId)
+  return { task }
+}
+```
+
+**User selection example and corresponding invoke parameters:**
+
+```typescript
+// User selects from dropdown (list mode)
+const params = {
+  workspace: {
+    __type__: "resource_locator",
+    mode_name: "list",
+    value: "ws_abc123",
+    cached_result_label: "Engineering Team",
+  },
+  project: {
+    __type__: "resource_locator",
+    mode_name: "list",
+    value: "proj_xyz789",
+    cached_result_label: "Q2 Roadmap",
+  },
+  // User pastes a URL (url mode)
+  task: {
+    __type__: "resource_locator",
+    mode_name: "url",
+    value: "https://app.example.com/tasks/task_def456",
+  },
+}
+// extractResourceLocator(params.task, /...\/tasks\/([A-Za-z0-9_-]+)/)
+// → "task_def456"
+```
+
+### 10.10 Resource Mapper — Dynamic Field Mapping
+
+A record creation tool that dynamically loads the target table's column definitions, allowing users to input values for each field. When the user switches the selected table, the available fields are automatically updated.
+
+**Parameter Definition:**
+
+```typescript
+import { extractResourceLocator, extractResourceMapper } from "@choiceopen/atomemo-plugin-sdk-js"
+
+const parameters: Array<Property> = [
+  {
+    name: "credential_id",
+    type: "credential_id",
+    credential_name: "my-service",
+    required: true,
+  },
+  {
+    name: "workspace",
+    type: "resource_locator",
+    display_name: { en_US: "Workspace" },
+    required: true,
+    modes: [{ type: "list", search_list_method: "search_workspaces", searchable: true }],
+  },
+  {
+    name: "table",
+    type: "resource_locator",
+    display_name: { en_US: "Table" },
+    required: true,
+    depends_on: ["workspace"],
+    modes: [{ type: "list", search_list_method: "search_tables", searchable: true }],
+  },
+  // Field mapper — depends on workspace + table, re-fetches fields when either changes
+  {
+    name: "fields",
+    type: "resource_mapper",
+    display_name: { en_US: "Fields" },
+    required: true,
+    depends_on: ["workspace", "table"],
+    mapping_method: "map_table_fields",
+  },
+]
+```
+
+**resource_mapping Callback:**
+
+```typescript
+resource_mapping: {
+  map_table_fields: async ({ args }) => {
+    const token = args.credentials["my-service"].api_key
+    const tableId = extractResourceLocator(args.parameters.table)
+
+    if (!tableId) {
+      return {
+        fields: [],
+        empty_fields_notice: { en_US: "Select a table to see available fields." },
+      }
+    }
+
+    const schema = await apiClient.getTableSchema(token, tableId)
+    return {
+      fields: schema.columns.map(col => ({
+        id: col.id,
+        display_name: { en_US: col.name },
+        type: col.dataType,   // "string" | "number" | "boolean" etc.
+        required: col.required,
+      })),
+    }
+  },
+},
+```
+
+**invoke — Extract mapping and create record:**
+
+```typescript
+invoke: async ({ args }) => {
+  const { parameters, credentials } = args
+  const token = credentials["my-service"].api_key
+
+  const tableId = extractResourceLocator(parameters.table)
+  // Returns Record<string, unknown> | null
+  const fieldValues = extractResourceMapper(parameters.fields)
+
+  const record = await apiClient.createRecord(token, tableId, fieldValues ?? {})
+  return { record_id: record.id }
+}
+```
+
+**User input example and corresponding invoke parameters:**
+
+```typescript
+// User fills in name, priority, and due_date fields in manual mode
+const params = {
+  table: {
+    __type__: "resource_locator",
+    mode_name: "list",
+    value: "tbl_tasks",
+    cached_result_label: "Tasks",
+  },
+  fields: {
+    __type__: "resource_mapper",
+    mapping_mode: "manual",
+    value: {
+      name: "Fix login bug",
+      priority: 1,
+      due_date: "2026-04-01",
+      completed: false,
+    },
+  },
+}
+// extractResourceMapper(params.fields)
+// → { name: "Fix login bug", priority: 1, due_date: "2026-04-01", completed: false }
+```
+
+### 10.11 File Reference Parameter
 
 ```typescript
 const fileParameter: PropertyFileReference = {
@@ -586,7 +849,7 @@ const fileParameter: PropertyFileReference = {
 }
 ```
 
-**User input and corresponding invoke behavior**:
+**User input and corresponding invoke behavior:**
 
 ```typescript
 // User configures an upstream node (e.g. File Upload) that produces file references
