@@ -230,6 +230,12 @@ export default withMermaid({
                         {
                           text: "Chat 触发器",
                           link: "/zh-hans/guide/workflow/nodes/trigger-nodes/chat",
+                          items: [
+                            {
+                              text: "API Key 使用指南",
+                              link: "/zh-hans/guide/workflow/nodes/trigger-nodes/chat-api-key",
+                            },
+                          ],
                         },
                         {
                           text: "Manual 触发器",
@@ -571,6 +577,12 @@ export default withMermaid({
                         {
                           text: "Chat Trigger",
                           link: "/en/guide/workflow/nodes/trigger-nodes/chat",
+                          items: [
+                            {
+                              text: "API Key Usage",
+                              link: "/en/guide/workflow/nodes/trigger-nodes/chat-api-key",
+                            },
+                          ],
                         },
                         {
                           text: "Manual Trigger",
