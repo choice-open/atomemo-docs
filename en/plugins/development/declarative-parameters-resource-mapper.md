@@ -48,12 +48,12 @@ interface ResourceMapperValue {
 
 ---
 
-### ResourceMapperSchemaField
+### ToolResourceMappingField
 
 The structure of each field returned by a `resource_mapping` callback:
 
 ```typescript
-interface ResourceMapperSchemaField {
+interface ToolResourceMappingField {
   /** Unique field identifier, used as the key in the mapped value. */
   id: string
 
@@ -65,6 +65,11 @@ interface ResourceMapperSchemaField {
 
   /** Whether the field is required. Required fields cannot be removed in manual mode. */
   required?: boolean | null
+
+  /** Optional field-level hint shown next to the input field in manual mode. */
+  ui?: {
+    hint?: I18nText | null
+  } | null
 }
 ```
 
@@ -83,7 +88,7 @@ type ToolResourceMappingFunction = (input: {
   }
 }) => Promise<{
   /** List of available fields the user can map. */
-  fields: Array<ResourceMapperSchemaField>
+  fields: Array<ToolResourceMappingField>
   /** Optional message shown when the field list is empty. */
   empty_fields_notice?: I18nText | null
 }>
@@ -112,6 +117,9 @@ const myTool: ToolDefinition = {
           display_name: { en_US: col.name },
           type: col.dataType,
           required: col.required,
+          ui: {
+            hint: col.description ? { en_US: col.description } : null,
+          },
         })),
       }
     },
@@ -126,6 +134,8 @@ const myTool: ToolDefinition = {
 
 > [!IMPORTANT]
 > When the available fields depend on another parameter (e.g., columns of a selected table), always declare `depends_on` on the mapper. This causes the UI to re-fetch the field schema and reset the mapping when the referenced parameter changes.
+>
+> In the schema, `depends_on` is only supported on `resource_locator` and `resource_mapper`. The upstream parameters it references should be `string`, `number` / `integer`, `boolean`, or `resource_locator` properties.
 
 ```typescript
 const fieldsParam: PropertyResourceMapper = {
@@ -200,8 +210,9 @@ The field renders as a block with a **mapping mode** selector:
    | `object` / `array` | JSON code editor |
 
 3. Required fields cannot be removed.
-4. An **Add Field** dropdown lists all optional fields that have been removed, allowing the user to restore them.
-5. If no fields are available, the `empty_fields_notice` returned by the callback is displayed.
+4. If a field definition includes `ui.hint`, the hint is shown below that field's input row.
+5. An **Add Field** dropdown lists all optional fields that have been removed, allowing the user to restore them.
+6. If no fields are available, the `empty_fields_notice` returned by the callback is displayed.
 
 #### Auto Mode
 

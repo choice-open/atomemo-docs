@@ -790,6 +790,9 @@ resource_mapping: {
         display_name: { en_US: col.name },
         type: col.dataType,   // "string" | "number" | "boolean" 等
         required: col.required,
+        ui: {
+          hint: col.description ? { en_US: col.description } : null,
+        },
       })),
     }
   },
@@ -875,4 +878,3 @@ invoke: async ({ args, context }) => {
   return { success: true, filename, mimeType }
 }
 ```
-

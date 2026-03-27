@@ -48,12 +48,12 @@ interface ResourceMapperValue {
 
 ---
 
-### ResourceMapperSchemaField
+### ToolResourceMappingField
 
 `resource_mapping` 回调返回的每个字段的结构：
 
 ```typescript
-interface ResourceMapperSchemaField {
+interface ToolResourceMappingField {
   /** 唯一字段标识符，用作映射值中的键名。 */
   id: string
 
@@ -65,6 +65,11 @@ interface ResourceMapperSchemaField {
 
   /** 该字段是否必填。必填字段在手动模式中不可删除。 */
   required?: boolean | null
+
+  /** 可选字段级提示，会在手动模式下显示在字段标签旁边。 */
+  ui?: {
+    hint?: I18nText | null
+  } | null
 }
 ```
 
@@ -83,7 +88,7 @@ type ToolResourceMappingFunction = (input: {
   }
 }) => Promise<{
   /** 用户可以映射的可用字段列表。 */
-  fields: Array<ResourceMapperSchemaField>
+  fields: Array<ToolResourceMappingField>
   /** 字段列表为空时显示的提示信息（可选）。 */
   empty_fields_notice?: I18nText | null
 }>
@@ -112,6 +117,9 @@ const myTool: ToolDefinition = {
           display_name: { en_US: col.name },
           type: col.dataType,
           required: col.required,
+          ui: {
+            hint: col.description ? { en_US: col.description } : null,
+          },
         })),
       }
     },
@@ -126,6 +134,8 @@ const myTool: ToolDefinition = {
 
 > [!IMPORTANT]
 > 当可用字段依赖于另一个参数（例如所选表格的列）时，务必在映射器上声明 `depends_on`。这会使 UI 在所引用的参数发生变化时重新拉取字段 Schema 并重置映射。
+>
+> 按 schema 定义，`depends_on` 只支持声明在 `resource_locator` 和 `resource_mapper` 上；它所依赖的上游参数应为 `string`、`number` / `integer`、`boolean` 或 `resource_locator` 类型。
 
 ```typescript
 const fieldsParam: PropertyResourceMapper = {
@@ -200,8 +210,9 @@ invoke: async ({ args }) => {
    | `object` / `array` | JSON 代码编辑器 |
 
 3. 必填字段不可删除。
-4. **添加字段**下拉框列出所有已被删除的可选字段，方便用户恢复。
-5. 若无可用字段，则显示回调返回的 `empty_fields_notice` 提示信息。
+4. 如果字段定义中带有 `ui.hint`，会在该字段输入项下方显示提示文本。
+5. **添加字段**下拉框列出所有已被删除的可选字段，方便用户恢复。
+6. 若无可用字段，则显示回调返回的 `empty_fields_notice` 提示信息。
 
 #### 自动模式
 
