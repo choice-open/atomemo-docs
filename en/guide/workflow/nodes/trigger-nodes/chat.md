@@ -204,6 +204,7 @@ LLM Node
 
 ## Next Steps
 
+- [API Key Usage](/en/guide/workflow/nodes/trigger-nodes/chat-api-key) - Call your chatflow via API with an API key
 - [Manual Trigger Node](/en/guide/workflow/nodes/trigger-nodes/manual) - Learn manual trigger
 - [AI Agent Node](/en/guide/workflow/nodes/action-nodes/ai-agent) - Build intelligent assistants
 - [Answer Node](/en/guide/workflow/nodes/action-nodes/answer) - Reply to users

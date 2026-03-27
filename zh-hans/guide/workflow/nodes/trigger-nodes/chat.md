@@ -630,6 +630,7 @@ Code Node
 
 ## 下一步
 
+- [API Key 使用指南](/zh-hans/guide/workflow/nodes/trigger-nodes/chat-api-key) - 使用 API Key 通过 API 调用 Chatflow
 - [Manual Trigger 节点](/zh-hans/guide/workflow/nodes/trigger-nodes/manual) - 了解手动触发方式
 - [AI Agent 节点](/zh-hans/guide/workflow/nodes/action-nodes/ai-agent) - 构建智能对话助手
 - [Answer 节点](/zh-hans/guide/workflow/nodes/action-nodes/answer) - 回复用户消息
