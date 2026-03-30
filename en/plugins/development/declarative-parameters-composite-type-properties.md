@@ -216,10 +216,15 @@ interface PropertyArray extends PropertyBase {
 
 ### 6.3 PropertyDiscriminatedUnion
 
-Switch between different parameter sets based on a "discriminator field" value. This is the most powerful combination pattern.
+Switch between different parameter sets based on a discriminator field value.
+
+`PropertyDiscriminatedUnion` is **not** a top-level property in the `parameters` array. It can only appear in places that explicitly allow it today:
+
+- `PropertyArray.items`
+- `PropertyObject.additional_properties`
 
 ```typescript
-interface PropertyDiscriminatedUnion extends PropertyBase {
+interface PropertyDiscriminatedUnion {
   type: "discriminated_union"
 
   /** Discriminator field name — must exist with same name in each any_of variant. */
@@ -241,56 +246,60 @@ interface PropertyDiscriminatedUnion extends PropertyBase {
 2. Generates a selector (default `select`, can be `switch`/`radio-group`)
 3. When user selects, displays remaining fields of corresponding variant
 
-**Example**: Select different parameters based on format
+**Example**: Wrap a discriminated union inside `array.items` to let one selected config switch shape by format
 
 ```typescript
 {
-  name: "output_config",
-  type: "discriminated_union",
+  name: "output_configs",
+  type: "array",
   display_name: { en_US: "Output Config" },
-  discriminator: "format",
-  discriminator_ui: { component: "select" },
-  any_of: [
-    {
-      name: "markdown_option",
-      type: "object",
-      properties: [
-        {
-          name: "format",
-          type: "string",
-          constant: "markdown",
-          display_name: { en_US: "Markdown" }
-        },
-        {
-          name: "include_toc",
-          type: "boolean",
-          display_name: { en_US: "Include Table of Contents" },
-          default: false
-        }
-      ]
-    },
-    {
-      name: "json_option",
-      type: "object",
-      properties: [
-        {
-          name: "format",
-          type: "string",
-          constant: "json",
-          display_name: { en_US: "JSON" }
-        },
-        {
-          name: "schema",
-          type: "object",
-          display_name: { en_US: "Schema" },
-          ui: { component: "code-editor", language: "json" },
-          properties: []
-        }
-      ]
-    }
-  ]
+  min_items: 1,
+  max_items: 1,
+  items: {
+    type: "discriminated_union",
+    discriminator: "format",
+    discriminator_ui: { component: "select" },
+    any_of: [
+      {
+        name: "markdown_option",
+        type: "object",
+        properties: [
+          {
+            name: "format",
+            type: "string",
+            constant: "markdown",
+            display_name: { en_US: "Markdown" }
+          },
+          {
+            name: "include_toc",
+            type: "boolean",
+            display_name: { en_US: "Include Table of Contents" },
+            default: false
+          }
+        ]
+      },
+      {
+        name: "json_option",
+        type: "object",
+        properties: [
+          {
+            name: "format",
+            type: "string",
+            constant: "json",
+            display_name: { en_US: "JSON" }
+          },
+          {
+            name: "schema",
+            type: "object",
+            display_name: { en_US: "Schema" },
+            ui: { component: "code-editor", language: "json" },
+            properties: []
+          }
+        ]
+      }
+    ]
+  }
 }
 ```
 
-> **Key**: Each variant (object in `any_of`) must contain a field with the same name as `discriminator`, and that field must set a `constant` value as the discriminator basis.
-
+> **Key**: Each variant (object in `any_of`) must contain a field with the same name as `discriminator`, and that field must set a `constant` value as the discriminator basis. If you want a single selector-like block, constrain the wrapper array with `min_items: 1` and `max_items: 1`.

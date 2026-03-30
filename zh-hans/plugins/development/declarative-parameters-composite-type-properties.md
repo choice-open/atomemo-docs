@@ -216,13 +216,18 @@ interface PropertyArray extends PropertyBase {
 
 ### 6.3 PropertyDiscriminatedUnion
 
-根据一个"判别字段"的值，切换显示不同的参数集合。这是最强大的组合模式。
+根据判别字段的值在不同参数集合之间切换。
+
+`PropertyDiscriminatedUnion` **不是** `parameters` 数组中的顶层属性。目前它只能出现在明确允许使用的位置：
+
+- `PropertyArray.items`
+- `PropertyObject.additional_properties`
 
 ```typescript
-interface PropertyDiscriminatedUnion extends PropertyBase {
+interface PropertyDiscriminatedUnion {
   type: "discriminated_union"
 
-  /** 判别字段名——必须在每个 any_of 变体中存在同名的 enum 字段。 */
+  /** 判别字段名——必须在每个 any_of 变体中存在同名字段。 */
   discriminator: string
 
   /** 所有可能的变体（每个变体是一个 PropertyObject）。 */
@@ -241,56 +246,61 @@ interface PropertyDiscriminatedUnion extends PropertyBase {
 2. 生成一个选择器（默认 `select`，可改为 `switch`/`radio-group`）
 3. 用户选择后，显示对应变体的其余字段
 
-**示例**：根据格式选择不同参数
+**示例**：在 `array.items` 内包裹判别联合，使单个配置项能根据 format 切换形态
 
 ```typescript
 {
-  name: "output_config",
-  type: "discriminated_union",
+  name: "output_configs",
+  type: "array",
   display_name: { en_US: "Output Config", zh_Hans: "输出配置" },
-  discriminator: "format",
-  discriminator_ui: { component: "select" },
-  any_of: [
-    {
-      name: "markdown_option",
-      type: "object",
-      properties: [
-        {
-          name: "format",
-          type: "string",
-          constant: "markdown",
-          display_name: { en_US: "Markdown", zh_Hans: "Markdown" }
-        },
-        {
-          name: "include_toc",
-          type: "boolean",
-          display_name: { en_US: "Include Table of Contents", zh_Hans: "包含目录" },
-          default: false
-        }
-      ]
-    },
-    {
-      name: "json_option",
-      type: "object",
-      properties: [
-        {
-          name: "format",
-          type: "string",
-          constant: "json",
-          display_name: { en_US: "JSON", zh_Hans: "JSON" }
-        },
-        {
-          name: "schema",
-          type: "object",
-          display_name: { en_US: "Schema", zh_Hans: "数据结构" },
-          ui: { component: "code-editor", language: "json" },
-          properties: []
-        }
-      ]
-    }
-  ]
+  min_items: 1,
+  max_items: 1,
+  items: {
+    type: "discriminated_union",
+    discriminator: "format",
+    discriminator_ui: { component: "select" },
+    any_of: [
+      {
+        name: "markdown_option",
+        type: "object",
+        properties: [
+          {
+            name: "format",
+            type: "string",
+            constant: "markdown",
+            display_name: { en_US: "Markdown", zh_Hans: "Markdown" }
+          },
+          {
+            name: "include_toc",
+            type: "boolean",
+            display_name: { en_US: "Include Table of Contents", zh_Hans: "包含目录" },
+            default: false
+          }
+        ]
+      },
+      {
+        name: "json_option",
+        type: "object",
+        properties: [
+          {
+            name: "format",
+            type: "string",
+            constant: "json",
+            display_name: { en_US: "JSON", zh_Hans: "JSON" }
+          },
+          {
+            name: "schema",
+            type: "object",
+            display_name: { en_US: "Schema", zh_Hans: "数据结构" },
+            ui: { component: "code-editor", language: "json" },
+            properties: []
+          }
+        ]
+      }
+    ]
+  }
 }
 ```
 
-> **关键**：每个变体（`any_of` 中的对象）必须包含一个与 `discriminator` 同名的字段，且该字段必须设置 `constant` 值作为判别依据。
+> **关键**：每个变体（`any_of` 中的对象）必须包含一个与 `discriminator` 同名的字段，且该字段必须设置 `constant` 值作为判别依据。若需要类似单个选择器的效果，可将外层数组约束为 `min_items: 1` 和 `max_items: 1`。
 

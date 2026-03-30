@@ -208,7 +208,7 @@ export const googleDriveOAuth2Credential = {
         placeholder: "输入 Client Secret",
       },
     },
-    // 内部字段用于存储令牌（通常在 UI 中隐藏，但在定义中必须存在）
+    // 内部字段用于存储令牌。即使不在 UI 中暴露，也请在定义中保留这些字段。
     { name: "access_token", type: "encrypted_string" },
     { name: "refresh_token", type: "encrypted_string" },
     { name: "expires_at", type: "integer" },
@@ -302,4 +302,4 @@ export const googleDriveOAuth2Credential = {
 ## 参考
 
 - **类型定义**: [`@choiceopen/atomemo-plugin-schema/types`](https://github.com/choice-open/atomemo-plugin-schema/tree/main/src/types) 中的 `CredentialDefinition`
-- **Schema**: [`@choiceopen/atomemo-plugin-schema/schema`](https://github.com/choice-open/atomemo-plugin-schema/blob/main/src/schemas/README.md) 中的 `CredentialDefinitionSchema`
+- **Schema**: [`@choiceopen/atomemo-plugin-schema/schemas`](https://github.com/choice-open/atomemo-plugin-schema/blob/main/src/schemas/README.md) 中的 `CredentialDefinitionSchema`

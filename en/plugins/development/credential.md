@@ -205,7 +205,7 @@ export const googleDriveOAuth2Credential = {
         placeholder: "Enter Client Secret",
       },
     },
-    // Internal fields for storing tokens (hidden from UI usually, but required in definition)
+    // Internal fields for storing tokens. Keep them in the definition even if you do not expose them in the UI.
     { name: "access_token", type: "encrypted_string" },
     { name: "refresh_token", type: "encrypted_string" },
     { name: "expires_at", type: "integer" },
@@ -299,4 +299,4 @@ export const googleDriveOAuth2Credential = {
 ## Reference
 
 - **Type Definition**: [`@choiceopen/atomemo-plugin-schema/types`](https://github.com/choice-open/atomemo-plugin-schema/tree/main/src/types) for `CredentialDefinition`
-- **Schema**: [`@choiceopen/atomemo-plugin-schema/schema`](https://github.com/choice-open/atomemo-plugin-schema/blob/main/src/schemas/README.md) for `CredentialDefinitionSchema`
+- **Schema**: [`@choiceopen/atomemo-plugin-schema/schemas`](https://github.com/choice-open/atomemo-plugin-schema/blob/main/src/schemas/README.md) for `CredentialDefinitionSchema`

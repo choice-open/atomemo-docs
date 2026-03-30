@@ -27,6 +27,12 @@ interface PropertyBase {
 
   /** Optional. UI component configuration. Different types support different UI components. */
   ui?: PropertyUI
+
+  /** Optional. Upstream parameter dependencies for cascading resource fields. */
+  depends_on?: string[]
+
+  /** Optional. Hub-side decoder applied before the value reaches your plugin. */
+  decoder?: "json"
 }
 ```
 
@@ -40,4 +46,7 @@ interface PropertyBase {
 | `display`      | ❌       | Conditional visibility. See [Section 9](./declarative-parameters-display-condition.md). |
 | `ai`           | ❌       | Parameter description when AI Agent calls tool.                                     |
 | `ui`           | ❌       | Uses type's default UI component if not provided.                                   |
+| `depends_on`   | ❌       | Upstream property names for cascading behavior. Currently supported on `resource_locator` and `resource_mapper`. |
+| `decoder`      | ❌       | Hub-side decoder. Currently only `"json"` is supported, and it is intended for object properties. |
 
+> `depends_on` is only supported on `resource_locator` and `resource_mapper` today. Use `decoder: "json"` when the Hub should parse an incoming JSON string into an object before invoking your plugin.
