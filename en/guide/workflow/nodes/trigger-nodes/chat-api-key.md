@@ -272,6 +272,8 @@ Sent periodically to keep the connection alive. No data payload.
 
 `GET /chat/app/{appId}`
 
+This is a public endpoint. Retrieving app information does not require API key authentication.
+
 Retrieve the currently published app and its active version. Returns 404 if the app does not exist or is offline.
 
 ### Path Parameters
