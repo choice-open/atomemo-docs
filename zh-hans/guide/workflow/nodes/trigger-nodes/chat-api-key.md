@@ -319,8 +319,7 @@ LLM 返回文本块事件。累积这些文本块即可构建完整回复。
 ### 示例
 
 ```bash
-curl -X GET 'https://server.atomemo.ai/api/chat/app/{appId}' \
-  --header 'X-Api-Key: {API_KEY}'
+curl -X GET 'https://server.atomemo.ai/api/chat/app/{appId}'
 ```
 
 Response：
