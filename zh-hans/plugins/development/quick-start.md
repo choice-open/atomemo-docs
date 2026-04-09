@@ -39,7 +39,20 @@ $ atomemo --version
 
 不要手动创建文件夹——使用 CLI 可以一键生成符合规范的项目骨架。
 
-### 1. 登录账号
+### 1. 克隆官方仓库并创建分支
+
+在初始化插件之前，先克隆官方插件仓库，并为本次开发创建一个新的分支：
+
+```bash
+$ git clone https://github.com/choice-open/atomemo-official-plugins.git
+$ cd atomemo-official-plugins
+$ git checkout -b feat/add-weather-lookup
+$ cd plugins
+```
+
+这样可以让你的插件直接位于规范的仓库结构中，也更方便后续提交 Pull Request。
+
+### 2. 登录账号
 
 在使用 CLI 创建项目之前，你需要先登录你的账号以同步开发者信息：
 
@@ -49,7 +62,7 @@ $ atomemo auth login
 
 _终端将提示通过浏览器打开登录页面，授权成功后即可关闭窗口。_
 
-### 2. 创建项目
+### 3. 创建项目
 
 运行初始化命令，CLI 会通过交互式问答引导你完成配置：
 
@@ -64,18 +77,20 @@ $ atomemo plugin init
 - **Language**: `TypeScript`
   :::
 
-### 3. 项目结构概览
+### 4. 项目结构概览
 
 创建完成后，生成的目录结构如下：
 
 ```text
-/weather-lookup
-  ├── src/
-  │    └── index.ts        # 插件入口文件
-  ├── package.json         # 依赖管理
-  ├── tsconfig.json        # TypeScript 配置
-  ├── .env                 # 环境变量（自动生成）
-  └── README.md
+atomemo-official-plugins/
+  └── plugins/
+       └── weather-lookup/
+            ├── src/
+            │    └── index.ts        # 插件入口文件
+            ├── package.json         # 依赖管理
+            ├── tsconfig.json        # TypeScript 配置
+            ├── .env                 # 环境变量（自动生成）
+            └── README.md
 ```
 
 ## 第三步：连接与调试
@@ -129,6 +144,8 @@ RECEIVE ok debug_plugin:notion phx_reply (8) {
   },
 }
 ```
+
+连接成功后，你可以打开 [atomemo.ai](https://atomemo.ai) 中的任意应用，在画布里看到当前开发中的插件已自动安装到登录账号所属的组织中，并直接使用对应节点进行调试。
 
 #### 连接失败
 

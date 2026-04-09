@@ -39,7 +39,20 @@ $ atomemo --version
 
 Don't create folders manually—use the CLI to generate a standards-compliant project scaffold in one command.
 
-### 1. Login to Your Account
+### 1. Clone the Official Repository and Create a Branch
+
+Before you initialize your plugin, clone the official plugin repository and create a feature branch for your work:
+
+```bash
+$ git clone https://github.com/choice-open/atomemo-official-plugins.git
+$ cd atomemo-official-plugins
+$ git checkout -b feat/add-weather-lookup
+$ cd plugins
+```
+
+This keeps your plugin in the expected repository structure and makes it easier to submit a Pull Request later.
+
+### 2. Login to Your Account
 
 Before creating a project with the CLI, log in to sync your developer information:
 
@@ -49,7 +62,7 @@ $ atomemo auth login
 
 _The terminal will prompt you to open a login page in your browser. You can close the window after authorization succeeds._
 
-### 2. Create Your Project
+### 3. Create Your Project
 
 Run the initialization command, and the CLI will guide you through interactive configuration:
 
@@ -64,18 +77,20 @@ $ atomemo plugin init
 - **Language**: `TypeScript`
   :::
 
-### 3. Project Structure Overview
+### 4. Project Structure Overview
 
 After creation, your directory structure will look like this:
 
 ```text
-/weather-lookup
-  ├── src/
-  │    └── index.ts        # Plugin entry point
-  ├── package.json         # Dependency management
-  ├── tsconfig.json        # TypeScript configuration
-  ├── .env                 # Environment variables (auto-generated)
-  └── README.md
+atomemo-official-plugins/
+  └── plugins/
+       └── weather-lookup/
+            ├── src/
+            │    └── index.ts        # Plugin entry point
+            ├── package.json         # Dependency management
+            ├── tsconfig.json        # TypeScript configuration
+            ├── .env                 # Environment variables (auto-generated)
+            └── README.md
 ```
 
 ## Step 3: Connect and Debug
@@ -129,6 +144,8 @@ RECEIVE ok debug_plugin:notion phx_reply (8) {
   },
 }
 ```
+
+After the connection succeeds, you can open any application on [atomemo.ai](https://atomemo.ai) and see the plugin you're developing already installed in the organization tied to your logged-in account. You can then use its node directly in the canvas for debugging.
 
 #### Connection Failed
 
