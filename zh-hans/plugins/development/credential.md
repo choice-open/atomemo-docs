@@ -155,6 +155,17 @@ plugin.run()
 
 如果你的插件需要 OAuth2 认证（例如 Google Drive, Slack），可以通过设置 `oauth2: true` 来启用 OAuth2 支持。
 
+### 授权方式
+
+你可以通过 `oauth2_grant_type` 可选地声明 OAuth2 的授权方式：
+
+- `authorization_code`
+- `client_credentials`
+
+如果省略 `oauth2_grant_type`，Hub 会默认使用 `authorization_code`。
+
+`authorization_code` 适用于需要用户跳转到提供方授权页面并完成授权的场景。`client_credentials` 适用于服务到服务的场景，由插件直接使用客户端凭证换取访问令牌。
+
 ### 必需参数
 
 当启用了 `oauth2` 时，`parameters` 数组**必须**包含以下字段（用于存储令牌状态）：
@@ -165,11 +176,11 @@ plugin.run()
 
 ### 必需函数
 
-你还需要实现以下三个函数来处理 OAuth2 流程：
+你需要实现哪些回调，取决于具体的授权方式：
 
-1. **oauth2_build_authorize_url**: 构建授权 URL 以重定向用户。
-2. **oauth2_get_token**: 使用授权码换取访问令牌。
-3. **oauth2_refresh_token**: 使用刷新令牌刷新访问令牌。
+1. **oauth2_build_authorize_url**: 构建授权 URL 以重定向用户。该回调用于 `authorization_code` 流程。
+2. **oauth2_get_token**: 使用授权码换取访问令牌，或在 `client_credentials` 流程中直接换取访问令牌。
+3. **oauth2_refresh_token**: 当提供方支持刷新令牌时，使用刷新令牌刷新访问令牌。
 
 ### 示例
 
@@ -186,6 +197,7 @@ export const googleDriveOAuth2Credential = {
 
   // 启用 OAuth2 支持
   oauth2: true,
+  oauth2_grant_type: "authorization_code",
 
   parameters: [
     {

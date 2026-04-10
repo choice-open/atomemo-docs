@@ -152,6 +152,17 @@ plugin.run()
 
 If your plugin requires OAuth2 authentication (e.g., Google Drive, Slack), you can enable OAuth2 support by setting `oauth2: true`.
 
+### Grant Type
+
+You can optionally declare the OAuth2 grant type with `oauth2_grant_type`:
+
+- `authorization_code`
+- `client_credentials`
+
+If `oauth2_grant_type` is omitted, the Hub defaults to `authorization_code`.
+
+Use `authorization_code` for user-consent flows where the user is redirected to the provider's authorization page. Use `client_credentials` for server-to-server flows where the plugin exchanges its client credentials directly for an access token.
+
 ### Required Parameters
 
 When `oauth2` is enabled, the `parameters` array **must** include the following fields:
@@ -162,11 +173,11 @@ When `oauth2` is enabled, the `parameters` array **must** include the following 
 
 ### Required Functions
 
-You also need to implement the following three functions to handle the OAuth2 flow:
+The callbacks you implement depend on the grant type:
 
-1. **oauth2_build_authorize_url**: Constructs the authorization URL to redirect the user.
-2. **oauth2_get_token**: Exchanges the authorization code for an access token.
-3. **oauth2_refresh_token**: Refreshes the access token using the refresh token.
+1. **oauth2_build_authorize_url**: Constructs the authorization URL to redirect the user. This is used for `authorization_code` flows.
+2. **oauth2_get_token**: Exchanges the authorization code for an access token, or requests an access token directly for `client_credentials` flows.
+3. **oauth2_refresh_token**: Refreshes the access token using the refresh token when the provider supports refresh tokens.
 
 ### Example
 
@@ -183,6 +194,7 @@ export const googleDriveOAuth2Credential = {
 
   // Enable OAuth2 support
   oauth2: true,
+  oauth2_grant_type: "authorization_code",
 
   parameters: [
     {
