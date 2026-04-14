@@ -58,9 +58,14 @@ parameters: [
       support_expression: true, // Allow using variables/expressions
       width: "full",
     },
+    ai: {
+      llm_description: { en_US: "Location for the search or lookup" },
+    },
   },
 ]
 ```
+
+If `ui.support_expression` is `true`, you can also add `ai.llm_description` to help the AI understand what the parameter is for.
 
 > **For a comprehensive guide** on defining parameters with full control over types, UI components, and validation rules, see the [Declarative Parameter Definition Reference](./declarative-parameters.md).
 
@@ -217,6 +222,9 @@ export const demoTool = {
         placeholder: { en_US: "New York" },
         support_expression: true,
         width: "full",
+      },
+      ai: {
+        llm_description: { en_US: "Location for the search or lookup" },
       },
     },
   ],

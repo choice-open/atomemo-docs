@@ -58,9 +58,14 @@ parameters: [
       support_expression: true, // 允许使用变量/表达式
       width: "full",
     },
+    ai: {
+      llm_description: { en_US: "Location for the search or lookup", zh_Hans: "搜索或查询使用的位置" },
+    },
   },
 ]
 ```
+
+如果 `ui.support_expression` 为 `true`，你也可以添加 `ai.llm_description`，帮助 AI 理解该参数的用途。
 
 > **完整指南** ：有关使用不同类型的字段、UI 组件和验证规则定义参数，请参见 [声明式参数定义参考文档](./declarative-parameters.md)。
 
@@ -217,6 +222,9 @@ export const demoTool = {
         placeholder: { en_US: "New York", zh_Hans: "上海" },
         support_expression: true,
         width: "full",
+      },
+      ai: {
+        llm_description: { en_US: "Location for the search or lookup", zh_Hans: "搜索或查询使用的位置" },
       },
     },
   ],
