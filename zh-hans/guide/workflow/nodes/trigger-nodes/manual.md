@@ -324,12 +324,12 @@ Code Node
 
 **A**:
 
-| 特性 | Manual Trigger | Chat Trigger | Webhook Trigger |
-|------|---------------|--------------|-----------------|
-| 触发方式 | 手动点击运行 | 用户发送消息 | HTTP 请求 |
-| 自动化程度 | 无自动化 | 自动响应用户 | 自动接收请求 |
-| 使用场景 | 测试、按需任务 | 对话交互 | API 集成 |
-| 数据输入 | 通过 API 传入 | 用户消息 | HTTP 请求体 |
+| 特性 | Manual Trigger | Chat Trigger | Webhook Trigger | Schedule Trigger |
+|------|---------------|--------------|-----------------|------------------|
+| 触发方式 | 手动点击运行 | 用户发送消息 | HTTP 请求 | Cron 表达式定时 |
+| 自动化程度 | 无自动化 | 自动响应用户 | 自动接收请求 | 全自动定时执行 |
+| 使用场景 | 测试、按需任务 | 对话交互 | API 集成 | 定期自动化任务 |
+| 数据输入 | 通过 API 传入 | 用户消息 | HTTP 请求体 | 无（纯入口触发） |
 
 ### Q2: 如何传入参数给 Manual Trigger？
 
@@ -373,13 +373,9 @@ Code Node (第一个节点)
 # 每周一上午9点触发工作流
 ```
 
-**方案 2: 未来可能支持的 Schedule Trigger**
-```
-(未来可能添加 Schedule Trigger 节点)
-Schedule Trigger
-  Schedule: "0 9 * * 1"  # Cron 表达式
-  → ...
-```
+**方案 2: 使用 Schedule 触发器**
+
+直接在工作流中添加 [Schedule 触发器](/zh-hans/guide/workflow/nodes/trigger-nodes/schedule)，配置 Cron 表达式即可实现定时触发。无需外部系统。
 
 ### Q4: 如何在 Manual Trigger 中模拟 Chat Trigger 的数据？
 
@@ -420,7 +416,7 @@ LLM Node
 **不适合的场景**:
 - 需要自动响应用户的场景 (应用 Chat Trigger)
 - 需要实时处理的场景 (应用 Webhook Trigger)
-- 高频执行的场景 (应用定时触发)
+- 高频执行的场景（使用 [Schedule 触发器](/zh-hans/guide/workflow/nodes/trigger-nodes/schedule)）
 
 **生产环境使用建议**:
 ```javascript

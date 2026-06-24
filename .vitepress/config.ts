@@ -245,6 +245,18 @@ export default withMermaid({
                           text: "Webhook 触发器",
                           link: "/zh-hans/guide/workflow/nodes/trigger-nodes/webhook",
                         },
+                        {
+                          text: "Schedule 触发器",
+                          link: "/zh-hans/guide/workflow/nodes/trigger-nodes/schedule",
+                        },
+                        {
+                          text: "Form 触发器",
+                          link: "/zh-hans/guide/workflow/nodes/trigger-nodes/form",
+                        },
+                        {
+                          text: "Subflow 触发器",
+                          link: "/zh-hans/guide/workflow/nodes/trigger-nodes/subflow",
+                        },
                       ],
                     },
                     {
@@ -282,6 +294,10 @@ export default withMermaid({
                         {
                           text: "情感分析",
                           link: "/zh-hans/guide/workflow/nodes/action-nodes/sentiment-analysis",
+                        },
+                        {
+                          text: "子流程输出",
+                          link: "/zh-hans/guide/workflow/nodes/action-nodes/output",
                         },
                         {
                           text: "数据转换",
@@ -592,6 +608,18 @@ export default withMermaid({
                           text: "Webhook Trigger",
                           link: "/en/guide/workflow/nodes/trigger-nodes/webhook",
                         },
+                        {
+                          text: "Schedule Trigger",
+                          link: "/en/guide/workflow/nodes/trigger-nodes/schedule",
+                        },
+                        {
+                          text: "Form Trigger",
+                          link: "/en/guide/workflow/nodes/trigger-nodes/form",
+                        },
+                        {
+                          text: "Subflow Trigger",
+                          link: "/en/guide/workflow/nodes/trigger-nodes/subflow",
+                        },
                       ],
                     },
                     {
@@ -632,6 +660,10 @@ export default withMermaid({
                         {
                           text: "Sentiment Analysis",
                           link: "/en/guide/workflow/nodes/action-nodes/sentiment-analysis",
+                        },
+                        {
+                          text: "Subflow Output",
+                          link: "/en/guide/workflow/nodes/action-nodes/output",
                         },
                         {
                           text: "Transform",

@@ -210,6 +210,7 @@ HTTP Request Node
 - **Manual Trigger**: Click to run, testing, on-demand tasks
 - **Chat Trigger**: User messages, conversational interaction
 - **Webhook Trigger**: HTTP requests, API integration
+- **Schedule Trigger**: Cron-based, periodic automation tasks
 
 ### Q: How to pass parameters to Manual Trigger?
 
@@ -227,7 +228,7 @@ Code Node
 
 ### Q: Can Manual Trigger be scheduled?
 
-**A**: No. Use external scheduler (cron) or future Schedule Trigger node.
+**A**: No. Use the [Schedule Trigger](/en/guide/workflow/nodes/trigger-nodes/schedule) node for scheduled execution.
 
 ### Q: Is Manual Trigger suitable for production?
 
@@ -240,7 +241,7 @@ Code Node
 No for:
 - Auto-response scenarios (use Chat Trigger)
 - Real-time processing (use Webhook Trigger)
-- High-frequency execution (use scheduled trigger)
+- High-frequency execution (use [Schedule Trigger](/en/guide/workflow/nodes/trigger-nodes/schedule))
 
 ## Next Steps
 
