@@ -38,37 +38,39 @@ The Schedule Trigger produces a single output port (`Head`). The output data is 
 
 The core configuration is a cron expression that defines when the workflow executes.
 
-**Format**: Extended crontab syntax with optional seconds field:
+**Format**: Extended crontab syntax using 6 or 7 fields:
 
 ```
 second minute hour day month weekday year
 ```
 
 - Fields are space-separated
-- The `second` field is optional (omit for minute-granularity scheduling)
-- The `year` field is optional
+- Fields are parsed left-to-right as: second, minute, hour, day, month, weekday, year
+- The `year` field is optional (omit for 6-field syntax)
+
+> **⚠️ Important**: The system **always parses the leftmost field as "second"**. If you write only 5 fields, they are interpreted as `second minute hour day month` (NOT Linux crontab's `minute hour day month weekday`). For example, `0 6 * * *` does **NOT** mean "6:00 AM daily" — it means "6 minutes past every hour"! Always use 6 fields to avoid ambiguity.
 
 **Supported Syntax**:
 
 | Feature | Example | Description |
 | --- | --- | --- |
-| Exact value | `0 9 * * *` | At minute 0 of hour 9 (9:00 AM) daily |
-| Wildcard `*` | `* * * * *` | Every minute |
-| Step `/` | `*/15 * * * *` | Every 15 minutes |
-| Range `-` | `0 9-17 * * *` | Every hour from 9 AM to 5 PM |
-| List `,` | `0 9,12,18 * * *` | At 9 AM, 12 PM, and 6 PM |
+| Exact value | `0 0 9 * * *` | At 9:00 AM daily |
+| Wildcard `*` | `0 * * * * *` | Every minute (at second 0) |
+| Step `/` | `0 */15 * * * *` | Every 15 minutes |
+| Range `-` | `0 0 9-17 * * *` | Every hour from 9 AM to 5 PM |
+| List `,` | `0 0 9,12,18 * * *` | At 9 AM, 12 PM, and 6 PM |
 | Special `@` | `@daily` | Once per day at midnight |
 
 **Special Expressions**:
 
 | Expression | Equivalent | Description |
 | --- | --- | --- |
-| `@yearly` / `@annually` | `0 0 1 1 *` | Once per year on Jan 1 at midnight |
-| `@monthly` | `0 0 1 * *` | Once per month on the 1st at midnight |
-| `@weekly` | `0 0 * * 0` | Once per week on Sunday at midnight |
-| `@daily` / `@midnight` | `0 0 * * *` | Once per day at midnight |
-| `@hourly` | `0 * * * *` | Once per hour at minute 0 |
-| `@minutely` | `* * * * *` | Once per minute |
+| `@yearly` / `@annually` | `0 0 0 1 1 *` | Once per year on Jan 1 at midnight |
+| `@monthly` | `0 0 0 1 * *` | Once per month on the 1st at midnight |
+| `@weekly` | `0 0 0 * * 0` | Once per week on Sunday at midnight |
+| `@daily` / `@midnight` | `0 0 0 * * *` | Once per day at midnight |
+| `@hourly` | `0 0 * * * *` | Once per hour at minute 0 |
+| `@minutely` | `0 * * * * *` | Once per minute |
 | `@secondly` | `* * * * * *` | Once per second |
 
 > **Note**: `@reboot` is **not supported**.
@@ -77,12 +79,12 @@ second minute hour day month weekday year
 
 | Expression | Description |
 | --- | --- |
-| `0 9 * * 1` | Every Monday at 9:00 AM |
-| `0 8,18 * * 1-5` | Every weekday at 8:00 AM and 6:00 PM |
-| `*/5 * * * *` | Every 5 minutes |
-| `0 9-17 * * 1-5` | Every hour, 9 AM–5 PM, Monday–Friday |
-| `0 0 1,15 * *` | Midnight on the 1st and 15th of each month |
-| `0 6 * * *` | Every day at 6:00 AM |
+| `0 0 9 * * 1` | Every Monday at 9:00 AM |
+| `0 0 8,18 * * 1-5` | Every weekday at 8:00 AM and 6:00 PM |
+| `0 */5 * * * *` | Every 5 minutes |
+| `0 0 9-17 * * 1-5` | Every hour, 9 AM–5 PM, Monday–Friday |
+| `0 0 0 1,15 * *` | Midnight on the 1st and 15th of each month |
+| `0 0 6 * * *` | Every day at 6:00 AM |
 | `@daily` | Once per day at midnight |
 
 > **Note**: The cron input field does not support inline comments (e.g., `# comment`). Only enter the expression itself.
@@ -125,7 +127,7 @@ This is useful for:
 
 ```
 Schedule Trigger
-  Cron: 0 9 * * 1-5 (weekdays at 9 AM)
+  Cron: 0 0 9 * * 1-5 (weekdays at 9 AM)
   → HTTP Request Node
     URL: "https://api.example.com/reports/daily"
     Method: POST
@@ -137,7 +139,7 @@ Schedule Trigger
 
 ```
 Schedule Trigger
-  Cron: */30 * * * * (every 30 minutes)
+  Cron: 0 */30 * * * * (every 30 minutes)
   → HTTP Request Node
     URL: "https://source-api.example.com/data"
     Method: GET
@@ -173,7 +175,7 @@ Schedule Trigger
 
 ```
 Schedule Trigger
-  Cron: 0 0 28-31 * * (last days of each month)
+  Cron: 0 0 0 28-31 * * (last days of each month)
   → Code Node (check if last day)
     Code: |
       const today = new Date();
@@ -237,10 +239,10 @@ For long-running workflows, consider whether a new execution should start before
 
 ```yaml
 # If your workflow takes 10 minutes, don't schedule every 5 minutes
-cron: "*/5 * * * *"   # ⚠️ may cause overlap
+cron: "0 */5 * * * *"   # ⚠️ may cause overlap
 
 # Instead, leave enough gap
-cron: "*/30 * * * *"  # ✓ safe for a 10-min workflow
+cron: "0 */30 * * * *"  # ✓ safe for a 10-min workflow
 ```
 
 > **Note**: The `#` comments above are for documentation only — do not paste them into the cron input field.
@@ -286,6 +288,22 @@ cron: "*/30 * * * *"  # ✓ safe for a 10-min workflow
 | Dry Run | Built-in Run button | Manual curl command |
 
 **Recommendation**: Use Schedule Trigger for straightforward periodic tasks within {{PRODUCT_NAME}}. Use external cron + Webhook only when you need cross-system orchestration.
+
+### Q: Why did my `0 6 * * *` run every hour instead of at 6:00 AM?
+
+**A**: {{PRODUCT_NAME}} uses extended crontab syntax and always parses left-to-right as `second minute hour day month weekday year`. With 5 fields, the system parses:
+
+| Field | Value | Meaning |
+| --- | --- | --- |
+| second | `0` | At second 0 |
+| minute | `6` | At minute 6 |
+| hour | `*` | Every hour |
+| day | `*` | Every day |
+| month | `*` | Every month |
+
+Result: **6 minutes past every hour**.
+
+**Fix**: Always write 6 fields. For 6:00 AM daily, use `0 0 6 * * *` (sec=0 min=0 hour=6).
 
 ## Next Steps
 
