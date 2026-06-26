@@ -283,7 +283,7 @@ $('Execute Workflow').变量名
 ## 下一步
 
 - [Subflow 触发器](/zh-hans/guide/workflow/nodes/trigger-nodes/subflow) — 了解如何接收父工作流的调用
-- [运行工作流](/zh-hans/guide/workflow/execute-workflow) — 了解如何从父工作流调用子流程
+- [执行子流程](/zh-hans/guide/workflow/nodes/action-nodes/execute-sub-workflow) — 了解如何从父工作流调用子流程
 - [Code 节点](/zh-hans/guide/workflow/nodes/action-nodes/code) — 在输出前处理数据
 
 ## 相关资源

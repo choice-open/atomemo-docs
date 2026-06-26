@@ -120,6 +120,8 @@ respond: "respond_to_webhook"
 - Provides maximum flexibility
 - Suitable for complex response logic
 
+> **See also**: [Webhook Response Node](/en/guide/workflow/nodes/action-nodes/webhook-response) — learn how to configure the response node.
+
 ### Advanced Settings (Settings Panel)
 
 #### Allow Multiple HTTP Method
@@ -348,6 +350,7 @@ Webhook Trigger
 
 ## Related Resources
 
+- [Webhook Response Node](/en/guide/workflow/nodes/action-nodes/webhook-response) - Send custom responses to Webhook callers
 - [HTTP Request Node](/en/guide/workflow/nodes/action-nodes/http-request) - Send HTTP requests
 - [Workflow Best Practices](/en/guide/best-practices) - Workflow design guide
 - [Expression Reference](/en/guide/expressions-reference) - Complete expression syntax

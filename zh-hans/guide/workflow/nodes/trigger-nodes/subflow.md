@@ -316,7 +316,7 @@ JSON 示例模式适合快速原型，但对团队协作来说不够自文档化
 ## 下一步
 
 - [Subflow Output](/zh-hans/guide/workflow/nodes/action-nodes/output) - 了解如何从子流程返回结果
-- [运行工作流](/zh-hans/guide/workflow/execute-workflow) - 了解如何从父工作流调用子流程
+- [执行子流程](/zh-hans/guide/workflow/nodes/action-nodes/execute-sub-workflow) - 了解如何从父工作流调用子流程
 - [Code 节点](/zh-hans/guide/workflow/nodes/action-nodes/code) - 在子流程中添加自定义处理逻辑
 
 ## 相关资源

@@ -283,7 +283,7 @@ $('Execute Workflow').variableName
 ## Next Steps
 
 - [Subflow Trigger](/en/guide/workflow/nodes/trigger-nodes/subflow) — Learn how to receive calls from parent workflows
-- [Execute Workflow](/en/guide/workflow/execute-workflow) — Learn how to call a subflow from a parent workflow
+- [Execute Sub-workflow](/en/guide/workflow/nodes/action-nodes/execute-sub-workflow) — Learn how to call a subflow from a parent workflow
 - [Code Node](/en/guide/workflow/nodes/action-nodes/code) — Process data before sending it to the output
 
 ## Related Resources

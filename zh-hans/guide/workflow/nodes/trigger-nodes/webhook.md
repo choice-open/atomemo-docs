@@ -120,6 +120,8 @@ respond: "respond_to_webhook"
 - 提供最大的灵活性
 - 适合复杂的响应逻辑
 
+> **参见**：[Webhook 响应节点](/zh-hans/guide/workflow/nodes/action-nodes/webhook-response) — 了解如何配置响应节点。
+
 ### 高级设置（设置面板）
 
 #### 允许多个 HTTP 方法
@@ -348,5 +350,6 @@ Webhook 触发器
 
 ## 相关资源
 
+- [Webhook 响应节点](/zh-hans/guide/workflow/nodes/action-nodes/webhook-response) - 向 Webhook 调用方发送自定义响应
 - [HTTP 请求节点](/zh-hans/guide/workflow/nodes/action-nodes/http-request) - 发送 HTTP 请求
 - [表达式方法](/zh-hans/guide/expressions) - 完整表达式语法

@@ -316,7 +316,7 @@ Use the node description to document what inputs are expected and what outputs a
 ## Next Steps
 
 - [Subflow Output](/en/guide/workflow/nodes/action-nodes/output) - Learn how to return results from a subflow
-- [Execute Workflow](/en/guide/workflow/execute-workflow) - Learn how to call a subflow from a parent workflow
+- [Execute Sub-workflow](/en/guide/workflow/nodes/action-nodes/execute-sub-workflow) - Learn how to call a subflow from a parent workflow
 - [Code Node](/en/guide/workflow/nodes/action-nodes/code) - Add custom processing logic in your subflow
 
 ## Related Resources

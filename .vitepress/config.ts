@@ -300,6 +300,10 @@ export default withMermaid({
                           link: "/zh-hans/guide/workflow/nodes/action-nodes/output",
                         },
                         {
+                          text: "Switch 分支",
+                          link: "/zh-hans/guide/workflow/nodes/action-nodes/switch",
+                        },
+                        {
                           text: "数据转换",
                           link: "/zh-hans/guide/workflow/nodes/action-nodes/transform",
                         },
@@ -308,6 +312,14 @@ export default withMermaid({
                           link: "/zh-hans/guide/workflow/nodes/action-nodes/variable-assigner",
                         },
                         { text: "等待", link: "/zh-hans/guide/workflow/nodes/action-nodes/wait" },
+                        {
+                          text: "Webhook 响应",
+                          link: "/zh-hans/guide/workflow/nodes/action-nodes/webhook-response",
+                        },
+                        {
+                          text: "执行子流程",
+                          link: "/zh-hans/guide/workflow/nodes/action-nodes/execute-sub-workflow",
+                        },
                       ],
                     },
                     {
@@ -666,6 +678,10 @@ export default withMermaid({
                           link: "/en/guide/workflow/nodes/action-nodes/output",
                         },
                         {
+                          text: "Switch",
+                          link: "/en/guide/workflow/nodes/action-nodes/switch",
+                        },
+                        {
                           text: "Transform",
                           link: "/en/guide/workflow/nodes/action-nodes/transform",
                         },
@@ -674,6 +690,14 @@ export default withMermaid({
                           link: "/en/guide/workflow/nodes/action-nodes/variable-assigner",
                         },
                         { text: "Wait", link: "/en/guide/workflow/nodes/action-nodes/wait" },
+                        {
+                          text: "Webhook Response",
+                          link: "/en/guide/workflow/nodes/action-nodes/webhook-response",
+                        },
+                        {
+                          text: "Execute Sub-workflow",
+                          link: "/en/guide/workflow/nodes/action-nodes/execute-sub-workflow",
+                        },
                       ],
                     },
                     {
