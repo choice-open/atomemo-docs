@@ -340,6 +340,10 @@ export default withMermaid({
                       text: "Tool 节点",
                       collapsed: false,
                       items: [
+                        { text: "AI Agent 工具", link: "/zh-hans/guide/workflow/nodes/tool-nodes/ai-agent" },
+                        { text: "子工作流工具", link: "/zh-hans/guide/workflow/nodes/tool-nodes/subflow" },
+                        { text: "思考工具", link: "/zh-hans/guide/workflow/nodes/tool-nodes/think" },
+                        { text: "MCP 客户端工具", link: "/zh-hans/guide/workflow/nodes/tool-nodes/mcp-client" },
                         { text: "代码工具", link: "/zh-hans/guide/workflow/nodes/tool-nodes/code" },
                         {
                           text: "实体识别工具",
@@ -718,6 +722,10 @@ export default withMermaid({
                       text: "Tool Nodes",
                       collapsed: false,
                       items: [
+                        { text: "AI Agent Tool", link: "/en/guide/workflow/nodes/tool-nodes/ai-agent" },
+                        { text: "Sub-workflow Tool", link: "/en/guide/workflow/nodes/tool-nodes/subflow" },
+                        { text: "Think Tool", link: "/en/guide/workflow/nodes/tool-nodes/think" },
+                        { text: "MCP Client Tool", link: "/en/guide/workflow/nodes/tool-nodes/mcp-client" },
                         { text: "Code Tool", link: "/en/guide/workflow/nodes/tool-nodes/code" },
                         {
                           text: "Entity Recognition Tool",

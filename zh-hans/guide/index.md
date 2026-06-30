@@ -40,12 +40,17 @@ description: 学习如何使用 {{PRODUCT_NAME}} 构建 AI 智能体和自动化
 
 #### Tool 节点
 为 AI Agent 提供可调用的工具能力：
+- [AI Agent 工具](/zh-hans/guide/workflow/nodes/tool-nodes/ai-agent) - 提供子 Agent 能力，支持任务委派
+- [子工作流工具](/zh-hans/guide/workflow/nodes/tool-nodes/subflow) - 按需执行可复用子流程
+- [思考工具](/zh-hans/guide/workflow/nodes/tool-nodes/think) - 为 AI Agent 提供结构化推理能力
+- [MCP 客户端工具](/zh-hans/guide/workflow/nodes/tool-nodes/mcp-client) - 连接外部 MCP 服务器工具
 - [代码工具](/zh-hans/guide/workflow/nodes/tool-nodes/code) - 为 AI Agent 提供代码执行能力
 - [实体识别工具](/zh-hans/guide/workflow/nodes/tool-nodes/entity-recognition) - 为 AI Agent 提供信息提取能力
 - [HTTP 请求工具](/zh-hans/guide/workflow/nodes/tool-nodes/http-request) - 为 AI Agent 提供 API 调用能力
 
 ### AI Agent 开发
 - [AI Agent 节点](/zh-hans/guide/workflow/nodes/action-nodes/ai-agent) - 构建智能对话和任务处理
+- [AI Agent 工具](/zh-hans/guide/workflow/nodes/tool-nodes/ai-agent) - 将任务委派给专业子 Agent
 - [工具节点](/zh-hans/guide/workflow/nodes/tool-nodes/code) - 为 Agent 添加自定义能力
 
 ### 团队协作

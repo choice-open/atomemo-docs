@@ -315,6 +315,7 @@ $('HTTP 请求').body.data.attributes
 
 ## 下一步
 
+- [子工作流工具节点](/zh-hans/guide/workflow/nodes/tool-nodes/subflow) — 将子流程注册为 AI 可调用的工具
 - [Subflow 触发器](/zh-hans/guide/workflow/nodes/trigger-nodes/subflow) — 了解如何创建可被调用的子流程
 - [Subflow Output](/zh-hans/guide/workflow/nodes/action-nodes/output) — 了解子流程如何返回结果
 - [循环与迭代](/zh-hans/guide/workflow/nodes/control-nodes/loop-iterate) — 对列表中每个元素调用子流程

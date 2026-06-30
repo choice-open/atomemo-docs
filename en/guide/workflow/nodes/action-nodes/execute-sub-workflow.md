@@ -315,6 +315,7 @@ $('HTTP Request').body.data.attributes
 
 ## Next Steps
 
+- [Sub-workflow Tool Node](/en/guide/workflow/nodes/tool-nodes/subflow) — Register sub-workflows as AI-callable tools
 - [Subflow Trigger](/en/guide/workflow/nodes/trigger-nodes/subflow) — Learn how to create a callable sub-workflow
 - [Subflow Output](/en/guide/workflow/nodes/action-nodes/output) — Learn how sub-workflows return results
 - [Loop & Iterate](/en/guide/workflow/nodes/control-nodes/loop-iterate) — Call a sub-workflow for each item in a list

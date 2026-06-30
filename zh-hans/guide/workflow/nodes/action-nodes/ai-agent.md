@@ -1057,6 +1057,7 @@ Code Node (在 Agent 之后)
 
 ## 下一步
 
+- [AI Agent 工具节点](/zh-hans/guide/workflow/nodes/tool-nodes/ai-agent) - 将任务委派给专业子 Agent
 - [Code Tool 节点](/zh-hans/guide/workflow/nodes/tool-nodes/code) - 为 Agent 添加自定义工具
 - [HTTP Request Tool 节点](/zh-hans/guide/workflow/nodes/tool-nodes/http-request) - 为 Agent 添加 API 调用能力
 - [Entity Recognition Tool 节点](/zh-hans/guide/workflow/nodes/tool-nodes/entity-recognition) - 为 Agent 添加信息提取能力

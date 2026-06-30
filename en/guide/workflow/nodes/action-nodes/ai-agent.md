@@ -471,6 +471,7 @@ Chat Trigger
 
 ## Next Steps
 
+- [AI Agent Tool Node](/en/guide/workflow/nodes/tool-nodes/ai-agent) - Delegate tasks to specialized sub-agents
 - [Code Tool Node](/en/guide/workflow/nodes/tool-nodes/code) - Add custom tools for Agent
 - [HTTP Request Tool Node](/en/guide/workflow/nodes/tool-nodes/http-request) - Add API calling capability
 - [Entity Recognition Tool](/en/guide/workflow/nodes/tool-nodes/entity-recognition) - Add info extraction capability

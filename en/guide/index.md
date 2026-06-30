@@ -40,12 +40,17 @@ Execute specific operation tasks:
 
 #### Tool Nodes
 Provide callable tool capabilities for AI Agents:
+- [AI Agent Tool](/en/guide/workflow/nodes/tool-nodes/ai-agent) - Provide sub-agent capabilities for task delegation
+- [Sub-workflow Tool](/en/guide/workflow/nodes/tool-nodes/subflow) - Execute reusable sub-workflows on demand
+- [Think Tool](/en/guide/workflow/nodes/tool-nodes/think) - Provide structured reasoning for AI Agents
+- [MCP Client Tool](/en/guide/workflow/nodes/tool-nodes/mcp-client) - Connect external MCP server tools
 - [Code Tool](/en/guide/workflow/nodes/tool-nodes/code) - Provide code execution capability for AI Agents
 - [Entity Recognition Tool](/en/guide/workflow/nodes/tool-nodes/entity-recognition) - Provide information extraction capability for AI Agents
 - [HTTP Request Tool](/en/guide/workflow/nodes/tool-nodes/http-request) - Provide API calling capability for AI Agents
 
 ### AI Agent Development
 - [AI Agent Node](/en/guide/workflow/nodes/action-nodes/ai-agent) - Build intelligent conversations and task processing
+- [AI Agent Tool](/en/guide/workflow/nodes/tool-nodes/ai-agent) - Delegate tasks to specialized sub-agents
 - [Tool Nodes](/en/guide/workflow/nodes/tool-nodes/code) - Add custom capabilities to Agents
 
 ### Team Collaboration
